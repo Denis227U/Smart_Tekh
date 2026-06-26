@@ -1,4 +1,4 @@
-import { Prisma } from '@/prisma/generated/client';
+import { Prisma } from '@/src/shared/api/prisma/generated/client';
 
 type ProductSeedData = Prisma.ProductCreateInput;
 
