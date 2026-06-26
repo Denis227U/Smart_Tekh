@@ -1,0 +1,67 @@
+// 1. Глобальный сброс
+@mixin reset-global {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -moz-text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+// 2. Сброс списков
+@mixin reset-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// 3. Сброс кнопок (с сохранением доступности фокуса)
+@mixin reset-button {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+}
+
+// 4. Сброс полей ввода (input, textarea)
+@mixin reset-input {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-image: none;
+  background-color: transparent;
+  box-shadow: none;
+  font: inherit;
+  color: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+// 5. Сброс для медиа (картинки, видео)
+@mixin reset-media {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
