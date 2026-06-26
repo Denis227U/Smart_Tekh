@@ -1,0 +1,15 @@
+model Product {
+  id String @id @default(cuid(2))
+
+  title       String
+  description String? @db.Text
+  price       Decimal @db.Decimal(10, 2)
+  rating      Decimal @default(0) @db.Decimal(2, 1)
+
+  coverImage String? @map("cover_image")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("products")
+}
