@@ -1,0 +1,24 @@
+@use '@/src/app/styles/helpers/sass-variables' as *;
+@use 'sass:math';
+@use 'sass:string';
+
+@function fluid($max: 100, $min: 10, $isEndOfLaptop: false) {
+  $maxViewportWidth: $container-desktop-width;
+  $minViewportWidth: 360;
+
+  @if $isEndOfLaptop {
+    $minViewportWidth: $container-laptop-width;
+  }
+
+  $slope: math.div(($max - $min), ($maxViewportWidth - $minViewportWidth));
+  $yAxisIntersection: (-$minViewportWidth * $slope) + $min;
+
+  // Возвращаем чистый calc с интерполяцией каждого числа
+  @return string.unquote(
+    'clamp(#{$min}px, #{$yAxisIntersection}px + #{$slope * 100}vw, #{$max}px)'
+  );
+}
+
+@function fluid-to-laptop($max: 100, $min: 10) {
+  @return #{fluid($max, $min, true)};
+}

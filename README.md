@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 Smart Tekh — интернет-магазин
 
-## Getting Started
+![CI](https://github.com/Denis227U/Smart_Tekh/actions/workflows/ci.yml/badge.svg)
 
-First, run the development server:
+## 📌 О проекте
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Современный и быстрый интернет-магазин, построенный на базе актуального стека технологий с акцентом на высокую производительность, строгую типизацию и поддерживаемую, масштабируемую Feature-Sliced Design архитектуру.
+
+## 🧰 Стек
+
+### Текущий
+- **Frontend:** Next.js 16 (App Router + cacheComponents), TypeScript
+- **База данных:** Prisma 7, PostgreSQL
+- **Архитектура:** Feature-Sliced Design (FSD)
+- **Инструменты:** ESLint, Prettier, Husky, Commitlint, GitHub Actions, Docker
+
+### В планах
+- **Управление состоянием:** Zustand 5 + persist
+- **Backend-логика:** Next.js Server Actions
+- **Аутентификация:** Auth.js v5 (ранее NextAuth.js)
+- **Хранение файлов:** MinIO
+
+## 🏗 Архитектурная структура (FSD)
+
+```text
+src/
+├── app/          # Инициализация приложения, глобальные стили, провайдеры (в разработке)
+├── pages/        # Страницы интернет-магазина (в разработке)
+├── widgets/      # Крупные блоки (в разработке)
+├── features/     # Интерактивные действия (в разработке)
+├── entities/     # Бизнес-сущности (в разработке)
+└── shared/       # Переиспользуемые UI-компоненты, хуки, API-клиенты, scss-миксины (в разработке)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💻 Локальный запуск
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. Клонирование репозитория
+```bash
+git clone https://github.com/Denis227U/Smart_Tekh.git
+cd Smart_Tekh
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Установка зависимостей
+```bash
+npm install
+# или pnpm install / yarn install
+```
 
-## Learn More
+### 3. Запуск базы данных (Docker Compose)
+```bash
+docker compose up -d db
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Настройка переменных окружения
+Создайте файл `.env` в корне проекта:
+```env
+# База данных (Prisma 7)
+DATABASE_URL="postgresql://myuser:mypassword@localhost:5434/mydb?schema=public"
+```
+*Примечание: myuser, mypassword и mydb — значения по умолчанию из docker-compose.yml
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 5. Миграции базы данных (Prisma 7)
+```bash
+npx prisma migrate dev
+# для наката миграций из prisma\migrations
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 6. Запуск сервера разработки
+```bash
+npm run dev
+```
+Проект откроется по адресу: `http://localhost:3000`
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🗺 Roadmap
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Ниже — запланированные ключевые шаги.
+
+- [ ] **Основной пользовательский флоу** — каталог с фильтрами, страница товара, поиск, корзина, оформление заказа
+- [ ] **Серверная логика** — переход на Server Actions для мутаций данных
+- [ ] **Аутентификация** — Auth.js v5 (Credentials + Google/GitHub провайдеры)
+- [ ] **Локальная корзина** — Zustand 5 + persist для неавторизованных пользователей
+- [ ] **Синхронизация корзины** — объединение локальной и серверной корзины при авторизации, сохранение в БД через Server Actions
+- [ ] **Хранение файлов** — интеграция MinIO для изображений товаров
+- [ ] **Тесты** — unit/integration (Vitest + React Testing Library)

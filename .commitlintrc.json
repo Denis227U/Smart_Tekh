@@ -1,0 +1,41 @@
+{
+  "extends": ["@commitlint/config-conventional"],
+  "rules": {
+    "scope-enum": [
+      2,
+      "always",
+      [
+        "app",
+        "pages",
+        "widgets",
+        "features",
+        "entities",
+        "shared",
+        "prisma",
+        "next-config",
+        "tooling",
+        "docker",
+        "ci",
+        "deps",
+        "readme",
+        "init",
+        "setup"
+      ]
+    ],
+    "type-enum": [
+      2,
+      "always",
+      [
+        "feat",
+        "fix",
+        "refactor",
+        "style",
+        "docs",
+        "test",
+        "chore",
+        "build",
+        "perf"
+      ]
+    ]
+  }
+}
