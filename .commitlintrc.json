@@ -17,7 +17,9 @@
         "docker",
         "ci",
         "deps",
-        "readme"
+        "readme",
+        "init",
+        "setup"
       ]
     ],
     "type-enum": [
