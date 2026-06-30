@@ -1,0 +1,36 @@
+.button {
+  @include reset-button;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.3em;
+  height: var(--size-button);
+  min-width: var(--size-button);
+  border-radius: var(--border-radius-xs);
+  color: var(--color-gray-10);
+  padding-inline: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  user-select: none;
+
+  @include hover {
+    color: var(--color-hover);
+  }
+
+  & {
+    * {
+      pointer-events: none;
+    }
+  }
+
+  &[data-variant='main-dark'] {
+    color: var(--color-white);
+    background-color: var(--color-blue-40);
+
+    @include hover {
+      color: var(--color-white);
+      background-color: var(--color-blue-20);
+    }
+  }
+}
