@@ -1,0 +1,8 @@
+.trigger {
+  width: 100%;
+  max-width: 100px;
+
+  @include mobile {
+    max-width: 80px;
+  }
+}

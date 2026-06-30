@@ -1,10 +1,14 @@
-import { OAuthButtons } from '@/src/features/auth';
+import { Suspense } from 'react';
+import { AuthPageRouteInner } from './_auth-page-route-inner';
 
-export default async function AuthPageRoute() {
+export default async function AuthPageRoute({
+  searchParams,
+}: {
+  searchParams: Promise<{ mode?: string }>;
+}) {
   return (
-    <div>
-      <h1>Вход в интернет-магазин</h1>
-      <OAuthButtons />
-    </div>
+    <Suspense fallback={null}>
+      <AuthPageRouteInner searchParams={searchParams} />
+    </Suspense>
   );
 }

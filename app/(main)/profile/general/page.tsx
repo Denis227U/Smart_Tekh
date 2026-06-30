@@ -1,6 +1,7 @@
 import { getCurrentUser } from '@/src/entities/user/server';
 import { SignOutButton } from '@/src/features/auth';
 import { auth } from '@/src/shared/config/auth';
+import { ROUTES } from '@/src/shared/routes';
 import { redirect } from 'next/navigation';
 
 export default async function ProfileGeneralPage() {
@@ -9,7 +10,7 @@ export default async function ProfileGeneralPage() {
   const session = await auth();
 
   if (!session) {
-    redirect('/auth');
+    redirect(ROUTES.AUTH.PAGE('signin'));
   }
 
   return (
