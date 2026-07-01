@@ -20,7 +20,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='ru' className={`${exo2.className}`}>
+    <html
+      lang='ru'
+      className={`${exo2.className}`}
+    >
       <body>{children}</body>
     </html>
   );

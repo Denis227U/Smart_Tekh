@@ -15,7 +15,11 @@ export const Button = (props: TButtonProps) => {
   if ('href' in props && props.href !== undefined) {
     const { href, children, icon, ...rest } = props;
     return (
-      <Link href={href} {...rest} {...commonProps}>
+      <Link
+        href={href}
+        {...rest}
+        {...commonProps}
+      >
         {icon && icon}
         {children}
       </Link>
@@ -26,7 +30,11 @@ export const Button = (props: TButtonProps) => {
   const { children, icon, onClick, ...rest } = props as ButtonProps;
 
   return (
-    <button {...rest} onClick={onClick} {...commonProps}>
+    <button
+      onClick={onClick}
+      {...rest}
+      {...commonProps}
+    >
       {icon && icon}
       {children}
     </button>

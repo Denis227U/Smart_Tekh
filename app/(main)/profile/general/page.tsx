@@ -19,7 +19,13 @@ export default async function ProfileGeneralPage() {
       <div>email: {user?.email}</div>
       <div>role: {user?.role}</div>
       <div>
-        {user?.avatar && <img width={80} src={user.avatar} alt='qwe' />}
+        {user?.avatar && (
+          <img
+            width={80}
+            src={user.avatar}
+            alt='qwe'
+          />
+        )}
       </div>
       <SignOutButton />
     </div>
