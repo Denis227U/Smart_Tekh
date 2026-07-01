@@ -1,0 +1,106 @@
+$transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+.modal {
+  --bg-color-shadow: color-mix(
+    in srgb,
+    var(--color-blue-40) 20%,
+    transparent 80%
+  );
+  --bg-color-start: color-mix(
+    in srgb,
+    var(--color-blue-40) 0%,
+    transparent 100%
+  );
+  --bg-color-end: color-mix(in srgb, var(--color-blue-40) 60%, transparent 40%);
+
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: var(--border-radius-m);
+  box-shadow: 0 4px 12px var(--bg-color-shadow);
+  max-width: 370px;
+  width: 100%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+  transition:
+    opacity var(--transition-duration) $transition-easing,
+    transform var(--transition-duration) $transition-easing;
+
+  // Бэкдроп — анимация появления
+  &::backdrop {
+    background-color: var(--bg-color-start);
+    backdrop-filter: blur(0px);
+    transition:
+      background-color var(--transition-duration) $transition-easing,
+      backdrop-filter var(--transition-duration) $transition-easing;
+  }
+}
+
+// Открытое состояние
+.isOpen {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+
+  &::backdrop {
+    background-color: var(--bg-color-end);
+    backdrop-filter: blur(2px);
+  }
+}
+
+// Закрывающееся состояние
+.isClosing {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.95);
+
+  &::backdrop {
+    background-color: var(--bg-color-start);
+    backdrop-filter: blur(0px);
+  }
+}
+
+.closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-family: var(--font-family-times-symbol);
+  color: var(--color-red);
+  font-size: 20px;
+
+  @include hover {
+    color: #ff0707;
+    background-color: var(--color-gray-40);
+  }
+}
+
+.header {
+  padding-block: 20px;
+  padding-inline: 30px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-blue-70);
+}
+
+.title {
+  max-width: 260px;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.body {
+  padding-block: 20px;
+  padding-inline: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+// Disable animation for accessibility / WCAG
+@media (prefers-reduced-motion: reduce) {
+  .modal,
+  .modal::backdrop {
+    transition: none;
+  }
+}
