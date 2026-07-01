@@ -1,13 +1,10 @@
-import { OAuthButtons } from '@/src/features/auth';
 import { Suspense } from 'react';
+import { AuthModal } from '@/src/features/auth';
 
 export default async function AuthModalPage() {
   return (
     <Suspense fallback={null}>
-      <div>
-        <h1>Модальное окно аутентификации</h1>
-        <OAuthButtons />
-      </div>
+      <AuthModal />
     </Suspense>
   );
 }
