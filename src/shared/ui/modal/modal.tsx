@@ -3,8 +3,8 @@
 import { type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '@/src/shared/lib';
-import { Button } from '@/src/shared/ui/client';
-import { Heading } from '@/src/shared/ui/server';
+import { Button } from '@/src/shared/ui/button';
+import { Heading } from '@/src/shared/ui/heading';
 import { useModal } from './use-modal';
 import s from './modal.module.scss';
 
