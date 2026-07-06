@@ -7,6 +7,7 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import bcrypt from 'bcryptjs';
 import { prisma, UserRole } from '@/src/shared/api';
 import { signInSchema } from '@/src/shared/lib';
+import { serverEnv } from '@/src/shared/config/env';
 
 export const SESSION_COOKIE_MAX_AGE = {
   MONTH: 30 * 24 * 60 * 60, // 30 days
@@ -14,7 +15,7 @@ export const SESSION_COOKIE_MAX_AGE = {
 } as const;
 
 export const SESSION_COOKIE_NAME =
-  process.env.NODE_ENV === 'production'
+  serverEnv.NODE_ENV === 'production'
     ? '__Secure-authjs.session-token'
     : 'authjs.session-token';
 
@@ -86,7 +87,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: process.env.NODE_ENV === 'production',
+        secure: serverEnv.NODE_ENV === 'production',
       },
     },
   },
