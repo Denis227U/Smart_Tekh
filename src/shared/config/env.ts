@@ -19,6 +19,8 @@ const serverEnvSchema = z.object({
   // Providers
   AUTH_GITHUB_ID: z.string().min(1),
   AUTH_GITHUB_SECRET: z.string().min(1),
+  AUTH_YANDEX_ID: z.string().min(1),
+  AUTH_YANDEX_SECRET: z.string().min(1),
 });
 
 const parsed = serverEnvSchema.safeParse(process.env);
