@@ -11,7 +11,12 @@
         "features",
         "entities",
         "shared",
+        "routing",
+        "ui",
+        "store",
+        "api",
         "prisma",
+        "seed",
         "next-config",
         "tooling",
         "docker",
@@ -34,7 +39,8 @@
         "test",
         "chore",
         "build",
-        "perf"
+        "perf",
+        "wip"
       ]
     ]
   }
