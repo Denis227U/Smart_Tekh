@@ -40,4 +40,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# vscode
+.vscode/
+
+# my local docs
+.local
+
 /src/shared/api/prisma/generated
