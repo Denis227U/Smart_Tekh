@@ -19,7 +19,6 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
 
-  // Prettier and import sorting for ALL files
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     plugins: {
@@ -28,19 +27,6 @@ const eslintConfig = defineConfig([
     },
     rules: {
       'prettier/prettier': 'error',
-      'import/order': [
-        'warn',
-        {
-          'newlines-between': 'always',
-        },
-      ],
-    },
-  },
-
-  // Specific rules for TypeScript (replacing overrides)
-  {
-    files: ['**/*.ts', '**/*.tsx'],
-    rules: {
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {
@@ -50,10 +36,99 @@ const eslintConfig = defineConfig([
         },
       ],
     },
+    settings: {
+      'import/parsers': {
+        '@typescript-eslint/parser': ['.ts', '.tsx'],
+      },
+      'import/resolver': {
+        typescript: true,
+        node: true,
+      },
+    },
   },
 
-  // Disabling ESLint rules that conflict with Prettier
   eslintConfigPrettier,
+
+  // Absolute priority for import/order
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    plugins: {
+      import: importPlugin,
+    },
+    rules: {
+      'import/order': [
+        'warn',
+        {
+          'newlines-between': 'never',
+          alphabetize: { order: 'asc', caseInsensitive: true },
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
+            'type',
+            'object',
+            'unknown',
+          ],
+          pathGroups: [
+            { pattern: '@/app/**', group: 'internal', position: 'before' },
+            { pattern: '@/src/app/**', group: 'internal', position: 'before' },
+            {
+              pattern: '@/src/pages/**',
+              group: 'internal',
+              position: 'before',
+            },
+            {
+              pattern: '@/src/widgets/**',
+              group: 'internal',
+              position: 'before',
+            },
+            {
+              pattern: '@/src/features/**',
+              group: 'internal',
+              position: 'before',
+            },
+            {
+              pattern: '@/src/entities/**',
+              group: 'internal',
+              position: 'before',
+            },
+            {
+              pattern: '@/src/shared/**',
+              group: 'internal',
+              position: 'before',
+            },
+
+            { pattern: './*.module.scss', group: 'object', position: 'after' },
+            {
+              pattern: './**/*.module.scss',
+              group: 'object',
+              position: 'after',
+            },
+            { pattern: '../*.module.scss', group: 'object', position: 'after' },
+            {
+              pattern: '../**/*.module.scss',
+              group: 'object',
+              position: 'after',
+            },
+            { pattern: '*.module.scss', group: 'object', position: 'after' },
+            { pattern: '**/*.module.scss', group: 'object', position: 'after' },
+            { pattern: './*.module.css', group: 'object', position: 'after' },
+            {
+              pattern: './**/*.module.css',
+              group: 'object',
+              position: 'after',
+            },
+            { pattern: '*.module.css', group: 'object', position: 'after' },
+            { pattern: '**/*.module.css', group: 'object', position: 'after' },
+          ],
+          pathGroupsExcludedImportTypes: ['builtin'],
+        },
+      ],
+    },
+  },
 ]);
 
 export default eslintConfig;
