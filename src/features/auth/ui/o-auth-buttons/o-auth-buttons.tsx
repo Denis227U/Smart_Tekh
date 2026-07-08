@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 import { signIn } from 'next-auth/react';
+import { useState } from 'react';
 import { Button } from '@/src/shared/ui/client';
 import { Loader } from '@/src/shared/ui/common';
 import s from './o-auth-buttons.module.scss';

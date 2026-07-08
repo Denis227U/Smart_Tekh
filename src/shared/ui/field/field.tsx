@@ -1,13 +1,13 @@
 'use client';
 
 import { ReactNode, useId } from 'react';
+import { FieldLayout } from './field-layout';
 import type {
   FieldCustomProps,
   FieldProps,
   InputFieldProps,
   TextareaFieldProps,
 } from './types';
-import { FieldLayout } from './field-layout';
 import s from './field.module.scss';
 
 export const Field = (props: FieldProps) => {

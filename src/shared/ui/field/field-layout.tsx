@@ -1,7 +1,7 @@
 'use client';
 
-import type { FieldLayoutProps } from './types';
 import { cn } from '@/src/shared/lib';
+import type { FieldLayoutProps } from './types';
 
 export const FieldLayout = ({
   id,

@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { cn } from '@/src/shared/lib';
 import { Button } from '@/src/shared/ui/button';
 import { Field } from '@/src/shared/ui/field';
 import { Icon } from '@/src/shared/ui/icon';
-import { cn } from '@/src/shared/lib';
 import type { FieldRevealProps } from './types';
 import s from './field-reveal.module.scss';
 

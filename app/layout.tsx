@@ -1,5 +1,5 @@
-import type { Metadata } from 'next';
 import { Exo_2 } from 'next/font/google';
+import type { Metadata } from 'next';
 import '@/src/app/styles/globals.scss';
 import '@/src/app/styles/utils.scss';
 

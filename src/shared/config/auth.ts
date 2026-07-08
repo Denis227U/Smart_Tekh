@@ -1,14 +1,14 @@
 import 'server-only';
 
-import NextAuth from 'next-auth';
-import GitHub from 'next-auth/providers/github';
-import Yandex from 'next-auth/providers/yandex';
-import Credentials from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import bcrypt from 'bcryptjs';
+import NextAuth from 'next-auth';
+import Credentials from 'next-auth/providers/credentials';
+import GitHub from 'next-auth/providers/github';
+import Yandex from 'next-auth/providers/yandex';
 import { prisma, UserRole } from '@/src/shared/api';
-import { signInSchema } from '@/src/shared/lib';
 import { serverEnv } from '@/src/shared/config/env';
+import { signInSchema } from '@/src/shared/lib';
 
 export const SESSION_COOKIE_MAX_AGE = {
   MONTH: 30 * 24 * 60 * 60, // 30 days

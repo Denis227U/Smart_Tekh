@@ -1,5 +1,5 @@
-import { Button } from '@/src/shared/ui/client';
 import { ROUTES } from '@/src/shared/routes';
+import { Button } from '@/src/shared/ui/client';
 import s from './sign-in-trigger.module.scss';
 
 const LABEL = 'Войти в свой аккаунт';
