@@ -7,10 +7,10 @@ type BaseProps = {
   icon?: ReactNode;
 };
 
-type LinkProps = BaseProps &
+type ButtonAsLinkProps = BaseProps &
   AnchorHTMLAttributes<HTMLAnchorElement> & { href: string };
 
-export type ButtonProps = BaseProps &
+export type ButtonAsButtonProps = BaseProps &
   ButtonHTMLAttributes<HTMLButtonElement> & { href?: never };
 
-export type TButtonProps = LinkProps | ButtonProps;
+export type ButtonProps = ButtonAsLinkProps | ButtonAsButtonProps;

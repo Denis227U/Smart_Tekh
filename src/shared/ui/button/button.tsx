@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { ButtonProps, TButtonProps } from './button.types';
 import { cn } from '@/src/shared/lib';
+import type { ButtonAsButtonProps, ButtonProps } from './types';
 import s from './button.module.scss';
 
-export const Button = (props: TButtonProps) => {
+export const Button = (props: ButtonProps) => {
   const commonProps = {
     className: cn(s.button, props.className),
     'data-variant': props.variant,
@@ -27,7 +27,7 @@ export const Button = (props: TButtonProps) => {
   }
 
   // render button
-  const { children, icon, onClick, ...rest } = props as ButtonProps;
+  const { children, icon, onClick, ...rest } = props as ButtonAsButtonProps;
 
   return (
     <button
