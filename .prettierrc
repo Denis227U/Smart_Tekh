@@ -10,5 +10,5 @@
   "endOfLine": "lf",
   "jsxSingleQuote": true,
   "bracketSameLine": false,
-  "singleAttributePerLine": false
+  "singleAttributePerLine": true
 }

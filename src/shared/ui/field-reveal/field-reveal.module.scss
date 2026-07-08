@@ -1,0 +1,19 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .link {
+    font-size: 16px;
+    font-weight: normal;
+    color: var(--color-blue-50);
+
+    &[data-align='left'] {
+      margin-right: auto;
+    }
+
+    &[data-align='right'] {
+      margin-left: auto;
+    }
+  }
+}

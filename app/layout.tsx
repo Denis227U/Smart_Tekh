@@ -1,5 +1,5 @@
-import type { Metadata } from 'next';
 import { Exo_2 } from 'next/font/google';
+import type { Metadata } from 'next';
 import '@/src/app/styles/globals.scss';
 import '@/src/app/styles/utils.scss';
 
@@ -20,7 +20,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='ru' className={`${exo2.className}`}>
+    <html
+      lang='ru'
+      className={`${exo2.className}`}
+    >
       <body>{children}</body>
     </html>
   );

@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
+  margin-inline: auto;
+  padding-inline: var(--container-padding-x);
+
+  &[data-size='md'] {
+    --container-width: #{fluid-to-laptop(900, 780)};
+  }
+
+  &[data-size='sm'] {
+    --container-width: #{fluid-to-laptop(500, 440)};
+  }
+
+  &[data-size='fluid'] {
+    --container-width: 100%;
+    max-width: 100%;
+  }
+}

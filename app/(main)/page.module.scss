@@ -1,0 +1,12 @@
+.box {
+  color: var(--color-blue-20);
+  background-color: var(--color-blue-70);
+
+  @include mobile {
+    color: var(--color-black);
+  }
+}
+
+.list {
+  @include reset-list;
+}

@@ -1,0 +1,14 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .errorMsg {
+    color: var(--color-red);
+    background-color: #ffe5e5;
+    text-align: center;
+    border-radius: var(--border-radius-m);
+    padding-block: 10px;
+    margin: 0;
+  }
+}
