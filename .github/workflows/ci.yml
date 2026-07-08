@@ -44,4 +44,13 @@ jobs:
       - name: Build
         run: npm run build
         env:
+          NODE_ENV: production
           DATABASE_URL: 'postgresql://${{ secrets.DB_USER }}:${{ secrets.DB_PASSWORD }}@localhost:5432/${{ secrets.DB_NAME }}?schema=public'
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          AUTH_GITHUB_ID: ${{ secrets.AUTH_GITHUB_ID }}
+          AUTH_GITHUB_SECRET: ${{ secrets.AUTH_GITHUB_SECRET }}
+          AUTH_YANDEX_ID: ${{ secrets.AUTH_YANDEX_ID }}
+          AUTH_YANDEX_SECRET: ${{ secrets.AUTH_YANDEX_SECRET }}
