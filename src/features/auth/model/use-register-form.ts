@@ -1,19 +1,28 @@
 'use client';
 
 import { useActionState, useState, useTransition } from 'react';
+import { ROUTES } from '@/src/shared/routes';
 import { registerUserAction } from '../api/register-user-action';
 import { useAutoLogin } from './use-auto-login';
 import type { RegisterState } from './types';
 
 const initialState: RegisterState = {};
 
-export const useRegisterForm = () => {
+export const useRegisterForm = ({
+  callbackUrl = ROUTES.MAIN,
+}: {
+  callbackUrl?: string;
+}) => {
   const [state, formAction] = useActionState(registerUserAction, initialState);
 
   const [isPendingTransition, startTransition] = useTransition();
 
   const [savedPassword, setSavedPassword] = useState('');
-  const { isLoggingIn, loginError } = useAutoLogin({ savedPassword, state });
+  const { isLoggingIn, loginError } = useAutoLogin({
+    savedPassword,
+    state,
+    callbackUrl,
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

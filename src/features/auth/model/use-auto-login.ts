@@ -1,31 +1,26 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
 import { signIn } from 'next-auth/react';
+import { useEffect, useRef, useState } from 'react';
 import { useAuthNavigation } from '../lib/use-auth-navigation';
 import type { RegisterState } from './types';
 
 export const useAutoLogin = ({
   state,
   savedPassword,
+  callbackUrl,
 }: {
   state: RegisterState;
   savedPassword: string;
+  callbackUrl?: string;
 }) => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(null);
 
   const successHandledRef = useRef(false);
-  const { handleAuthSuccess } = useAuthNavigation();
+  const { handleAuthSuccess } = useAuthNavigation({ callbackUrl });
 
   useEffect(() => {
-    console.log('Текущее состояние автологина:', {
-      success: state?.success,
-      email: state?.email,
-      hasPassword: !!savedPassword,
-      handled: successHandledRef.current,
-    });
-
     const autoLoginAndNavigate = async () => {
       if (state?.success && state?.email && !successHandledRef.current) {
         successHandledRef.current = true;

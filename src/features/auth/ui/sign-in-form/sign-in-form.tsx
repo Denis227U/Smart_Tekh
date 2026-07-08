@@ -1,6 +1,7 @@
 'use client';
 
 import { Controller } from 'react-hook-form';
+import { ROUTES } from '@/src/shared/routes';
 import {
   Button,
   Field,
@@ -11,8 +12,14 @@ import { Loader } from '@/src/shared/ui/common';
 import { useSignInForm } from '../../model/use-sign-in-form';
 import s from './sign-in-form.module.scss';
 
-export const SignInForm = () => {
-  const { control, isPending, errors, onSubmit } = useSignInForm();
+export const SignInForm = ({
+  callbackUrl = ROUTES.MAIN,
+}: {
+  callbackUrl?: string;
+}) => {
+  const { control, isPending, errors, onSubmit } = useSignInForm({
+    callbackUrl,
+  });
 
   return (
     <form

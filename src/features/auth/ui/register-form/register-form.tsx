@@ -1,13 +1,20 @@
 'use client';
 
 import Link from 'next/link';
+import { ROUTES } from '@/src/shared/routes';
 import { Button, Field, FieldReveal } from '@/src/shared/ui/client';
 import { Loader } from '@/src/shared/ui/common';
 import { useRegisterForm } from '../../model/use-register-form';
 import s from './register-form.module.scss';
 
-export const RegisterForm = () => {
-  const { state, isLoading, errorMessage, onSubmit } = useRegisterForm();
+export const RegisterForm = ({
+  callbackUrl = ROUTES.MAIN,
+}: {
+  callbackUrl?: string;
+}) => {
+  const { state, isLoading, errorMessage, onSubmit } = useRegisterForm({
+    callbackUrl,
+  });
 
   return (
     <form

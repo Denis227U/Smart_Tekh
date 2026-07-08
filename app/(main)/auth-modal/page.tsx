@@ -1,14 +1,14 @@
-import { AuthModalRedirectInner } from './_auth-modal-redirect-inner';
 import { Suspense } from 'react';
+import { AuthGuardAndRedirect } from './_auth-guard-and-redirect';
 
-export default async function AuthModalRedirect({
+export default function AuthModalRedirect({
   searchParams,
 }: {
-  searchParams: Promise<{ mode?: string }>;
+  searchParams: Promise<{ mode?: string; callbackUrl?: string }>;
 }) {
   return (
     <Suspense fallback={null}>
-      <AuthModalRedirectInner searchParams={searchParams} />
+      <AuthGuardAndRedirect searchParams={searchParams} />
     </Suspense>
   );
 }
