@@ -1,0 +1,22 @@
+.list {
+  @include reset-list;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.link {
+  color: var(--color-white);
+  font-weight: 500;
+  font-size: 16px;
+
+  &[data-active] {
+    color: var(--color-orange-40);
+  }
+
+  @include hover {
+    color: var(--color-orange-40);
+  }
+}
