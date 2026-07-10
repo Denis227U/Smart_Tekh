@@ -1,0 +1,6 @@
+.list {
+  @include reset-list;
+
+  display: flex;
+  gap: 6px;
+}
