@@ -1,0 +1,37 @@
+.header {
+  .mainRow {
+    height: var(--height-header-top);
+    display: grid;
+    grid-template-columns: var(--width-catalog) 1fr auto;
+    column-gap: 20px;
+    align-items: center;
+
+    @include tablet {
+      grid-template-columns: var(--width-catalog) auto;
+    }
+  }
+
+  .actions {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    color: var(--color-gray-10);
+    gap: 20px;
+  }
+
+  .subRowWrp {
+    background-color: var(--color-blue-10);
+
+    @include tablet {
+      display: none;
+    }
+  }
+
+  .subRow {
+    height: var(--height-header-bottom);
+    display: grid;
+    grid-template-columns: var(--width-catalog) 1fr;
+    align-items: center;
+    column-gap: fluid-to-laptop(24, 16);
+  }
+}
