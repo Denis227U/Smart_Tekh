@@ -1,4 +1,5 @@
 import { Exo_2 } from 'next/font/google';
+import { Providers } from '@/src/app/providers';
 import type { Metadata } from 'next';
 import '@/src/app/styles/globals.scss';
 import '@/src/app/styles/utils.scss';
@@ -24,7 +25,9 @@ export default function RootLayout({
       lang='ru'
       className={`${exo2.className}`}
     >
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
