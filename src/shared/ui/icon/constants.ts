@@ -1,3 +1,4 @@
+import Catalog from './icons/catalog.svg';
 import EyeOff from './icons/eye-off.svg';
 import Eye from './icons/eye.svg';
 import Lock from './icons/lock.svg';
@@ -10,4 +11,5 @@ export const Icons = {
   Lock,
   Register,
   Profile,
+  Catalog,
 };

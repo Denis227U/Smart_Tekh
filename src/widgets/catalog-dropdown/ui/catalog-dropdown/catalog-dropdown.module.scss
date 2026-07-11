@@ -1,0 +1,30 @@
+.container {
+  --height-catalog-container: calc(524px + 10px * 2);
+  z-index: var(--overlay-dropdown);
+  width: 100%;
+
+  .list {
+    max-height: var(--height-catalog-container);
+    overflow-y: auto;
+    background-color: var(--color-blue-70);
+    padding-block: 8px;
+    border-bottom-left-radius: var(--border-radius-m);
+    border-bottom-right-radius: var(--border-radius-m);
+
+    @include bp-down(1340px) {
+      max-height: clamp(
+        396px,
+        calc(100vw * (150 / 317) - (28552px / 317)),
+        544px
+      );
+    }
+  }
+
+  .item {
+    padding-inline: 10px;
+  }
+
+  .link {
+    width: 100%;
+  }
+}

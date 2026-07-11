@@ -8,11 +8,13 @@ export function useDropdown({
   defaultOpen = false,
   onOpenChange,
   closeOnClickOutside = true,
+  closeOnEscape = true,
 }: {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   closeOnClickOutside?: boolean;
+  closeOnEscape?: boolean;
 } = {}) {
   const isControlled = controlledOpen !== undefined;
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
@@ -99,19 +101,21 @@ export function useDropdown({
         }
       }
 
-      if (e.key === 'Escape' && isOpen) {
+      if (e.key === 'Escape' && isOpen && closeOnEscape) {
         setOpen(false);
       }
     },
-    [isOpen, setOpen],
+    [isOpen, setOpen, closeOnEscape],
   );
 
   // Keyboard navigation within the list
   const handleListKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLUListElement>) => {
       if (e.key === 'Escape') {
-        setOpen(false);
-        previousActiveElement.current?.focus();
+        if (closeOnEscape) {
+          setOpen(false);
+          previousActiveElement.current?.focus();
+        }
         return;
       }
 
@@ -139,7 +143,7 @@ export function useDropdown({
         items[nextIndex].focus();
       }
     },
-    [setOpen],
+    [setOpen, closeOnEscape],
   );
 
   const triggerAria = {

@@ -12,7 +12,10 @@ export type DropdownProps = {
   onOpenChange?: (open: boolean) => void;
   containerClassName?: string;
   listClassName?: string;
+  /** Default is true */
   closeOnClickOutside?: boolean;
+  /** Default is true */
+  closeOnEscape?: boolean;
   /** Horizontal alignment of the container */
   align?: 'left' | 'right';
   /** Horizontal alignment of the item content */

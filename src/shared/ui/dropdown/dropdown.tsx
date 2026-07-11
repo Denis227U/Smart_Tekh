@@ -16,6 +16,7 @@ export const Dropdown = ({
   containerClassName,
   listClassName,
   closeOnClickOutside = true,
+  closeOnEscape = true,
   align = 'left',
   itemAlign = 'left',
   usePortal = false,
@@ -33,6 +34,7 @@ export const Dropdown = ({
     defaultOpen,
     onOpenChange,
     closeOnClickOutside,
+    closeOnEscape,
   });
 
   let renderedTrigger: ReactNode;

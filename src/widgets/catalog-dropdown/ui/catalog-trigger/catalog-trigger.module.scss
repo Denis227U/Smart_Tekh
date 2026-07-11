@@ -1,0 +1,24 @@
+.trigger {
+  padding-inline: 20px;
+  width: 100%;
+  height: var(--height-header-bottom);
+  justify-content: start;
+  gap: 14px;
+  background-color: var(--color-blue-10);
+  color: var(--color-white);
+  border-radius: initial;
+  font-weight: 500;
+
+  &[data-active='true'] {
+    background-color: var(--color-blue-20);
+
+    // svg * {
+    //   color: var(--color-white);
+    // }
+  }
+
+  @include hover {
+    background-color: var(--color-blue-20);
+    color: var(--color-white);
+  }
+}

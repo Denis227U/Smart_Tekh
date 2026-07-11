@@ -1,10 +1,11 @@
 import { PropsWithChildren } from 'react';
+import { CatalogDropdown } from '@/src/widgets/catalog-dropdown';
 import { Header } from '@/src/widgets/header';
 
 export const MainLayout = ({ children }: PropsWithChildren) => {
   return (
     <>
-      <Header />
+      <Header catalog={<CatalogDropdown />} />
 
       <main>{children}</main>
 
