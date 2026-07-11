@@ -2,7 +2,6 @@
   @include reset-button;
 
   display: inline-flex;
-  justify-content: center;
   align-items: center;
   column-gap: 0.3em;
   height: var(--size-button);
@@ -32,5 +31,18 @@
       color: var(--color-white);
       background-color: var(--color-blue-20);
     }
+  }
+
+  // Horizontal alignment
+  &[data-align='center'] {
+    justify-content: center;
+  }
+
+  &[data-align='left'] {
+    justify-content: flex-start;
+  }
+
+  &[data-align='right'] {
+    justify-content: flex-end;
   }
 }

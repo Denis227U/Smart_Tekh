@@ -1,23 +1,32 @@
 'use client';
 
 import { signOut } from 'next-auth/react';
-import { Button } from '@/src/shared/ui/client';
+import { Button, type ButtonProps } from '@/src/shared/ui/client';
+
+type SignOutButtonProps = Pick<
+  ButtonProps,
+  'className' | 'variant' | 'align' | 'onClick'
+> & {
+  callbackUrl?: string;
+};
 
 export const SignOutButton = ({
   callbackUrl = '/',
-  className,
-}: {
-  callbackUrl?: string;
-  className?: string;
-}) => {
-  const handleSignOut = async () => {
+  onClick,
+  ...rest
+}: SignOutButtonProps) => {
+  const handleSignOut = async (e: React.MouseEvent<HTMLElement>) => {
+    if (onClick) {
+      onClick(e);
+    }
+
     await signOut({ callbackUrl });
   };
 
   return (
     <Button
       onClick={handleSignOut}
-      className={className}
+      {...rest}
     >
       Выйти
     </Button>

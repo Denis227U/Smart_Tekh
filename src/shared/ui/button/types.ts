@@ -5,6 +5,8 @@ type BaseProps = {
   variant?: 'main-dark';
   className?: string;
   icon?: ReactNode;
+  align?: 'left' | 'center' | 'right';
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 };
 
 type ButtonAsLinkProps = BaseProps &

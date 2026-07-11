@@ -6,14 +6,17 @@ import type { ButtonAsButtonProps, ButtonProps } from './types';
 import s from './button.module.scss';
 
 export const Button = (props: ButtonProps) => {
+  const { align = 'center' } = props;
+
   const commonProps = {
     className: cn(s.button, props.className),
     'data-variant': props.variant,
+    'data-align': align,
   };
 
   // render Next.js Link
   if ('href' in props && props.href !== undefined) {
-    const { href, children, icon, ...rest } = props;
+    const { href, children, icon, align: _, ...rest } = props;
     return (
       <Link
         href={href}
@@ -27,7 +30,13 @@ export const Button = (props: ButtonProps) => {
   }
 
   // render button
-  const { children, icon, onClick, ...rest } = props as ButtonAsButtonProps;
+  const {
+    children,
+    icon,
+    onClick,
+    align: _,
+    ...rest
+  } = props as ButtonAsButtonProps;
 
   return (
     <button
