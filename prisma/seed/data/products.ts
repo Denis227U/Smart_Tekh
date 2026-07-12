@@ -1,10 +1,13 @@
 import { Prisma } from '@/src/shared/api/prisma/generated/client';
 
-type ProductSeedData = Prisma.ProductCreateInput;
+type ProductSeedData = Omit<Prisma.ProductCreateInput, 'category'> & {
+  categorySlug: string;
+};
 
 export const products: ProductSeedData[] = [
   {
     title: 'Наушники блютуз беспроводные большие с микрофоном\t',
+    categorySlug: 'aksessuary',
     description: 'Музыкальная полноразмерная аудиотехника tws от нашего бренда',
     price: 1410,
     rating: 4.4,
@@ -13,6 +16,7 @@ export const products: ProductSeedData[] = [
   },
   {
     title: 'Гироскутер/ гироскутер детский',
+    categorySlug: 'giroskuteri',
     description: 'Новинка 2026 года',
     price: 8280,
     rating: 4.2,
