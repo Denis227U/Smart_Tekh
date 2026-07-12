@@ -1,1 +1,1 @@
-export { CatalogDropdown } from './ui/catalog-dropdown/catalog-dropdown';
+export { CatalogDropdown } from './ui/catalog-dropdown';

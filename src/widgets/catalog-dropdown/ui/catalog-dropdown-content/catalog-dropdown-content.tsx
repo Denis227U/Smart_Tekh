@@ -1,14 +1,22 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { CategoryItem, CATEGORIES_MOCK } from '@/src/entities/category';
+import { CategoryItem, type CategoryDto } from '@/src/entities/category';
 import { Dropdown, DropdownItem } from '@/src/shared/ui/client';
 import { CatalogTrigger } from '../catalog-trigger/catalog-trigger';
-import s from './catalog-dropdown.module.scss';
+import s from './catalog-dropdown-content.module.scss';
 
-export const CatalogDropdown = () => {
+export const CatalogDropdownContent = ({
+  categories,
+}: {
+  categories: CategoryDto[];
+}) => {
   const pathname = usePathname();
   const isHome = pathname === '/';
+
+  const sortedCategories = categories.toSorted(
+    (a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0),
+  );
 
   return (
     <nav key={isHome ? 'home->open' : 'other->close'}>
@@ -20,7 +28,7 @@ export const CatalogDropdown = () => {
         closeOnClickOutside={false}
         closeOnEscape={false}
       >
-        {CATEGORIES_MOCK.map((category) => (
+        {sortedCategories.map((category) => (
           <DropdownItem
             key={category.slug}
             className={s.item}
