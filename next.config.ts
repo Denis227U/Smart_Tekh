@@ -15,6 +15,17 @@ const nextConfig: NextConfig = {
     `,
   },
 
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '9020',
+        pathname: '/multimedia/**',
+      },
+    ],
+  },
+
   // Configuration for Turbopack (dev mode)
   turbopack: {
     root: path.join(__dirname),

@@ -1,4 +1,23 @@
 services:
+  minio:
+    image: minio/minio
+    container_name: minio_smart_tekhnika
+    restart: unless-stopped
+    ports:
+      - '9020:9000' # API (for file uploading)
+      - '9021:9001' # Web Console
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-admin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-password123}
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ['CMD', 'mc', 'ready', 'local']
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
   db:
     image: postgres:15
     container_name: postgres_smart_tekhnika
@@ -20,4 +39,5 @@ services:
       start_period: 10s
 
 volumes:
+  minio_data:
   postgres_data:
