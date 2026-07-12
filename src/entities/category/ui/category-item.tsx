@@ -1,15 +1,24 @@
+'use client';
+
 import Image from 'next/image';
+import { useState } from 'react';
+import { getAssetUrl } from '@/src/shared/lib';
 import { Button } from '@/src/shared/ui/client';
-import { CategoryMock } from '../model/constants';
+import defaultIcon from '../assets/not-icon.png';
+import type { CategoryDto } from '../model/types';
 
 export const CategoryItem = ({
   category,
   className,
 }: {
-  category: CategoryMock;
+  category: CategoryDto;
   className?: string;
 }) => {
   const href = '/#';
+
+  const [imgSrc, setImgSrc] = useState(
+    category.icon ? getAssetUrl(category.icon) : defaultIcon,
+  );
 
   return (
     <Button
@@ -17,13 +26,15 @@ export const CategoryItem = ({
       className={className}
     >
       <Image
-        src={category.imageSrc}
+        src={imgSrc}
         alt=''
         width={32}
         height={32}
+        onError={() => setImgSrc(defaultIcon)}
+        preload
       />
 
-      <span>{category.label}</span>
+      <span>{category.name}</span>
     </Button>
   );
 };
