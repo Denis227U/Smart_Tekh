@@ -1,0 +1,148 @@
+.mobilePanel {
+  --panel-size: 64px;
+  --panel-color: #bfcbd6;
+  --panel-layer: 999;
+  --panel-backdrop-bg: color-mix(
+    in srgb,
+    var(--color-blue-40) 60%,
+    transparent 40%
+  );
+
+  @include tablet-above {
+    display: none !important;
+  }
+}
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: var(--panel-size);
+  background-color: var(--color-blue-40);
+  transform: translate(0, 0);
+  transition: transform 0.3s ease-in-out;
+  z-index: calc(var(--panel-layer) + 1);
+
+  &.navHidden {
+    transform: translate(0, 100%);
+  }
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: clamp(0px, calc(100vw * (5 / 33) - (1600px / 33)), 50px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.item {
+  display: flex;
+}
+
+.button {
+  @include square(var(--panel-size));
+
+  color: var(--panel-color);
+  flex-direction: column;
+  justify-content: space-between;
+  padding-block: 10px;
+  padding-inline: 0;
+  font-weight: normal;
+  font-size: 14px;
+
+  &[data-active='trigger'] {
+    color: var(--color-white);
+  }
+  &[data-active='link'] {
+    color: var(--color-gray-10);
+    pointer-events: none;
+  }
+
+  @include hover {
+    color: var(--color-white);
+  }
+
+  span {
+    line-height: 1;
+  }
+}
+
+// backdrop
+.modalBackdrop {
+  background-color: var(--panel-backdrop-bg);
+  z-index: calc(var(--panel-layer) - 1);
+  position: fixed;
+  inset: 0 0 var(--panel-size);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s ease-out,
+    visibility 0.2s ease-out;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+// dialog
+.modal {
+  position: fixed;
+  z-index: var(--panel-layer);
+  bottom: var(--panel-size);
+  overflow-y: auto;
+  border: none;
+  padding: 50px;
+  width: calc(100vw - 40px);
+  max-width: 600px;
+  max-height: calc(95vh - var(--panel-size));
+  height: 100%;
+  border-radius: var(--border-radius-m) var(--border-radius-m) 0 0;
+  background-color: var(--color-blue-70);
+  margin: 0 auto;
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+
+  @media (max-width: 480px) {
+    padding: 20px;
+  }
+
+  &::backdrop {
+    display: none;
+  }
+
+  &.active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  &Close {
+    @include reset-button;
+
+    font-family: var(--font-family-times-symbol);
+    color: var(--color-red);
+    font-size: 22px;
+  }
+
+  &Content {
+    display: none;
+    flex-direction: column;
+    row-gap: 20px;
+
+    &.active {
+      display: flex;
+    }
+  }
+}

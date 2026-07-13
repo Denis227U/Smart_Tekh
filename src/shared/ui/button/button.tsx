@@ -16,10 +16,11 @@ export const Button = (props: ButtonProps) => {
 
   // render Next.js Link
   if ('href' in props && props.href !== undefined) {
-    const { href, children, icon, align: _, ...rest } = props;
+    const { href, children, icon, align: _, ref, ...rest } = props;
     return (
       <Link
         href={href}
+        ref={ref}
         {...rest}
         {...commonProps}
       >
@@ -35,12 +36,14 @@ export const Button = (props: ButtonProps) => {
     icon,
     onClick,
     align: _,
+    ref,
     ...rest
   } = props as ButtonAsButtonProps;
 
   return (
     <button
       onClick={onClick}
+      ref={ref}
       {...rest}
       {...commonProps}
     >

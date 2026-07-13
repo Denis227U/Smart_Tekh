@@ -5,18 +5,23 @@ import { Logo } from '@/src/shared/ui/common';
 import { AuthStatus } from '../auth-status/auth-status';
 import { Contacts } from '../contacts/contacts';
 import { HeaderLayout } from '../header-layout/header-layout';
+import { MobilePanel } from '../mobile-panel/mobile-panel';
 import { UserActions } from '../user-actions/user-actions';
 
 export const Header = async ({ catalog }: { catalog: React.ReactNode }) => {
   return (
-    <HeaderLayout
-      logo={<Logo loading='eager' />}
-      contacts={<Contacts />}
-      search={<SearchTrigger />}
-      userActions={<UserActions />}
-      catalog={catalog}
-      infoMenu={<InfoMenu items={NAVIGATION_ITEMS} />}
-      authStatus={<AuthStatus />}
-    />
+    <>
+      <HeaderLayout
+        logo={<Logo loading='eager' />}
+        contacts={<Contacts />}
+        search={<SearchTrigger />}
+        userActions={<UserActions />}
+        catalog={catalog}
+        infoMenu={<InfoMenu items={NAVIGATION_ITEMS} />}
+        authStatus={<AuthStatus />}
+      />
+
+      <MobilePanel />
+    </>
   );
 };

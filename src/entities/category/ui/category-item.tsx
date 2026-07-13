@@ -3,17 +3,19 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { getAssetUrl } from '@/src/shared/lib';
-import { Button } from '@/src/shared/ui/client';
+import { Button, type ButtonProps } from '@/src/shared/ui/client';
 import defaultIcon from '../assets/not-icon.png';
 import type { CategoryDto } from '../model/types';
+
+type CategoryItemProps = Pick<ButtonProps, 'className' | 'align'> & {
+  category: CategoryDto;
+};
 
 export const CategoryItem = ({
   category,
   className,
-}: {
-  category: CategoryDto;
-  className?: string;
-}) => {
+  align,
+}: CategoryItemProps) => {
   const href = '/#';
 
   const [imgSrc, setImgSrc] = useState(
@@ -24,6 +26,7 @@ export const CategoryItem = ({
     <Button
       href={href}
       className={className}
+      align={align}
     >
       <Image
         src={imgSrc}

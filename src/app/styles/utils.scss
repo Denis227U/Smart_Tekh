@@ -25,3 +25,8 @@
     display: none !important;
   }
 }
+
+.is-lock {
+  overflow: hidden !important;
+  touch-action: none;
+}
