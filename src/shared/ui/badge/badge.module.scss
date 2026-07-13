@@ -1,0 +1,24 @@
+.badge {
+  position: relative;
+
+  .counter {
+    display: none;
+  }
+
+  &[data-active] {
+    .counter {
+      @include flex-center;
+
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 20px;
+      padding-inline: 4px;
+      min-width: 20px;
+      background-color: var(--color-blue-40);
+      border-radius: 50%;
+      color: var(--color-white);
+      font-size: 14px;
+    }
+  }
+}
