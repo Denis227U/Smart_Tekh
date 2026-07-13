@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { getFocusableChild } from '@/src/shared/lib/client';
+import { getFocusableChildren } from '@/src/shared/lib/client';
 
 export function useDropdown({
   open: controlledOpen,
@@ -64,7 +64,7 @@ export function useDropdown({
           const firstItem =
             listRef.current?.querySelector<HTMLElement>('[role="option"]');
           if (firstItem) {
-            const focusTarget = getFocusableChild(firstItem) ?? firstItem;
+            const focusTarget = getFocusableChildren(firstItem)[0];
             focusTarget.focus();
           }
         });

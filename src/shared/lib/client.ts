@@ -1,1 +1,1 @@
-export { getFocusableChild } from './client/get-focusable-child';
+export { getFocusableChildren } from './client/get-focusable-children';
