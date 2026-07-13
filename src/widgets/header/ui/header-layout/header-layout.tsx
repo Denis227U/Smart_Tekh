@@ -5,6 +5,7 @@ import s from './header-layout.module.scss';
 export const HeaderLayout = ({
   logo,
   contacts,
+  search,
   userActions,
   catalog,
   infoMenu,
@@ -12,6 +13,7 @@ export const HeaderLayout = ({
 }: {
   logo: ReactNode;
   contacts: ReactNode;
+  search: ReactNode;
   userActions: ReactNode;
   catalog: ReactNode;
   infoMenu: ReactNode;
@@ -24,6 +26,7 @@ export const HeaderLayout = ({
         {contacts}
 
         <div className={s.actions}>
+          <div className={s.searchWrapper}>{search}</div>
           {userActions}
           {authStatus}
         </div>

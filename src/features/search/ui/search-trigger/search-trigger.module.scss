@@ -1,0 +1,20 @@
+.trigger {
+  @include flex-center;
+
+  color: var(--color-gray-10);
+  height: var(--size-button);
+  gap: 10px;
+  border-bottom: var(--border-width-m) solid var(--color-gray-40);
+
+  &:not(:last-child) {
+    margin-right: 8px;
+  }
+
+  @include hover {
+    border-color: var(--color-blue-40);
+  }
+
+  // @include tablet {
+  //   display: none;
+  // }
+}

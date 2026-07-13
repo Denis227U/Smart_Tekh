@@ -16,7 +16,12 @@
     display: flex;
     align-items: center;
     color: var(--color-gray-10);
-    gap: 20px;
+  }
+
+  .searchWrapper {
+    @include tablet {
+      display: none;
+    }
   }
 
   .subRowWrp {
