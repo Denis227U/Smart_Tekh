@@ -2,6 +2,18 @@
   &:not(:last-child) {
     margin-right: 20px;
   }
+
+  &[data-variant='desctop'] {
+    @include mobile {
+      display: none;
+    }
+  }
+
+  &[data-variant='mobile'] {
+    @include mobile-above {
+      display: none;
+    }
+  }
 }
 
 .list {

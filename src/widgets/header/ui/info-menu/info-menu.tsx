@@ -5,12 +5,22 @@ import { usePathname } from 'next/navigation';
 import type { BaseMenuItem } from '../../model/types';
 import s from './info-menu.module.scss';
 
-export const InfoMenu = ({ items }: { items: BaseMenuItem[] }) => {
+export const InfoMenu = ({
+  items,
+  variant = 'horizontal',
+  device = 'desktop',
+}: {
+  items: BaseMenuItem[];
+  variant?: 'horizontal' | 'vertical';
+  device?: 'desktop' | 'mobile';
+}) => {
   const pathname = usePathname();
 
   return (
     <nav
       className={s.menu}
+      data-variant={variant}
+      data-device={device}
       aria-label='Меню с информацией для клиентов'
     >
       <ul className={s.list}>

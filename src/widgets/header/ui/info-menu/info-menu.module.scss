@@ -1,6 +1,45 @@
+.menu {
+  display: flex;
+
+  &[data-variant='horizontal'] {
+    .list {
+      flex-direction: row;
+    }
+  }
+  &[data-variant='vertical'] {
+    .list {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  &[data-device='mobile'] {
+    .list {
+      @include tablet {
+        gap: 0;
+      }
+    }
+
+    .item {
+      width: 100%;
+      border-bottom: 1px solid var(--color-black); // Линия на всех разрешениях
+      padding-bottom: 15px;
+      padding-top: 15px;
+    }
+
+    .link {
+      @include tablet {
+        color: var(--color-black);
+        font-size: 18px;
+      }
+    }
+  }
+}
+
 .list {
   @include reset-list;
 
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -2,7 +2,11 @@ import { cn } from '@/src/shared/lib';
 import { Badge, Icon } from '@/src/shared/ui/common';
 import s from './user-actions.module.scss';
 
-export const UserActions = () => {
+export const UserActions = ({
+  variant = 'desctop',
+}: {
+  variant?: 'desctop' | 'mobile';
+}) => {
   // TODO: Mock data
   const cart = 2;
   const fav = 1;
@@ -12,6 +16,7 @@ export const UserActions = () => {
   return (
     <nav
       className={s.actions}
+      data-variant={variant}
       aria-label='Меню пользователя'
     >
       <ul className={s.list}>
