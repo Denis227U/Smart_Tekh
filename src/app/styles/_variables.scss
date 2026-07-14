@@ -46,4 +46,9 @@
 
   --size-button: 48px;
   --size-field: var(--size-button);
+
+  --height-header-top: 80px;
+  --height-header-bottom: 60px;
+
+  --width-catalog: #{fluid(310, 124)};
 }

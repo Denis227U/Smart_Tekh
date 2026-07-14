@@ -1,0 +1,9 @@
+.text {
+  color: var(--color-gray-10);
+}
+
+.onlyDesktop {
+  @include tablet {
+    display: none;
+  }
+}

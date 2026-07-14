@@ -8,6 +8,9 @@ model Product {
 
   coverImage String? @map("cover_image")
 
+  categoryId String   @map("category_id")
+  category   Category @relation(fields: [categoryId], references: [id])
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 

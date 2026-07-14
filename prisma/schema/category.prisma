@@ -1,0 +1,17 @@
+model Category {
+  id String @id @default(cuid(2))
+
+  name String  @unique(map: "categories_name_key")
+  slug String  @unique(map: "categories_slug_key")
+  icon String?
+
+  sortOrder Int     @default(0) @map("sort_order")
+  isActive  Boolean @default(true) @map("is_active")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  products Product[]
+
+  @@map("categories")
+}

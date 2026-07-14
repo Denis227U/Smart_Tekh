@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
+import { MainLayout } from '@/src/app/layouts';
 
-export default function MainLayout({
+export default function MainGroupLayout({
   children,
   modal,
 }: Readonly<{
@@ -8,9 +9,9 @@ export default function MainLayout({
   modal: ReactNode;
 }>) {
   return (
-    <div>
+    <MainLayout>
       {children}
       {modal}
-    </div>
+    </MainLayout>
   );
 }

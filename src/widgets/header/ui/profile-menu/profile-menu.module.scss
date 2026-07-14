@@ -1,0 +1,58 @@
+.container {
+  --offset-profile-menu: calc(
+    (var(--height-header-top) - var(--size-button)) / 2 + var(--size-button)
+  );
+
+  .list {
+    top: var(--offset-profile-menu);
+    padding: 0;
+    min-width: 230px;
+    border: none;
+    background-color: var(--color-white);
+    border-bottom-left-radius: var(--border-radius-m);
+    border-bottom-right-radius: var(--border-radius-m);
+    border-top: none;
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  .trigger {
+    &.is-active {
+      color: var(--color-blue-40);
+    }
+
+    @include hover {
+      color: var(--color-blue-40);
+    }
+  }
+
+  .link,
+  .signout {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    height: 54px;
+    padding: 3px 20px;
+    color: var(--color-black);
+    font-weight: 500;
+    font-size: 16px;
+
+    @include hover {
+      color: var(--color-blue-40);
+    }
+  }
+
+  .signout {
+    color: var(--color-red);
+    background-color: #ffe5e5;
+
+    border-end-start-radius: var(--border-radius-m);
+    border-end-end-radius: var(--border-radius-m);
+
+    @include hover {
+      color: color-mix(in srgb, var(--color-red), red 60%);
+      background-color: color-mix(in srgb, #ffe5e5, red 4%);
+    }
+  }
+}

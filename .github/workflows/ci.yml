@@ -54,3 +54,6 @@ jobs:
           AUTH_GITHUB_SECRET: ${{ secrets.AUTH_GITHUB_SECRET }}
           AUTH_YANDEX_ID: ${{ secrets.AUTH_YANDEX_ID }}
           AUTH_YANDEX_SECRET: ${{ secrets.AUTH_YANDEX_SECRET }}
+          MINIO_ROOT_USER: ${{ secrets.MINIO_ROOT_USER }}
+          MINIO_ROOT_PASSWORD: ${{ secrets.MINIO_ROOT_PASSWORD }}
+          NEXT_PUBLIC_ASSETS_BASE_URL: ${{ vars.NEXT_PUBLIC_ASSETS_BASE_URL }}

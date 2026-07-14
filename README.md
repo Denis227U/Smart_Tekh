@@ -11,6 +11,7 @@
 ### Текущий
 - **Frontend:** Next.js 16 (App Router + cacheComponents), TypeScript
 - **База данных:** Prisma 7, PostgreSQL
+- **Хранение файлов:** MinIO (объектное хранилище для статических изображений)
 - **Аутентификация:** NextAuth v5 (Credentials, Google and Yandex OAuth), Middleware-защита роутов
 - **Валидация:** Zod (клиент + сервер)
 - **UI:** Базовые компоненты в shared/ui (Button, Loader, Icon, Container, Modal, Heading, Field, и др.)
@@ -20,19 +21,20 @@
 ### В планах
 - **Управление состоянием:** Zustand 5 + persist
 - **Backend-логика:** Next.js Server Actions
-- **Хранение файлов:** MinIO
 - **Тесты:** Vitest + React Testing Library
 
 ## 🏗 Архитектурная структура (FSD)
 
 ```text
-src/
-├── app/          # Инициализация приложения, глобальные стили, провайдеры (в разработке)
-├── pages/        # Страницы интернет-магазина (в разработке)
-├── widgets/      # Крупные блоки (в разработке)
-├── features/     # Интерактивные действия (аутентификация)
-├── entities/     # Бизнес-сущности (в разработке)
-└── shared/       # Переиспользуемые UI-компоненты, хуки, API-клиенты, scss-миксины
+.
+├── app/              # Роутинг Next.js (App Router: layout, page, api)
+└── src/              # Исходный FSD код
+    ├── app/          # Инициализация приложения, глобальные стили, scss-миксины, провайдеры (SessionProvider), MainLayout
+    ├── pages/        # Страницы интернет-магазина (auth)
+    ├── widgets/      # Крупные блоки (Header, CatalogDropdown, MobilePanel)
+    ├── features/     # Интерактивные действия (аутентификация)
+    ├── entities/     # Бизнес-сущности (category, contact, user)
+    └── shared/       # Переиспользуемые UI-компоненты, хуки, API-клиенты
 ```
 
 ## 💻 Локальный запуск
@@ -50,8 +52,9 @@ npm install
 ```
 
 ### 3. Запуск базы данных (Docker Compose)
+Запуск базы данных PostgreSQL и объектного хранилища MinIO:
 ```bash
-docker compose up -d db
+docker compose up -d
 ```
 
 ### 4. Настройка переменных окружения
@@ -64,9 +67,10 @@ DATABASE_URL="postgresql://myuser:mypassword@localhost:5434/mydb?schema=public"
 
 ### 5. Миграции базы данных (Prisma 7) и наполнение тестовыми данными
 ```bash
-# для наката миграций из prisma\migrations
+# Накат миграций из prisma/migrations и генерация Prisma Client
 npx prisma migrate dev
 
+# Сидирование базы данных
 npx prisma db seed
 ```
 
@@ -85,9 +89,9 @@ npm run dev
 Ниже — запланированные ключевые шаги.
 
 - [ ] **Основной пользовательский флоу** — каталог с фильтрами, страница товара, поиск, корзина, оформление заказа
-- [ ] **Серверная логика** — переход на Server Actions для мутаций данных
+- [ ] **Серверная логика** — использование Server Actions для мутаций данных
 - [ ] **Расширенная аутентификация** — двухфакторная, восстановление пароля
 - [ ] **Локальная корзина** — Zustand 5 + persist для неавторизованных пользователей
 - [ ] **Синхронизация корзины** — объединение локальной и серверной корзины при авторизации, сохранение в БД через Server Actions
-- [ ] **Хранение файлов** — интеграция MinIO для изображений товаров
+- [ ] **Интеграция S3 API** — настройка программной загрузки изображений из Next.js в MinIO через SDK
 - [ ] **Тесты** — unit/integration (Vitest + React Testing Library)
