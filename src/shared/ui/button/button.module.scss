@@ -33,6 +33,41 @@
     }
   }
 
+  &[data-variant='main'] {
+    color: var(--color-white);
+    background-color: var(--color-blue-50);
+
+    @include hover {
+      color: var(--color-white);
+      background-color: var(--color-hover);
+    }
+
+    &:disabled {
+      background-color: var(--color-gray-10);
+      pointer-events: none;
+    }
+  }
+
+  &[data-variant='outline'] {
+    color: var(--color-blue-50);
+    border: var(--border-width-s) solid var(--color-blue-50);
+
+    @include hover {
+      color: var(--color-blue-40);
+      border: var(--border-width-s) solid var(--color-blue-40);
+    }
+  }
+
+  &[data-variant='outline-gray'] {
+    color: var(--color-gray-30);
+    border: var(--border-width-s) solid var(--color-gray-30);
+
+    @include hover {
+      color: var(--color-gray-10);
+      border: var(--border-width-s) solid var(--color-gray-10);
+    }
+  }
+
   // Horizontal alignment
   &[data-align='center'] {
     justify-content: center;
