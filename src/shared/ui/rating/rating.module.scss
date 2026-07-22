@@ -1,0 +1,14 @@
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  .star {
+    fill: var(--color-gray-30);
+    flex-shrink: 0;
+
+    &.full {
+      fill: var(--color-orange-40);
+    }
+  }
+}

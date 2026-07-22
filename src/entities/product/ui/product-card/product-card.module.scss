@@ -1,0 +1,134 @@
+.card {
+  --card-shadow: 0 15px 20px 0 rgba(42, 82, 117, 0.1);
+
+  position: relative;
+  padding: 20px;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr repeat(3, auto);
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    'header header'
+    'review review'
+    'prices actions'
+    'footer footer';
+  align-items: center;
+  row-gap: 20px;
+  column-gap: 10px;
+  border: var(--border);
+  transition: box-shadow var(--transition-duration) ease-in;
+
+  @include hover {
+    box-shadow: var(--card-shadow);
+  }
+
+  @include mobile {
+    max-width: 400px;
+    margin-inline: auto;
+  }
+
+  .header {
+    grid-area: header;
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .imageLink {
+    position: relative;
+    height: 220px;
+    display: flex;
+  }
+
+  .image {
+    height: 220px;
+    object-fit: contain;
+    margin-inline: auto;
+  }
+
+  .subtitle {
+    font-weight: 500;
+    color: var(--color-gray-10);
+  }
+
+  .titleLink {
+    text-decoration: none;
+
+    @include hover {
+      color: var(--color-blue-40);
+    }
+  }
+
+  .title {
+    font-weight: 500;
+
+    @include hover {
+      color: var(--color-blue-40);
+    }
+  }
+
+  .reviewBlock {
+    grid-area: review;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .priceBlock {
+    grid-area: prices;
+    align-self: end;
+    display: flex;
+    flex-direction: column;
+
+    &:has(> *:only-child) {
+      margin-top: 5px;
+    }
+  }
+
+  .priceOld::after,
+  .priceCurrent::after {
+    content: var(--price-currency);
+  }
+
+  .priceOld {
+    font-weight: 700;
+    color: var(--color-gray-10);
+    text-decoration: line-through;
+  }
+
+  .priceCurrent {
+    font-weight: 700;
+    font-size: 24px;
+  }
+
+  .actions {
+    grid-area: actions;
+    align-self: end;
+    justify-self: end;
+    display: flex;
+    column-gap: 10px;
+  }
+
+  .footer {
+    grid-area: footer;
+    width: 100%;
+  }
+
+  .footerActions {
+    display: flex;
+    column-gap: 10px;
+
+    > *:first-child {
+      flex-grow: 1;
+    }
+  }
+
+  .noStock {
+    height: var(--size-button);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-gray-10);
+  }
+}

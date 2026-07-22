@@ -4,3 +4,4 @@ export * from './field';
 export * from './field-reveal';
 export * from './field-checkbox';
 export * from './dropdown';
+export * from './safe-image';
