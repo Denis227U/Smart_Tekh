@@ -1,4 +1,5 @@
 import { PageHeader } from '@/src/widgets/page-header';
+import { ProductCatalog } from '@/src/widgets/product-catalog';
 import { Container } from '@/src/shared/ui/common';
 import s from './catalog-page.module.scss';
 
@@ -18,7 +19,9 @@ export const CatalogPage = ({
           <div className={s.content}>
             <div className={s.topPanel}>TOP PANEL</div>
 
-            <div className={s.grid}>PRODUCT GRID</div>
+            <div className={s.grid}>
+              <ProductCatalog />
+            </div>
 
             <div className={s.pagination}>PAGINATION</div>
           </div>
