@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import { Pool } from 'pg';
 import { Prisma, PrismaClient } from '@/src/shared/api/prisma/generated/client';
 import { ASSET_PATHS } from '@/src/shared/config';
-import { getAssetUrl } from '@/src/shared/lib';
+import { generateUniqueSlug, getAssetUrl } from '@/src/shared/lib';
 import { categories } from './data/categories';
 import { products } from './data/products';
 import { users } from './data/users';
@@ -24,7 +24,9 @@ async function main() {
       "sessions",
       "users",
       "categories",
-      "products"
+      "products",
+      "product_images",
+      "product_characteristics"
     RESTART IDENTITY CASCADE;
   `;
 
@@ -86,6 +88,8 @@ async function main() {
 
   for (const productData of products) {
     const categoryId = categoriesSlugToId[productData.categorySlug];
+    const productSlug = generateUniqueSlug(productData.title);
+    const coverImageAlt = `Главное фото товара ${productData.title.trim()}`;
 
     if (!categoryId) {
       console.warn(
@@ -94,15 +98,60 @@ async function main() {
       continue;
     }
 
-    const { categorySlug: _, price, rating, ...restProductData } = productData;
+    const {
+      title,
+      description,
+      brand,
+      price,
+      oldPrice,
+      discount,
+      rating,
+      stock,
+      views,
+      coverImage,
+      coverThumbnail,
+      images,
+      characteristics,
+    } = productData;
+
+    const imagesWithAlt = images.map((image, index) => ({
+      url: image.url,
+      thumbnail: image.thumbnail || null,
+      priority: image.priority || index,
+      alt: `Фото ${index + 1} товара ${title.trim()}`,
+    }));
 
     await prisma.product.create({
       data: {
-        ...restProductData,
-        price: new Prisma.Decimal(Number(price)),
-        rating: rating ? new Prisma.Decimal(Number(rating)) : undefined,
-        category: {
-          connect: { id: categoryId },
+        title: title.trim(),
+        description: description || null,
+        slug: productSlug,
+        brand: brand,
+
+        price: new Prisma.Decimal(String(price)),
+        oldPrice: oldPrice ? new Prisma.Decimal(String(oldPrice)) : null,
+        discount: discount ? Number(discount) : 0,
+
+        rating: rating ? Number(rating) : 0,
+        stock: stock ? Number(stock) : 0,
+        views: views ? Number(views) : 0,
+
+        coverImage: coverImage || null,
+        coverThumbnail: coverThumbnail || null,
+        coverImageAlt: coverImageAlt,
+
+        categoryId: categoryId,
+
+        characteristics: {
+          create: characteristics.map((char) => ({
+            name: char.name,
+            value: char.value,
+            isSearchable: char.isSearchable ?? false,
+            priority: char.priority ?? 0,
+          })),
+        },
+        images: {
+          create: imagesWithAlt,
         },
       },
     });
