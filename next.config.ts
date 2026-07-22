@@ -23,6 +23,10 @@ const nextConfig: NextConfig = {
         port: '9020',
         pathname: '/multimedia/**',
       },
+      {
+        protocol: 'https',
+        hostname: '**.wbbasket.ru', // Allows any WB subdomains
+      },
     ],
   },
 
