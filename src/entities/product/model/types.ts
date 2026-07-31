@@ -1,4 +1,5 @@
 import { ProductGetPayload } from '@/src/shared/api/prisma/generated/models';
+import { VALID_SORT_VALUES } from './constants';
 
 export type ProductWithCategory = ProductGetPayload<{
   include: {
@@ -23,6 +24,26 @@ export type ProductDto = Omit<
   labels: LabelType[];
 };
 
-export interface ProductsFilters {
+export interface CharacteristicFilter {
+  name: string;
+  values: string[];
+}
+
+export type ProductSort = (typeof VALID_SORT_VALUES)[number];
+
+export interface ProductFilters {
   categorySlug?: string;
+  priceMin?: number;
+  priceMax?: number;
+  characteristics?: CharacteristicFilter[];
+  sort?: ProductSort;
+  page?: number;
+  perPage?: number;
+}
+
+export interface Pagination {
+  page: number;
+  perPage: number;
+  total: number;
+  totalPages: number;
 }
