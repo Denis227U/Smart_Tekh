@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+  margin-inline: auto;
+}
+
+.button {
+  &[data-active] {
+    pointer-events: none;
+  }
+}
+
+.arrow:disabled,
+.button:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.ellipsis {
+  min-width: 2.25rem;
+  text-align: center;
+  color: #6b7280;
+  user-select: none;
+}
