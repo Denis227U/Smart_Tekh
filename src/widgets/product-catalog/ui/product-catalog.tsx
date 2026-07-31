@@ -1,24 +1,32 @@
 import { Suspense } from 'react';
-import type { ProductsFilters } from '@/src/entities/product';
+import type { ProductFilters } from '@/src/entities/product';
 import { getProductsByFilters } from '@/src/entities/product/server';
 import { ProductCatalogContent } from './product-catalog-content/product-catalog-content';
 import { ProductCatalogEmpty } from './product-catalog-empty/product-catalog-empty';
 import { ProductCatalogSkeleton } from './product-catalog-skeleton/product-catalog-skeleton';
 
-const ProductCatalogAsync = async ({ categorySlug }: ProductsFilters) => {
-  const data = await getProductsByFilters({
+const ProductCatalogAsync = async ({
+  categorySlug,
+  priceMin,
+  priceMax,
+  characteristics,
+}: ProductFilters) => {
+  const { products } = await getProductsByFilters({
     categorySlug,
+    priceMin,
+    priceMax,
+    characteristics,
   });
 
-  if (!data.length) return <ProductCatalogEmpty />;
+  if (!products.length) return <ProductCatalogEmpty />;
 
-  return <ProductCatalogContent products={data} />;
+  return <ProductCatalogContent products={products} />;
 };
 
-export const ProductCatalog = ({ categorySlug }: ProductsFilters) => {
+export const ProductCatalog = (props: ProductFilters) => {
   return (
     <Suspense fallback={<ProductCatalogSkeleton />}>
-      <ProductCatalogAsync categorySlug={categorySlug} />
+      <ProductCatalogAsync {...props} />
     </Suspense>
   );
 };

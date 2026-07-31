@@ -1,0 +1,25 @@
+.list {
+  @include reset-list;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-block: 10px;
+
+  .option {
+    display: flex;
+    gap: 5px;
+    font-size: 16px;
+  }
+
+  .count {
+    color: var(--color-gray-10);
+
+    &::before {
+      content: '(';
+    }
+    &::after {
+      content: ')';
+    }
+  }
+}
