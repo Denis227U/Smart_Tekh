@@ -53,7 +53,7 @@ export const CatalogPage = ({
                     fallback={<ProductCatalogSkeleton />}
                   >
                     {({ params: { categorySlug }, searchParams }) => {
-                      const { priceMin, priceMax, characteristics } =
+                      const { page, priceMin, priceMax, characteristics } =
                         searchParams;
 
                       const slug = categorySlug?.[0];
@@ -69,13 +69,12 @@ export const CatalogPage = ({
                               ? JSON.parse(String(characteristics))
                               : undefined
                           }
+                          page={Number(page) || undefined}
                         />
                       );
                     }}
                   </RoutePropsResolver>
                 </div>
-
-                <div className={s.pagination}>PAGINATION</div>
               </div>
             </div>
           </CatalogParamsProvider>

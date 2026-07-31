@@ -10,17 +10,24 @@ const ProductCatalogAsync = async ({
   priceMin,
   priceMax,
   characteristics,
+  page,
 }: ProductFilters) => {
-  const { products } = await getProductsByFilters({
+  const { products, pagination } = await getProductsByFilters({
     categorySlug,
     priceMin,
     priceMax,
     characteristics,
+    page,
   });
 
   if (!products.length) return <ProductCatalogEmpty />;
 
-  return <ProductCatalogContent products={products} />;
+  return (
+    <ProductCatalogContent
+      products={products}
+      totalPages={pagination.totalPages}
+    />
+  );
 };
 
 export const ProductCatalog = (props: ProductFilters) => {
