@@ -3,6 +3,7 @@ import {
   CatalogSidebar,
   CatalogSidebarSkeleton,
 } from '@/src/widgets/catalog-sidebar';
+import { CatalogToolbar } from '@/src/widgets/catalog-toolbar';
 import { PageHeader } from '@/src/widgets/page-header';
 import {
   ProductCatalog,
@@ -44,7 +45,7 @@ export const CatalogPage = ({
               </aside>
 
               <div className={s.content}>
-                <div className={s.topPanel}>TOP PANEL</div>
+                <CatalogToolbar />
 
                 <div className={s.grid}>
                   <RoutePropsResolver
@@ -58,6 +59,11 @@ export const CatalogPage = ({
 
                       const slug = categorySlug?.[0];
 
+                      const validatedSort = getValidatedSort({
+                        categorySlug,
+                        searchParams,
+                      });
+
                       return (
                         <ProductCatalog
                           key={JSON.stringify(searchParams)}
@@ -70,6 +76,7 @@ export const CatalogPage = ({
                               : undefined
                           }
                           page={Number(page) || undefined}
+                          sort={validatedSort}
                         />
                       );
                     }}

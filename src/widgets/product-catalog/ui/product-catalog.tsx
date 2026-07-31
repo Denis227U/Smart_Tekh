@@ -11,6 +11,7 @@ const ProductCatalogAsync = async ({
   priceMax,
   characteristics,
   page,
+  sort,
 }: ProductFilters) => {
   const { products, pagination } = await getProductsByFilters({
     categorySlug,
@@ -18,6 +19,7 @@ const ProductCatalogAsync = async ({
     priceMax,
     characteristics,
     page,
+    sort,
   });
 
   if (!products.length) return <ProductCatalogEmpty />;
