@@ -210,20 +210,24 @@ const PriceRangeInputs = ({
 export const PriceRangeFilter = ({
   title,
   priceRange,
+  showTitle = true,
 }: {
   title: string;
   priceRange: PriceRange;
+  showTitle?: boolean;
 }) => {
   const { filters, setPriceRange } = useCatalogParams();
 
   return (
     <>
-      <Heading
-        tag='h2'
-        variant='h5'
-      >
-        {title}
-      </Heading>
+      {showTitle && (
+        <Heading
+          tag='h2'
+          variant='h5'
+        >
+          {title}
+        </Heading>
+      )}
 
       <PriceRangeInputs
         queryMin={filters.priceMin}

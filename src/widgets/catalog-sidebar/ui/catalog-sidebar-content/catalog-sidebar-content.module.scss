@@ -1,0 +1,22 @@
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.accordionTrigger.accordionTrigger {
+  padding-block: 10px;
+  padding-inline: 20px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--color-blue-70);
+  border-radius: var(--border-radius-xs);
+  font-weight: 600;
+  text-align: left;
+}
+
+.accordionItem {
+  margin-bottom: 20px;
+}

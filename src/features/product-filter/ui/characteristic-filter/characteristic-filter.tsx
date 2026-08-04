@@ -8,9 +8,11 @@ import s from './characteristic-filter.module.scss';
 export const CharacteristicFilter = ({
   title,
   values,
+  showTitle = true,
 }: {
   title: string;
   values: { value: string; count: number }[];
+  showTitle?: boolean;
 }) => {
   const { filters, toggleCharacteristic } = useCatalogParams();
 
@@ -19,12 +21,14 @@ export const CharacteristicFilter = ({
 
   return (
     <div>
-      <Heading
-        tag='h2'
-        variant='h5'
-      >
-        {title}
-      </Heading>
+      {showTitle && (
+        <Heading
+          tag='h2'
+          variant='h5'
+        >
+          {title}
+        </Heading>
+      )}
 
       <ul className={s.list}>
         {values.length > 0
