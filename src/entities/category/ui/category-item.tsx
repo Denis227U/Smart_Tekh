@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { getAssetUrl } from '@/src/shared/lib';
+import { ROUTES } from '@/src/shared/routes';
 import { Button, type ButtonProps } from '@/src/shared/ui/client';
 import defaultIcon from '../assets/not-icon.png';
 import type { CategoryDto } from '../model/types';
@@ -16,7 +17,7 @@ export const CategoryItem = ({
   className,
   align,
 }: CategoryItemProps) => {
-  const href = '/#';
+  const href = ROUTES.CATEGORY(category.slug);
 
   const [imgSrc, setImgSrc] = useState(
     category.icon ? getAssetUrl(category.icon) : defaultIcon,

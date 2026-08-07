@@ -1,6 +1,8 @@
+import ArrowRight from './icons/arrow-right.svg';
 import Cart from './icons/cart.svg';
 import Catalog from './icons/catalog.svg';
 import Chart from './icons/chart.svg';
+import Chat from './icons/chat.svg';
 import EyeOff from './icons/eye-off.svg';
 import Eye from './icons/eye.svg';
 import Home from './icons/home.svg';
@@ -10,6 +12,7 @@ import More from './icons/more.svg';
 import Profile from './icons/profile.svg';
 import Register from './icons/register.svg';
 import Search from './icons/search.svg';
+import Star from './icons/star.svg';
 
 export const Icons = {
   Eye,
@@ -24,4 +27,7 @@ export const Icons = {
   Search,
   More,
   Home,
+  Chat,
+  Star,
+  ArrowRight,
 };

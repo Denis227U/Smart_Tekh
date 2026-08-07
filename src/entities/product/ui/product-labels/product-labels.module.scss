@@ -1,0 +1,46 @@
+.labels {
+  @include reset-list;
+
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 4px;
+}
+
+.label {
+  padding: 4px 10px;
+  color: var(--color-white);
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: var(--border-radius-xs);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  width: fit-content;
+
+  &.isNew {
+    background-color: var(--color-green);
+  }
+
+  &.isHit {
+    background-color: var(--color-red);
+  }
+
+  &.isOnSale {
+    background-color: var(--color-orange-40);
+  }
+
+  &.isGoodPrice {
+    background-color: var(--color-blue-50);
+  }
+
+  &.isDiscount {
+    background-color: var(--color-orange-10);
+    padding: 3px 5px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+}

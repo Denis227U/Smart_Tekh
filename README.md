@@ -12,11 +12,12 @@
 - **Frontend:** Next.js 16 (App Router + cacheComponents), TypeScript
 - **База данных:** Prisma 7, PostgreSQL
 - **Хранение файлов:** MinIO (объектное хранилище для статических изображений)
-- **Аутентификация:** NextAuth v5 (Credentials, Google and Yandex OAuth), Middleware-защита роутов
 - **Валидация:** Zod (клиент + сервер)
-- **UI:** Базовые компоненты в shared/ui (Button, Loader, Icon, Container, Modal, Heading, Field, и др.)
+- **UI:** Базовые компоненты в shared/ui (Button, Loader, Icon, Container, Modal, Heading, Field, Accordion, и др.)
 - **Архитектура:** Feature-Sliced Design (FSD), строгий порядок импортов (eslint import/order по FSD), строгая валидация .env
 - **Инструменты:** ESLint, Prettier, Husky, Commitlint, GitHub Actions, Docker
+- **Аутентификация:** NextAuth v5 (Credentials, Google and Yandex OAuth), Middleware-защита роутов
+- **Функционал каталога:** Полноценный каталог товаров с фильтрацией, сортировкой, пагинацией и синхронизацией всех параметров через URL
 
 ### В планах
 - **Управление состоянием:** Zustand 5 + persist
@@ -30,10 +31,10 @@
 ├── app/              # Роутинг Next.js (App Router: layout, page, api)
 └── src/              # Исходный FSD код
     ├── app/          # Инициализация приложения, глобальные стили, scss-миксины, провайдеры (SessionProvider), MainLayout
-    ├── pages/        # Страницы интернет-магазина (auth)
-    ├── widgets/      # Крупные блоки (Header, CatalogDropdown, MobilePanel)
-    ├── features/     # Интерактивные действия (аутентификация)
-    ├── entities/     # Бизнес-сущности (category, contact, user)
+    ├── pages/        # Страницы интернет-магазина (auth, catalog)
+    ├── widgets/      # Крупные блоки (Header, CatalogDropdown, MobilePanel, ProductCatalog, CatalogSidebar)
+    ├── features/     # Интерактивные действия (аутентификация, product-filter, product-sort, product-pagination)
+    ├── entities/     # Бизнес-сущности (category, contact, user, product)
     └── shared/       # Переиспользуемые UI-компоненты, хуки, API-клиенты
 ```
 
@@ -85,10 +86,14 @@ npm run dev
 - Защищённые маршруты через Middleware
 - Клиентская и серверная валидация форм (Zod)
 
+## ⚡ Технические особенности каталога
+* **URL как Single Source of Truth:** Фильтры, сортировка и характеристики полностью синхронизированы с `searchParams`. Это позволяет пользователям делиться ссылками с сохраненными фильтрами.
+* **Оптимизация навигации (push vs replace):** Ввод цен защищен дебаунсом и обновляет URL через `router.replace`, чтобы не засорять историю браузера. Выбор остальных фильтров и сортировки идет через `router.push`, что позволяет пользователю отменять шаги кнопкой «Назад».
+
 ## 🗺 Roadmap
 Ниже — запланированные ключевые шаги.
 
-- [ ] **Основной пользовательский флоу** — каталог с фильтрами, страница товара, поиск, корзина, оформление заказа
+- [ ] **Основной пользовательский флоу** — страница товара, поиск, корзина, оформление заказа
 - [ ] **Серверная логика** — использование Server Actions для мутаций данных
 - [ ] **Расширенная аутентификация** — двухфакторная, восстановление пароля
 - [ ] **Локальная корзина** — Zustand 5 + persist для неавторизованных пользователей

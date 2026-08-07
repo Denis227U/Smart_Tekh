@@ -7,7 +7,7 @@ import {
 
 type BaseProps<T> = {
   children: ReactNode;
-  variant?: 'main-dark';
+  variant?: 'main-dark' | 'main' | 'outline' | 'outline-gray';
   className?: string;
   icon?: ReactNode;
   align?: 'left' | 'center' | 'right';

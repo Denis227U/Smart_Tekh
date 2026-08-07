@@ -3,16 +3,73 @@ model Product {
 
   title       String
   description String? @db.Text
-  price       Decimal @db.Decimal(10, 2)
-  rating      Decimal @default(0) @db.Decimal(2, 1)
+  slug        String  @unique
+  brand       String
 
-  coverImage String? @map("cover_image")
+  price    Decimal  @db.Decimal(10, 2)
+  oldPrice Decimal? @map("old_price") @db.Decimal(10, 2)
+  discount Int      @default(0)
+
+  rating        Decimal @default(0) @db.Decimal(2, 1)
+  stock         Int     @default(0)
+  views         Int     @default(0)
+  commentsCount Int     @default(0) @map("comments_count")
+
+  coverImage     String? @map("cover_image")
+  coverThumbnail String? @map("cover_thumbnail")
+  coverImageAlt  String? @map("cover_image_alt")
 
   categoryId String   @map("category_id")
   category   Category @relation(fields: [categoryId], references: [id])
 
+  characteristics ProductCharacteristic[]
+  images          ProductImage[]
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  @@index([categoryId, price])
+  @@index([categoryId, createdAt(sort: Desc)])
+  @@index([categoryId, rating(sort: Desc)])
+  @@index([categoryId, views(sort: Desc)])
+  @@index([brand])
   @@map("products")
+}
+
+model ProductCharacteristic {
+  id String @id @default(cuid(2))
+
+  name  String
+  value String
+
+  isSearchable Boolean @default(false) @map("is_searchable")
+  priority     Int     @default(0) // Larger number = higher in filters
+
+  productId String  @map("product_id")
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([productId, name, value])
+  @@index([productId, priority(sort: Desc)])
+  @@map("product_characteristics")
+}
+
+model ProductImage {
+  id        String  @id @default(cuid(2))
+  url       String
+  thumbnail String?
+  alt       String?
+
+  priority Int @default(0)
+
+  productId String  @map("product_id")
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([productId, priority(sort: Asc)])
+  @@map("product_images")
 }

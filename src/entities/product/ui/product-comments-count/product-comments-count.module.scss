@@ -1,0 +1,25 @@
+.badge {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  column-gap: 6px;
+
+  svg {
+    position: relative;
+    top: 1px;
+  }
+}
+
+.count {
+  font-weight: 500;
+
+  &::before {
+    content: '(';
+    font-weight: 300;
+  }
+
+  &::after {
+    content: ')';
+    font-weight: 300;
+  }
+}

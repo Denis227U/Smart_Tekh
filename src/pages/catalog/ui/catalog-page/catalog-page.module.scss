@@ -1,0 +1,44 @@
+.container {
+  padding-bottom: 80px;
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: fluid-to-laptop(310, 220) 1fr;
+  column-gap: 16px;
+
+  @include tablet {
+    grid-template-columns: initial;
+    grid-column: 1/1;
+  }
+}
+
+.filters {
+  grid-column: 1/2;
+}
+
+.content {
+  grid-column: 2/3;
+
+  @include tablet {
+    grid-column: 1/2;
+  }
+}
+
+.topPanel {
+  display: grid;
+  grid-template-columns: 1fr minmax(240px, auto);
+  align-items: start;
+  gap: 40px;
+  margin-bottom: 20px;
+
+  // Temporary
+  height: 48px;
+  background-color: #ccc;
+}
+
+.grid {
+  &:not(:last-child) {
+    margin-bottom: 40px;
+  }
+}

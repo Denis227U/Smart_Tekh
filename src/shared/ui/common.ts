@@ -4,3 +4,6 @@ export * from './loader';
 export * from './container';
 export * from './logo';
 export * from './badge';
+export * from './grid';
+export * from './rating';
+export * from './route-props-resolver';
