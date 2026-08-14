@@ -1,4 +1,5 @@
 export { ProductCard } from './ui/product-card/product-card';
+export { ProductCommentsCount } from './ui/product-comments-count/product-comments-count';
 
 export { isValidSort } from './lib/sort';
 

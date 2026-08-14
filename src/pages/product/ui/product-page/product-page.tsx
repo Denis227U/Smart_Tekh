@@ -1,4 +1,8 @@
 import {
+  ProductDetails,
+  ProductDetailsSkeleton,
+} from '@/src/widgets/product-details';
+import {
   ProductGallery,
   ProductGallerySkeleton,
 } from '@/src/widgets/product-gallery';
@@ -29,7 +33,15 @@ export const ProductPage = ({
           )}
         </RoutePropsResolver>
 
-        <div className={s.details}>ProductDetails</div>
+        <RoutePropsResolver
+          params={params}
+          searchParams={searchParams}
+          fallback={<ProductDetailsSkeleton />}
+        >
+          {({ params: { productSlug } }) => (
+            <ProductDetails productSlug={productSlug} />
+          )}
+        </RoutePropsResolver>
       </Container>
 
       <Container
