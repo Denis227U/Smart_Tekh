@@ -1,5 +1,9 @@
+import {
+  ProductGallery,
+  ProductGallerySkeleton,
+} from '@/src/widgets/product-gallery';
 import { cn } from '@/src/shared/lib';
-import { Container } from '@/src/shared/ui/common';
+import { Container, RoutePropsResolver } from '@/src/shared/ui/common';
 import s from './product-page.module.scss';
 
 export const ProductPage = ({
@@ -15,7 +19,15 @@ export const ProductPage = ({
         tag='section'
         className={cn(s.wrapper, s.section)}
       >
-        <div className={s.gallery}>ProductGallery</div>
+        <RoutePropsResolver
+          params={params}
+          searchParams={searchParams}
+          fallback={<ProductGallerySkeleton />}
+        >
+          {({ params: { productSlug } }) => (
+            <ProductGallery productSlug={productSlug} />
+          )}
+        </RoutePropsResolver>
 
         <div className={s.details}>ProductDetails</div>
       </Container>

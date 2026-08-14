@@ -11,6 +11,21 @@ export type ProductWithCategory = ProductGetPayload<{
   };
 }>;
 
+type ProductWithImages = ProductGetPayload<{
+  include: {
+    images: {
+      select: {
+        id: true;
+        url: true;
+        thumbnail: true;
+        alt: true;
+      };
+    };
+  };
+}>;
+
+export type ProductImageDto = ProductWithImages['images'][number];
+
 export type LabelType = 'NEW' | 'HIT' | 'SALE' | 'GOOD_PRICE' | 'DISCOUNT';
 
 export type ProductDto = Omit<
