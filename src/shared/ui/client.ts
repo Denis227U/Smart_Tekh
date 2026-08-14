@@ -9,3 +9,4 @@ export * from './pagination';
 export * from './select';
 export * from './accordion';
 export * from './carousel';
+export * from './tabs';
