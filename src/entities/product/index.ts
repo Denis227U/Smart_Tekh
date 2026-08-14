@@ -10,4 +10,5 @@ export type {
   ProductDto,
   ProductSort,
   ProductImageDto,
+  ProductCharacteristicDto,
 } from './model/types.ts';

@@ -62,3 +62,9 @@ export interface Pagination {
   total: number;
   totalPages: number;
 }
+
+export type ProductCharacteristicDto = {
+  id: string;
+  name: string;
+  value: string;
+};
