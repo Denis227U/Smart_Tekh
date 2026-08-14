@@ -4,7 +4,9 @@ export const ROUTES = {
     MODAL: (mode: 'signin' | 'register') => `/auth-modal?mode=${mode}`,
     PAGE: (mode: 'signin' | 'register') => `/auth?mode=${mode}`,
   },
-  CATEGORY: (alias: string) => `/catalog/${alias}`,
+  CATEGORY: (category: string) => `/catalog/${category}`,
+  PRODUCT: (category: string, product: string) =>
+    `/product/${category}/${product}`,
   PROFILE: {
     INDEX: '/profile',
     GENERAL: '/profile/general',

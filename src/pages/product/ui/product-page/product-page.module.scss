@@ -1,0 +1,50 @@
+.section {
+  padding-bottom: 40px;
+
+  @include tablet {
+    padding-bottom: 30px;
+  }
+
+  &:last-child {
+    padding-bottom: 80px;
+
+    @include tablet {
+      padding-bottom: 60px;
+    }
+
+    @include mobile {
+      padding-bottom: 50px;
+    }
+  }
+}
+
+.wrapper {
+  padding-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.gallery {
+  width: 530px;
+  height: 556px;
+  background-color: #ccc;
+}
+
+.details {
+  width: 100%;
+  height: 556px;
+  background-color: #ccc;
+}
+
+.tabs {
+  width: 100%;
+  height: 556px;
+  background: #ccc;
+}
+
+.recommended {
+  width: 100%;
+  height: 600px;
+  background: #ccc;
+}
