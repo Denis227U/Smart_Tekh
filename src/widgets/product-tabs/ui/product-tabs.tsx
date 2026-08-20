@@ -6,7 +6,13 @@ import {
 import { ProductTabsContent } from './product-tabs-content';
 import { ProductTabsSkeleton } from './product-tabs-skeleton/product-tabs-skeleton';
 
-const ProductTabsAsync = async ({ productSlug }: { productSlug: string }) => {
+const ProductTabsAsync = async ({
+  productSlug,
+  reviews,
+}: {
+  productSlug: string;
+  reviews: React.ReactNode;
+}) => {
   const product = await getProductBySlug(productSlug);
   const productCharacteristics =
     await getProductCharacteristicsBySlug(productSlug);
@@ -18,14 +24,24 @@ const ProductTabsAsync = async ({ productSlug }: { productSlug: string }) => {
       title={product.title}
       description={product.description}
       characteristics={productCharacteristics}
+      reviews={reviews}
     />
   );
 };
 
-export const ProductTabs = ({ productSlug }: { productSlug: string }) => {
+export const ProductTabs = ({
+  productSlug,
+  reviews,
+}: {
+  productSlug: string;
+  reviews: React.ReactNode;
+}) => {
   return (
     <Suspense fallback={<ProductTabsSkeleton />}>
-      <ProductTabsAsync productSlug={productSlug} />
+      <ProductTabsAsync
+        productSlug={productSlug}
+        reviews={reviews}
+      />
     </Suspense>
   );
 };

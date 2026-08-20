@@ -6,6 +6,7 @@ import {
   ProductGallery,
   ProductGallerySkeleton,
 } from '@/src/widgets/product-gallery';
+import { ProductReviews } from '@/src/widgets/product-reviews';
 import { ProductTabs, ProductTabsSkeleton } from '@/src/widgets/product-tabs';
 import { cn } from '@/src/shared/lib';
 import { Container, RoutePropsResolver } from '@/src/shared/ui/common';
@@ -55,7 +56,10 @@ export const ProductPage = ({
           fallback={<ProductTabsSkeleton />}
         >
           {({ params: { productSlug } }) => (
-            <ProductTabs productSlug={productSlug} />
+            <ProductTabs
+              productSlug={productSlug}
+              reviews={<ProductReviews productSlug={productSlug} />}
+            />
           )}
         </RoutePropsResolver>
       </Container>

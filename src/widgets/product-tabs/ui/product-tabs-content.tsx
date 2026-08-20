@@ -5,7 +5,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/src/shared/ui/client';
-import { Heading, Table } from '@/src/shared/ui/common';
+import { Table } from '@/src/shared/ui/common';
 import { PRODUCT_TABS } from '../model/constants';
 import { ProductDescription } from './product-description/product-description';
 
@@ -13,10 +13,12 @@ export const ProductTabsContent = ({
   title,
   description,
   characteristics,
+  reviews,
 }: {
   title: string;
   description: string | null;
   characteristics: ProductCharacteristicDto[];
+  reviews: React.ReactNode;
 }) => {
   return (
     <Tabs defaultValue={PRODUCT_TABS.DESC.value}>
@@ -45,19 +47,7 @@ export const ProductTabsContent = ({
         />
       </TabsContent>
 
-      <TabsContent value={PRODUCT_TABS.REVIEWS.value}>
-        <div aria-labelledby='product-tabs-comments'>
-          <Heading
-            tag='h2'
-            variant='h3'
-            id='product-tabs-comments'
-          >
-            Отзывы на «{title}»
-          </Heading>
-
-          <div>Отзывы</div>
-        </div>
-      </TabsContent>
+      <TabsContent value={PRODUCT_TABS.REVIEWS.value}>{reviews}</TabsContent>
     </Tabs>
   );
 };
