@@ -4,4 +4,5 @@ export const ASSETS_BASE_URL = clientEnv.NEXT_PUBLIC_ASSETS_BASE_URL;
 
 export const ASSET_PATHS = {
   CATEGORIES: 'categories',
+  USER_AVATARS: 'user-avatars',
 } as const;
