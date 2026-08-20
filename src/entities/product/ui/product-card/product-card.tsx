@@ -42,7 +42,7 @@ export const ProductCard = ({
   titleTag = 'h3',
   className,
   preload = false,
-  commentsCount,
+  reviewsCount,
   labels,
   addToFavoriteBtn,
   addToCompareBtn,
@@ -104,7 +104,7 @@ export const ProductCard = ({
           value={rating}
         />
 
-        <ProductCommentsCount count={commentsCount} />
+        <ProductCommentsCount count={reviewsCount} />
       </div>
 
       <div className={s.priceBlock}>

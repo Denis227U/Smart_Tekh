@@ -6,7 +6,7 @@ import { ProductDeliveryInfo } from '../product-delivery-info/product-delivery-i
 import s from './product-details-content.module.scss';
 
 export const ProductDetailsContent = ({ product }: { product: ProductDto }) => {
-  const { id, title, rating, price, oldPrice, discount, commentsCount } =
+  const { id, title, rating, price, oldPrice, discount, reviewsCount } =
     product;
 
   return (
@@ -27,7 +27,7 @@ export const ProductDetailsContent = ({ product }: { product: ProductDto }) => {
             value={rating}
           />
 
-          <ProductCommentsCount count={commentsCount} />
+          <ProductCommentsCount count={reviewsCount} />
         </div>
 
         <div className={s.prices}>

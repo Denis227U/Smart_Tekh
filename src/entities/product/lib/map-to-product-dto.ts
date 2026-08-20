@@ -21,7 +21,7 @@ export const mapToProductDto = (
     stock: product.stock,
     categorySlug: product.category?.slug ?? 'uncategorized',
     views: product.views,
-    commentsCount: product.commentsCount,
+    reviewsCount: product.reviewsCount,
     createdAt: product.createdAt,
     labels: calculateLabels(product),
   };
