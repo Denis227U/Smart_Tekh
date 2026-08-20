@@ -1,0 +1,13 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.textArea {
+  width: 100%;
+}
+
+.error {
+  color: var(--color-red);
+}
