@@ -1,8 +1,8 @@
 import { AddReviewTrigger } from '@/src/features/add-review';
 import { SignInTrigger } from '@/src/features/auth';
-import { ReviewCard } from '@/src/entities/review';
 import type { ReviewDto } from '@/src/entities/review';
 import { Heading } from '@/src/shared/ui/common';
+import { ProductReviewsList } from '../product-reviews-list/product-reviews-list';
 import s from './product-reviews-content.module.scss';
 
 export const ProductReviewsContent = ({
@@ -10,11 +10,15 @@ export const ProductReviewsContent = ({
   productId,
   productSlug,
   reviews,
+  initialHasMore,
+  initialCursor,
 }: {
   title: string;
   productId: string;
   productSlug: string;
   reviews: ReviewDto[];
+  initialHasMore: boolean;
+  initialCursor: string | null;
 }) => {
   return (
     <div aria-labelledby='product-reviews'>
@@ -28,26 +32,22 @@ export const ProductReviewsContent = ({
       </Heading>
 
       <div className={s.grid}>
-        {reviews.map((review) => (
-          <ReviewCard
-            key={review.id}
-            className={s.reviewCard}
-            id={review.id}
-            authorName={review.authorName}
-            avatarSrc={review.avatarSrc}
-            createdAt={review.createdAt}
-            rating={review.rating}
-            text={review.text}
-          />
-        ))}
+        <ProductReviewsList
+          key={productId}
+          initialReviews={reviews}
+          productId={productId}
+          className={s.reviewList}
+          initialHasMore={initialHasMore}
+          initialCursor={initialCursor}
+        />
 
-        <form className={s.form}>
+        <div className={s.form}>
           <AddReviewTrigger
             productId={productId}
             productSlug={productSlug}
             signInTrigger={<SignInTrigger />}
           />
-        </form>
+        </div>
       </div>
     </div>
   );

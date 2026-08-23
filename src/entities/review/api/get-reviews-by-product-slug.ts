@@ -7,10 +7,13 @@ interface ProductReviewsData {
   productId: string;
   productTitle: string;
   reviews: ReviewDto[];
+  hasMore: boolean;
+  nextCursor: string | null;
 }
 
 export const getReviewsByProductSlug = async (
   productSlug: string,
+  take: number,
 ): Promise<ProductReviewsData | null> => {
   'use cache';
   cacheLife('seconds');
@@ -27,6 +30,7 @@ export const getReviewsByProductSlug = async (
         orderBy: {
           createdAt: 'desc',
         },
+        take: take + 1,
         include: {
           user: {
             select: {
@@ -40,9 +44,22 @@ export const getReviewsByProductSlug = async (
 
   if (!product) return null;
 
+  const hasMore = product.reviews.length > take;
+  const slicedReviews = hasMore
+    ? product.reviews.slice(0, take)
+    : product.reviews;
+
+  // Cursor is the last review ID in the list
+  const nextCursor =
+    slicedReviews.length > 0
+      ? slicedReviews[slicedReviews.length - 1].id
+      : null;
+
   return {
     productId: product.id,
     productTitle: product.title,
-    reviews: product.reviews.map(mapToReviewtDto),
+    reviews: slicedReviews.map(mapToReviewtDto),
+    hasMore,
+    nextCursor,
   };
 };
