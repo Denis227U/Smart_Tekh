@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { cn } from '@/src/shared/lib';
+import { ROUTES } from '@/src/shared/routes';
 import { SafeImage } from '@/src/shared/ui/client';
 import { Heading, Rating } from '@/src/shared/ui/common';
 import { ProductCommentsCount } from '../product-comments-count/product-comments-count';
@@ -41,7 +42,7 @@ export const ProductCard = ({
   titleTag = 'h3',
   className,
   preload = false,
-  commentsCount,
+  reviewsCount,
   labels,
   addToFavoriteBtn,
   addToCompareBtn,
@@ -52,8 +53,7 @@ export const ProductCard = ({
     '--price-currency': `" ₽"`,
   };
 
-  // temporary
-  const productUrl = '/#';
+  const productHref = ROUTES.PRODUCT(categorySlug, slug);
 
   return (
     <article
@@ -68,7 +68,7 @@ export const ProductCard = ({
       <header className={s.header}>
         <Link
           className={s.imageLink}
-          href={productUrl}
+          href={productHref}
         >
           <SafeImage
             key={coverThumbnail}
@@ -85,7 +85,7 @@ export const ProductCard = ({
         <span className={s.subtitle}>{brand}</span>
 
         <Link
-          href={productUrl}
+          href={productHref}
           className={s.titleLink}
         >
           <Heading
@@ -104,7 +104,7 @@ export const ProductCard = ({
           value={rating}
         />
 
-        <ProductCommentsCount count={commentsCount} />
+        <ProductCommentsCount count={reviewsCount} />
       </div>
 
       <div className={s.priceBlock}>

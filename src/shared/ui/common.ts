@@ -7,3 +7,4 @@ export * from './badge';
 export * from './grid';
 export * from './rating';
 export * from './route-props-resolver';
+export * from './table';

@@ -2,7 +2,7 @@ import { Prisma } from '@/src/shared/api/prisma/generated/client';
 
 type ProductSeedData = Omit<
   Prisma.ProductCreateInput,
-  'category' | 'images' | 'characteristics' | 'slug'
+  'category' | 'images' | 'characteristics' | 'slug' | 'rating' | 'reviewsCount'
 > & {
   characteristics: {
     name: string;
@@ -28,7 +28,6 @@ export const products: ProductSeedData[] = [
     price: 1410,
     oldPrice: 1974,
     discount: 40,
-    rating: 4.5,
     stock: 10,
     characteristics: [
       {
@@ -194,7 +193,6 @@ export const products: ProductSeedData[] = [
     price: 8280,
     oldPrice: 11178,
     discount: 35,
-    rating: 4.2,
     stock: 22,
     characteristics: [
       {
@@ -302,7 +300,6 @@ export const products: ProductSeedData[] = [
     price: 18144,
     oldPrice: 29030,
     discount: 60,
-    rating: 4.4,
     stock: 4,
     characteristics: [
       {
@@ -441,7 +438,6 @@ export const products: ProductSeedData[] = [
     price: 2684,
     oldPrice: 4562,
     discount: 70,
-    rating: 4.7,
     stock: 0,
     characteristics: [
       {
@@ -616,7 +612,6 @@ export const products: ProductSeedData[] = [
     price: 1999,
     oldPrice: 2400,
     discount: 20,
-    rating: 4.3,
     stock: 0,
     characteristics: [
       {
@@ -785,7 +780,6 @@ export const products: ProductSeedData[] = [
     price: 16647,
     oldPrice: 21640,
     discount: 30,
-    rating: 1,
     stock: 0,
     characteristics: [
       {
@@ -908,7 +902,6 @@ export const products: ProductSeedData[] = [
     price: 1730,
     oldPrice: undefined,
     discount: 0,
-    rating: 4.9,
     stock: 15,
     characteristics: [
       {
@@ -1004,7 +997,6 @@ export const products: ProductSeedData[] = [
     price: 18049,
     oldPrice: 32490,
     discount: 80,
-    rating: 4.8,
     stock: 3,
     characteristics: [
       {
@@ -1146,7 +1138,6 @@ export const products: ProductSeedData[] = [
     price: 35070,
     oldPrice: 38580,
     discount: 10,
-    rating: 4.9,
     stock: 1,
     characteristics: [
       {
@@ -1324,7 +1315,6 @@ export const products: ProductSeedData[] = [
     price: 9407,
     oldPrice: 10820,
     discount: 15,
-    rating: 4.7,
     stock: 10,
     characteristics: [
       {
@@ -1468,7 +1458,6 @@ export const products: ProductSeedData[] = [
     price: 52000,
     oldPrice: 62400,
     discount: 20,
-    rating: 5,
     stock: 10,
     characteristics: [
       {
@@ -1555,7 +1544,6 @@ export const products: ProductSeedData[] = [
     price: 58148,
     oldPrice: 81407,
     discount: 40,
-    rating: undefined,
     stock: 0,
     characteristics: [
       {
@@ -1662,7 +1650,6 @@ export const products: ProductSeedData[] = [
     price: 760,
     oldPrice: undefined,
     discount: 0,
-    rating: 4.8,
     stock: 0,
     characteristics: [
       {
@@ -1758,7 +1745,6 @@ export const products: ProductSeedData[] = [
     price: 3038,
     oldPrice: undefined,
     discount: 0,
-    rating: 4.8,
     stock: 0,
     characteristics: [
       {
@@ -1918,7 +1904,6 @@ export const products: ProductSeedData[] = [
     price: 18983,
     oldPrice: 24678,
     discount: 30,
-    rating: 4.5,
     stock: 31,
     characteristics: [
       {
@@ -2110,7 +2095,6 @@ export const products: ProductSeedData[] = [
     price: 7963,
     oldPrice: 10750,
     discount: 35,
-    rating: 5,
     stock: 15,
     characteristics: [
       {
@@ -2201,7 +2185,6 @@ export const products: ProductSeedData[] = [
     price: 41699,
     oldPrice: 62550,
     discount: 50,
-    rating: 4.1,
     stock: 30,
     characteristics: [
       {
@@ -2416,7 +2399,6 @@ export const products: ProductSeedData[] = [
     price: 2598,
     oldPrice: undefined,
     discount: 0,
-    rating: 4.8,
     stock: 8,
     characteristics: [
       {
@@ -2593,7 +2575,6 @@ export const products: ProductSeedData[] = [
     price: 15148,
     oldPrice: 21965,
     discount: 45,
-    rating: 4.6,
     stock: 4,
     characteristics: [
       {
@@ -2720,7 +2701,6 @@ export const products: ProductSeedData[] = [
     price: 3031,
     oldPrice: 3335,
     discount: 10,
-    rating: 4.7,
     stock: 8,
     characteristics: [
       {
@@ -2866,7 +2846,6 @@ export const products: ProductSeedData[] = [
     price: 3030,
     oldPrice: undefined,
     discount: 0,
-    rating: 4.7,
     stock: 0,
     characteristics: [
       {
@@ -3048,7 +3027,6 @@ export const products: ProductSeedData[] = [
     price: 78330,
     oldPrice: 93996,
     discount: 20,
-    rating: 5,
     stock: 6,
     characteristics: [
       {
@@ -3157,7 +3135,6 @@ export const products: ProductSeedData[] = [
     price: 42996,
     oldPrice: 47296,
     discount: 10,
-    rating: 4.5,
     stock: 2,
     characteristics: [
       {
@@ -3303,7 +3280,6 @@ export const products: ProductSeedData[] = [
     price: 10593,
     oldPrice: 12150,
     discount: 15,
-    rating: 3,
     stock: 2,
     characteristics: [
       {
@@ -3422,7 +3398,6 @@ export const products: ProductSeedData[] = [
     price: 38747,
     oldPrice: undefined,
     discount: 0,
-    rating: 5,
     stock: 6,
     characteristics: [
       {
@@ -3631,7 +3606,6 @@ export const products: ProductSeedData[] = [
     price: 1222,
     oldPrice: 1956,
     discount: 60,
-    rating: 4.7,
     stock: 24,
     characteristics: [
       {
@@ -3799,7 +3773,6 @@ export const products: ProductSeedData[] = [
     price: 14264,
     oldPrice: 21396,
     discount: 50,
-    rating: 4.8,
     stock: 16,
     characteristics: [
       {
@@ -3959,7 +3932,6 @@ export const products: ProductSeedData[] = [
     price: 12271,
     oldPrice: 13500,
     discount: 10,
-    rating: 4.7,
     stock: 2,
     characteristics: [
       {
@@ -4100,7 +4072,6 @@ export const products: ProductSeedData[] = [
     price: 48409,
     oldPrice: undefined,
     discount: 0,
-    rating: 2.7,
     stock: 3,
     characteristics: [
       {
@@ -4259,7 +4230,6 @@ export const products: ProductSeedData[] = [
     price: 9165,
     oldPrice: 11460,
     discount: 25,
-    rating: 5,
     stock: 10,
     characteristics: [
       {
@@ -4367,7 +4337,6 @@ export const products: ProductSeedData[] = [
     price: 1498,
     oldPrice: 2098,
     discount: 40,
-    rating: 4.6,
     stock: 14,
     characteristics: [
       {
@@ -4547,7 +4516,6 @@ export const products: ProductSeedData[] = [
     price: 1518,
     oldPrice: 1898,
     discount: 25,
-    rating: 4.8,
     stock: 41,
     characteristics: [
       {
@@ -4630,7 +4598,6 @@ export const products: ProductSeedData[] = [
     price: 17177,
     oldPrice: 18895,
     discount: 10,
-    rating: 4.8,
     stock: 11,
     characteristics: [
       {
@@ -4782,7 +4749,6 @@ export const products: ProductSeedData[] = [
     price: 72562,
     oldPrice: 108845,
     discount: 50,
-    rating: undefined,
     stock: 10,
     characteristics: [
       {

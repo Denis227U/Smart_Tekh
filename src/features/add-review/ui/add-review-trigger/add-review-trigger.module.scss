@@ -1,0 +1,63 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 20px;
+  width: 100%;
+
+  @include tablet {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 500px;
+    justify-content: space-between;
+    gap: 20px 40px;
+  }
+}
+.reviewBlock {
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    @include tablet {
+      flex: 1 1 300px;
+    }
+  }
+}
+
+.signInBlock {
+  @include tablet {
+    justify-content: start;
+  }
+}
+
+.title {
+  margin: 0;
+}
+
+.text {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--color-gray-10);
+
+  b {
+    color: var(--color-black);
+    font-weight: 600;
+  }
+}
+
+.button,
+.triggerWrapper {
+  width: 100%;
+  flex-shrink: 0;
+  max-width: 310px;
+
+  @include tablet {
+    width: auto;
+    min-width: 200px;
+    flex-grow: 0;
+  }
+}

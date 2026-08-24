@@ -1,0 +1,27 @@
+$bgColor: #cbd5e1;
+$fbColor: #1e293b;
+
+.avatar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $bgColor;
+  border-radius: 50%;
+  overflow: hidden;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fallback {
+  font-size: 24px;
+  font-weight: 700;
+  color: $fbColor;
+  line-height: 1;
+}

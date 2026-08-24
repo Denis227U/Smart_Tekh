@@ -1,0 +1,32 @@
+.list {
+  @include reset-list;
+
+  display: flex;
+  gap: 20px;
+
+  @include bp-down(600px) {
+    flex-direction: column;
+    gap: 40px;
+  }
+}
+
+.item {
+  flex: calc(50% - 10px) 1 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  row-gap: 10px;
+  column-gap: 11px;
+}
+
+.title {
+  grid-column: 2/-1;
+  font-size: 18px;
+}
+
+.text {
+  grid-column: 2/-1;
+  font-size: 16px;
+  line-height: 1.2;
+  margin: 0;
+}

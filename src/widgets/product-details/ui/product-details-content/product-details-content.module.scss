@@ -1,0 +1,132 @@
+.title {
+  grid-area: title;
+  user-select: none;
+}
+
+.grid {
+  grid-area: info;
+  padding: 30px;
+  border: var(--border);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: repeat(2, auto);
+  grid-template-areas:
+    'review actions1'
+    'prices actions2';
+  column-gap: 30px;
+  row-gap: 20px;
+
+  @include tablet {
+    padding: 20px;
+  }
+
+  @include bp-down(600px) {
+    grid-template-columns: initial;
+    grid-template-areas:
+      'review'
+      'actions1'
+      'prices'
+      'actions2';
+  }
+
+  @include mobile-s {
+    padding: 0;
+    border: none;
+  }
+
+  .review {
+    grid-area: review;
+    align-self: start;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .prices {
+    grid-area: prices;
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: repeat(2, auto);
+    column-gap: 10px;
+  }
+
+  .priceOld::after,
+  .priceCurrent::after,
+  &__discount-amount::after {
+    content: var(--priceCurrency);
+  }
+
+  .priceOld {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-gray-10);
+    text-decoration: line-through;
+  }
+
+  .priceCurrent {
+    grid-column: 1/-1;
+    grid-row: 2/-1;
+    font-size: 32px;
+    font-weight: 700;
+  }
+
+  &__discount {
+    background-color: var(--color-orange-10);
+    border-radius: 6px;
+    padding: 3px 4px;
+    font-size: 18px;
+    color: var(--color-white);
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: max-content;
+    padding-inline: 10px;
+  }
+
+  .actionsFirst,
+  .actionsSecond {
+    display: flex;
+    gap: 10px;
+  }
+
+  .actionsFirst {
+    grid-area: actions1;
+    justify-self: end;
+
+    @include bp-down(600px) {
+      justify-self: start;
+    }
+  }
+
+  .actionsSecond {
+    grid-area: actions2;
+    display: flex;
+    flex-direction: row-reverse;
+
+    @include tablet {
+      justify-self: end;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    @include mobile-s {
+      flex-direction: column;
+    }
+
+    * {
+      flex: 50% 1 0;
+
+      @include mobile-s {
+        flex: initial;
+      }
+    }
+  }
+
+  .footer {
+    grid-area: footer;
+  }
+}

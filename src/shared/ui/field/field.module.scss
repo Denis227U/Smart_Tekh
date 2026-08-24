@@ -101,6 +101,7 @@ $control-padding: 20px;
 
   &[data-textarea] {
     .control {
+      height: auto;
       min-height: 96px;
       padding-block: $control-padding;
       resize: vertical;

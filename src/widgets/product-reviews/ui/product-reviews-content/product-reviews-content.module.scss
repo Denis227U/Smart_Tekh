@@ -1,0 +1,35 @@
+.title {
+  margin-bottom: 30px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 640px 1fr;
+  grid-template-rows: auto;
+  gap: 20px #{fluid(100, 40, true)};
+
+  @include tablet {
+    grid-template-columns: inherit;
+  }
+}
+
+.reviewList {
+  grid-column: 1/2;
+}
+
+.form {
+  grid-column: 2/3;
+  grid-row: 1/-1;
+  padding: 0 30px 30px;
+  align-self: flex-start;
+
+  position: sticky;
+  top: 30px;
+
+  @include tablet {
+    grid-column: inherit;
+    position: static;
+    grid-row: 1/2;
+    padding: 10px 0;
+  }
+}

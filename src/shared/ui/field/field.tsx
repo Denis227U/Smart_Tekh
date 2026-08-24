@@ -83,6 +83,7 @@ export const Field = (props: FieldProps) => {
       label={label}
       isRequired={isRequired}
       isVisibleLabel={isVisibleLabel}
+      multiline={props.multiline}
       styles={s}
     />
   );
