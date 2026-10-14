@@ -7,17 +7,19 @@ export const HeaderLayout = ({
   contacts,
   search,
   userActions,
+  authStatus,
   catalog,
   infoMenu,
-  authStatus,
+  isCondensed = false,
 }: {
   logo: ReactNode;
   contacts: ReactNode;
   search: ReactNode;
   userActions: ReactNode;
-  catalog: ReactNode;
-  infoMenu: ReactNode;
   authStatus: ReactNode;
+  catalog?: ReactNode;
+  infoMenu?: ReactNode;
+  isCondensed?: boolean;
 }) => {
   return (
     <header className={s.header}>
@@ -32,12 +34,14 @@ export const HeaderLayout = ({
         </div>
       </Container>
 
-      <div className={s.subRowWrp}>
-        <Container className={s.subRow}>
-          {catalog}
-          {infoMenu}
-        </Container>
-      </div>
+      {!isCondensed && (
+        <div className={s.subRowWrp}>
+          <Container className={s.subRow}>
+            {catalog}
+            {infoMenu}
+          </Container>
+        </div>
+      )}
     </header>
   );
 };

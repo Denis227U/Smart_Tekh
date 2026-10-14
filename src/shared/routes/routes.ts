@@ -11,4 +11,5 @@ export const ROUTES = {
     INDEX: '/profile',
     GENERAL: '/profile/general',
   },
+  CHECKOUT: '/checkout',
 };
