@@ -41,6 +41,10 @@ export async function getProductPriceRangeByCategory(
     ? aggregations._max.price.toNumber()
     : 0;
 
+  if (minPrice === maxPrice) {
+    return { min: minPrice, max: minPrice + 1 };
+  }
+
   return {
     min: minPrice,
     max: maxPrice,
