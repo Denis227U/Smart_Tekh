@@ -1,5 +1,7 @@
 export { CartItemRow } from './ui/cart-item-row/cart-item-row';
 
+export { useInitialCart } from './lib/use-initial-cart';
+
 export {
   useIsInCart,
   useCartItems,
