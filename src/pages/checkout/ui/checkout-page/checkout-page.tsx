@@ -1,3 +1,4 @@
+import { CartItems } from '@/src/widgets/cart-items';
 import { PageHeader } from '@/src/widgets/page-header';
 import { cn } from '@/src/shared/lib';
 import { Container } from '@/src/shared/ui/common';
@@ -14,7 +15,7 @@ export const CheckoutPage = ({
     <Container className={cn(s.container, s.section)}>
       <PageHeader title='Оформление заказа' />
 
-      <div>Корзина</div>
+      <CartItems />
     </Container>
   );
 };

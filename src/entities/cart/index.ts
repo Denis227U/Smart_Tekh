@@ -1,3 +1,5 @@
+export { CartItemRow } from './ui/cart-item-row/cart-item-row';
+
 export {
   useIsInCart,
   useCartItems,
