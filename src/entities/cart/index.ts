@@ -1,4 +1,5 @@
 export { CartItemRow } from './ui/cart-item-row/cart-item-row';
+export { CartHeaderLink } from './ui/cart-header-link/cart-header-link';
 
 export { useInitialCart } from './lib/use-initial-cart';
 

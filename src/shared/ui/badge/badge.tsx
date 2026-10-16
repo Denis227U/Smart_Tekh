@@ -1,5 +1,6 @@
 import { cn } from '@/src/shared/lib';
-import { Button } from '@/src/shared/ui/client';
+import { Button } from '@/src/shared/ui/button';
+import { Counter } from '@/src/shared/ui/counter';
 import type { PropsWithChildren } from 'react';
 import s from './badge.module.scss';
 
@@ -15,17 +16,32 @@ export const Badge = ({
   count: number;
   className?: string;
 }>) => {
-  return (
-    <Button
-      className={cn(s.badge, className)}
-      data-active={count > 0 ? true : undefined}
-      href={href}
-      title={label}
-      aria-label={label}
-    >
-      {children}
+  if (href) {
+    return (
+      <Button
+        className={cn(s.badgeWrapper, className)}
+        href={href}
+        title={label}
+        aria-label={label}
+      >
+        <div className={s.iconContainer}>
+          {children}
+          <Counter
+            count={count}
+            className={s.badgeCounter}
+          />
+        </div>
+      </Button>
+    );
+  }
 
-      {count > 0 && <span className={s.counter}>{count}</span>}
-    </Button>
+  return (
+    <div className={cn(s.iconContainer, className)}>
+      {children}
+      <Counter
+        count={count}
+        className={s.badgeCounter}
+      />
+    </div>
   );
 };

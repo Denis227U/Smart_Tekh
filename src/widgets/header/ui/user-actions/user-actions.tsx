@@ -1,3 +1,4 @@
+import { CartHeaderLink } from '@/src/entities/cart';
 import { cn } from '@/src/shared/lib';
 import { Badge, Icon } from '@/src/shared/ui/common';
 import s from './user-actions.module.scss';
@@ -8,7 +9,6 @@ export const UserActions = ({
   variant?: 'desctop' | 'mobile';
 }) => {
   // TODO: Mock data
-  const cart = 2;
   const fav = 1;
   const comp = 0;
   const viewed = 14;
@@ -61,17 +61,7 @@ export const UserActions = ({
           </Badge>
         </li>
         <li className={s.item}>
-          <Badge
-            className={s.cart}
-            href='/#'
-            label='Корзина'
-            count={cart}
-          >
-            <Icon
-              name='Cart'
-              height={20}
-            />
-          </Badge>
+          <CartHeaderLink />
         </li>
       </ul>
     </nav>
