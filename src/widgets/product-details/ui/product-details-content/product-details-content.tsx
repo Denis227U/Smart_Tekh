@@ -1,3 +1,4 @@
+import { AddToCartButton } from '@/src/features/add-to-cart';
 import { ProductCommentsCount, type ProductDto } from '@/src/entities/product';
 import { Button } from '@/src/shared/ui/client';
 import { Heading, Icon, Rating } from '@/src/shared/ui/common';
@@ -8,6 +9,18 @@ import s from './product-details-content.module.scss';
 export const ProductDetailsContent = ({ product }: { product: ProductDto }) => {
   const { id, title, rating, price, oldPrice, discount, reviewsCount } =
     product;
+
+  // Preparing data object for Zustand
+  const cartProductData = {
+    id: id,
+    title: title,
+    slug: product.slug,
+    price: price,
+    oldPrice: oldPrice,
+    stock: product.stock,
+    coverThumbnail: product.coverThumbnail,
+    coverImageAlt: product.coverImageAlt,
+  };
 
   return (
     <>
@@ -51,7 +64,11 @@ export const ProductDetailsContent = ({ product }: { product: ProductDto }) => {
         <div className={s.actionsSecond}>
           <Button variant='outline'>Купить в 1 клик</Button>
 
-          <Button variant='main'>В корзину</Button>
+          <AddToCartButton
+            productId={id}
+            productData={cartProductData}
+            variant='text'
+          />
         </div>
       </div>
 

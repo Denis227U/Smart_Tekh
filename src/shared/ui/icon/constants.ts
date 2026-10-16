@@ -1,4 +1,5 @@
 import ArrowRight from './icons/arrow-right.svg';
+import CartAdded from './icons/cart-added.svg';
 import Cart from './icons/cart.svg';
 import Catalog from './icons/catalog.svg';
 import Chart from './icons/chart.svg';
@@ -34,4 +35,5 @@ export const Icons = {
   ArrowRight,
   Delivery,
   Payment,
+  CartAdded,
 };
