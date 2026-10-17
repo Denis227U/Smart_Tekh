@@ -9,18 +9,22 @@ import s from './remove-from-cart-button.module.scss';
 
 export const RemoveFromCartButton = ({
   productId,
+  userId,
   className,
 }: {
   productId: string;
+  userId: string | undefined;
   className?: string;
 }) => {
   const isHydrated = useCartHydrated();
   const removeItem = useRemoveItem();
 
-  const handleRemoveItem = (e: React.MouseEvent) => {
+  const handleRemoveItem = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    removeItem(productId);
+    await removeItem(productId, userId, (errorMessage) => {
+      alert(errorMessage);
+    });
   };
 
   if (!isHydrated) {

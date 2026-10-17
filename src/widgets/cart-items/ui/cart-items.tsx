@@ -8,10 +8,12 @@ import {
   useCartItems,
   useIsCartInitialized,
 } from '@/src/entities/cart';
+import { useSession } from '@/src/entities/user';
 import { CartItemsSkeleton } from './cart-items-skeleton';
 import s from './cart-items.module.scss';
 
 export const CartItems = () => {
+  const { user } = useSession();
   const isCartInitialized = useIsCartInitialized();
 
   const items = useCartItems();
@@ -55,10 +57,14 @@ export const CartItems = () => {
                   <ChangeCartItemQuantity
                     productId={item.productId}
                     productData={item.product}
+                    userId={user?.id}
                   />
                 }
                 actionsSlot={
-                  <RemoveFromCartButton productId={item.productId} />
+                  <RemoveFromCartButton
+                    productId={item.productId}
+                    userId={user?.id}
+                  />
                 }
               />
             );

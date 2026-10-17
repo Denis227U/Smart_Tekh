@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { syncCart } from '../api/sync-cart';
 import { mapLocalToCartDto } from '../lib/map-to-cart-dto';
+import { SYNC_DELAY } from './constants';
 import type { CartItemDto, CartStore, LocalCartItem } from './types';
 
 type PersistedCartState = {
@@ -10,11 +12,29 @@ type PersistedCartState = {
 export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => {
+      // Function that schedules a server sync after SYNC_DELAY
+      const scheduleSync = (userId?: string) => {
+        if (!userId) return;
+
+        const currentTimeoutId = get()._syncTimeoutId;
+        if (currentTimeoutId) {
+          clearTimeout(currentTimeoutId);
+        }
+
+        const timeoutId = setTimeout(async () => {
+          set({ _syncTimeoutId: null });
+          await get().flushSync(userId);
+        }, SYNC_DELAY);
+
+        set({ _syncTimeoutId: timeoutId });
+      };
+
       return {
         items: [],
+        _syncTimeoutId: null,
         isCartInitialized: false,
 
-        addItem: (productDto, productId, onError) => {
+        addItem: (productDto, productId, userId, onError) => {
           const { items } = get();
           const existing = items.find((item) => item.productId === productId);
           const maxStock = productDto.stock ?? 0;
@@ -58,9 +78,10 @@ export const useCartStore = create<CartStore>()(
           }
 
           set({ items: newItems });
+          scheduleSync(userId);
         },
 
-        updateQuantity: (productId, quantity, onError) => {
+        updateQuantity: (productId, quantity, userId, onError) => {
           if (quantity <= 0) {
             get().removeItem(productId);
             return;
@@ -86,6 +107,7 @@ export const useCartStore = create<CartStore>()(
                   : item,
               );
               set({ items: fallbackItems });
+              scheduleSync(userId);
               return;
             }
           }
@@ -96,16 +118,83 @@ export const useCartStore = create<CartStore>()(
               : item,
           );
           set({ items: newItems });
+          scheduleSync(userId);
         },
 
-        removeItem: (productId) => {
-          const { items } = get();
-          const newItems = items.filter((item) => item.productId !== productId);
+        removeItem: async (productId, userId, onError) => {
+          const currentTimeoutId = get()._syncTimeoutId;
+          if (currentTimeoutId) {
+            clearTimeout(currentTimeoutId);
+            set({ _syncTimeoutId: null });
+          }
+
+          // Optimistic delete
+          const previousItems = get().items;
+          const newItems = previousItems.filter(
+            (item) => item.productId !== productId,
+          );
           set({ items: newItems });
+
+          // Server synchronization
+          if (userId) {
+            try {
+              const payload: LocalCartItem[] = newItems.map((item) => ({
+                productId: item.productId,
+                quantity: item.quantity,
+              }));
+
+              const res = await syncCart(userId, payload, false);
+
+              if ('error' in res) {
+                throw new Error(res.error || 'Ошибка сервера');
+              }
+
+              // Update state.items with fresh data
+              if ('items' in res && res.items) {
+                set({ items: res.items });
+              }
+            } catch (error) {
+              console.error('Не удалось удалить товар на сервере:', error);
+
+              // Rollback
+              set({ items: previousItems });
+
+              onError?.(
+                error instanceof Error
+                  ? error.message
+                  : 'Не удалось удалить товар. Проверьте подключение к интернету.',
+              );
+            }
+          }
         },
 
         clearCart: () => {
-          set({ items: [] });
+          const currentTimeoutId = get()._syncTimeoutId;
+          if (currentTimeoutId) {
+            clearTimeout(currentTimeoutId);
+          }
+          set({ items: [], _syncTimeoutId: null });
+        },
+
+        flushSync: async (userId, isMerge = false) => {
+          const { items, _syncTimeoutId } = get();
+
+          if (_syncTimeoutId) {
+            clearTimeout(_syncTimeoutId);
+            set({ _syncTimeoutId: null });
+          }
+
+          const payload: LocalCartItem[] = items.map((item) => ({
+            productId: item.productId,
+            quantity: item.quantity,
+          }));
+
+          const res = await syncCart(userId, payload, isMerge);
+
+          // Update state.items with fresh data
+          if (res.success && 'items' in res && res.items) {
+            set({ items: res.items });
+          }
         },
 
         setItems: (items) => set({ items }),

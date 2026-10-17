@@ -15,11 +15,13 @@ import s from './add-to-cart-button.module.scss';
 
 export const AddToCartButton = ({
   productId,
+  userId,
   productData,
   className,
   variant = 'icon',
 }: {
   productId: string;
+  userId: string | undefined;
   productData: CartItemDto['product'];
   className?: string;
   variant?: VariantButton;
@@ -35,7 +37,7 @@ export const AddToCartButton = ({
 
     if (productData.stock <= 0) return;
 
-    addToCart(productData, productId, (maxStock) =>
+    addToCart(productData, productId, userId, (maxStock) =>
       alert(`Извините, доступно только ${maxStock} шт.`),
     );
   };

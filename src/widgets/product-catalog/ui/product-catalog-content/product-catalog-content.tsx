@@ -8,9 +8,11 @@ import s from './product-catalog-content.module.scss';
 export const ProductCatalogContent = ({
   products,
   totalPages,
+  userId,
 }: {
   products: ProductDto[];
   totalPages: number;
+  userId: string | undefined;
 }) => {
   return (
     <>
@@ -52,6 +54,7 @@ export const ProductCatalogContent = ({
               buyBtn={
                 <AddToCartButton
                   productId={p.id}
+                  userId={userId}
                   productData={cartProductData}
                 />
               }

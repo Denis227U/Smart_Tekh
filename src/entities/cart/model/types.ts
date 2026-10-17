@@ -54,6 +54,7 @@ export interface LocalCartItem {
 
 export interface CartState {
   items: CartItemDto[];
+  _syncTimeoutId: NodeJS.Timeout | null;
   isCartInitialized: boolean;
 }
 
@@ -61,15 +62,22 @@ export interface CartActions {
   addItem: (
     productDto: CartItemDto['product'],
     productId: string,
+    userId?: string,
     onError?: (maxStock: number) => void,
   ) => void;
   updateQuantity: (
     productId: string,
     quantity: number,
+    userId?: string,
     onError?: (maxStock: number) => void,
   ) => void;
-  removeItem: (productId: string) => void;
+  removeItem: (
+    productId: string,
+    userId?: string,
+    onError?: (message: string) => void,
+  ) => void;
   clearCart: () => void;
+  flushSync: (userId: string, isMerge?: boolean) => Promise<void>;
   setItems: (items: CartItemDto[]) => void;
   setCartInitialized: (initialized: boolean) => void;
 }

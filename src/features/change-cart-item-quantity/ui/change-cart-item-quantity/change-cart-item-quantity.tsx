@@ -14,10 +14,12 @@ import s from './change-cart-item-quantity.module.scss';
 
 export const ChangeCartItemQuantity = ({
   productId,
+  userId,
   productData,
   className,
 }: {
   productId: string;
+  userId: string | undefined;
   productData: CartItemDto['product'];
   className?: string;
 }) => {
@@ -35,7 +37,7 @@ export const ChangeCartItemQuantity = ({
 
     if (currentStock <= 0 || quantityInCart <= 1) return;
 
-    updateQuantity(productId, quantityInCart - 1, showAlert);
+    updateQuantity(productId, quantityInCart - 1, userId, showAlert);
   };
 
   const handleIncrement = (e: React.MouseEvent) => {
@@ -43,18 +45,18 @@ export const ChangeCartItemQuantity = ({
 
     if (currentStock <= 0 || isStockExceeded) return;
 
-    updateQuantity(productId, quantityInCart + 1, showAlert);
+    updateQuantity(productId, quantityInCart + 1, userId, showAlert);
   };
 
   const handleInputChange = (value: number) => {
     if (currentStock <= 0) return;
 
     if (value > currentStock) {
-      updateQuantity(productId, currentStock, showAlert);
+      updateQuantity(productId, currentStock, userId, showAlert);
       return;
     }
 
-    updateQuantity(productId, value, showAlert);
+    updateQuantity(productId, value, userId, showAlert);
   };
 
   if (!isHydrated) {

@@ -6,7 +6,13 @@ import { PRODUCT_DELIVERY_INFO } from '../../model/constants';
 import { ProductDeliveryInfo } from '../product-delivery-info/product-delivery-info';
 import s from './product-details-content.module.scss';
 
-export const ProductDetailsContent = ({ product }: { product: ProductDto }) => {
+export const ProductDetailsContent = ({
+  product,
+  userId,
+}: {
+  product: ProductDto;
+  userId: string | undefined;
+}) => {
   const { id, title, rating, price, oldPrice, discount, reviewsCount } =
     product;
 
@@ -66,6 +72,7 @@ export const ProductDetailsContent = ({ product }: { product: ProductDto }) => {
 
           <AddToCartButton
             productId={id}
+            userId={userId}
             productData={cartProductData}
             variant='text'
           />
