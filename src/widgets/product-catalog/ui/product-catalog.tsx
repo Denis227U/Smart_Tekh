@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import type { ProductFilters } from '@/src/entities/product';
 import { getProductsByFilters } from '@/src/entities/product/server';
+import { getCurrentUser } from '@/src/entities/user/server';
 import { ProductCatalogContent } from './product-catalog-content/product-catalog-content';
 import { ProductCatalogEmpty } from './product-catalog-empty/product-catalog-empty';
 import { ProductCatalogSkeleton } from './product-catalog-skeleton/product-catalog-skeleton';
@@ -22,12 +23,15 @@ const ProductCatalogAsync = async ({
     sort,
   });
 
+  const user = await getCurrentUser();
+
   if (!products.length) return <ProductCatalogEmpty />;
 
   return (
     <ProductCatalogContent
       products={products}
       totalPages={pagination.totalPages}
+      userId={user?.id}
     />
   );
 };

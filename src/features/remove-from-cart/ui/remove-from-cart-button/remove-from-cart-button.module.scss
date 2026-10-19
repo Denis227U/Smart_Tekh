@@ -1,0 +1,14 @@
+.button {
+  position: relative;
+  transition: all 0.2s ease;
+
+  svg {
+    color: var(--color-gray-10);
+  }
+
+  &:hover {
+    svg {
+      color: color-mix(in oklab, var(--color-red), rgb(36, 11, 21) 45%);
+    }
+  }
+}

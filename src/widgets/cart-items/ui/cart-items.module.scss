@@ -1,0 +1,39 @@
+.list {
+  --list-gap: 30px;
+
+  @include reset-list;
+
+  display: flex;
+  flex-direction: column;
+  max-width: 900px;
+
+  .item {
+    padding-block: 24px;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    &:first-child {
+      padding-top: 0;
+    }
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.empty {
+  text-align: center;
+  padding-block: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--color-gray-10);
+}
+
+.loaderWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 120px;
+}

@@ -1,8 +1,10 @@
 import ArrowRight from './icons/arrow-right.svg';
+import CartAdded from './icons/cart-added.svg';
 import Cart from './icons/cart.svg';
 import Catalog from './icons/catalog.svg';
 import Chart from './icons/chart.svg';
 import Chat from './icons/chat.svg';
+import Delete from './icons/delete.svg';
 import Delivery from './icons/delivery.svg';
 import EyeOff from './icons/eye-off.svg';
 import Eye from './icons/eye.svg';
@@ -34,4 +36,6 @@ export const Icons = {
   ArrowRight,
   Delivery,
   Payment,
+  CartAdded,
+  Delete,
 };

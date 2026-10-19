@@ -1,0 +1,42 @@
+.button {
+  position: relative;
+
+  &.added {
+    background-color: var(--color-blue-70);
+    border: none;
+    transition: background-color 0.2s ease;
+    color: var(--color-blue-40);
+
+    svg {
+      color: var(--color-blue-40);
+    }
+
+    &:hover {
+      border: none;
+      background-color: color-mix(
+        in oklab,
+        var(--color-blue-70),
+        rgb(8, 19, 61) 5%
+      );
+      color: var(--color-blue-40);
+    }
+
+    &:disabled {
+      background-color: color-mix(
+        in oklab,
+        var(--color-blue-70),
+        rgb(128, 128, 128) 25%
+      );
+    }
+  }
+
+  &.loading {
+    background-color: var(--color-gray-40);
+  }
+}
+
+.badgeCounter {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+}
