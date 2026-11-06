@@ -1,0 +1,35 @@
+.stepWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.step {
+  --gap: 30px;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--gap);
+
+  padding: 30px;
+  border: var(--border-width-s) solid var(--color-gray-30);
+  border-radius: var(--border-radius-m);
+
+  @include mobile-s {
+    padding-block: 30px;
+  }
+}
+
+.prevStepInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titleLocked {
+  color: var(--color-gray-10);
+}
+
+.nextBtn {
+  width: 200px;
+}

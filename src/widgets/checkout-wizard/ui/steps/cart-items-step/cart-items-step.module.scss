@@ -1,0 +1,73 @@
+.list {
+  --list-gap: 30px;
+
+  @include reset-list;
+
+  display: flex;
+  flex-direction: column;
+  // row-gap: var(--list-gap);
+
+  // Стили для стандартного списка в корзине
+  &:not(.collapsed) {
+    .item {
+      padding-block: 24px; // Отступы сверху и снизу от линии
+
+      // Добавляем линию разделения для всех элементов, кроме последнего
+      &:not(:last-child) {
+        border-bottom: 1px solid #e5e5e5; // Цвет серой линии с макета
+      }
+
+      // Корректируем отступы у крайних элементов
+      &:first-child {
+        padding-top: 0;
+      }
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  &.collapsed {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
+    column-gap: 20px;
+
+    .item {
+      grid-template-columns: initial;
+      padding-bottom: 0;
+
+      @include mobile-s {
+        row-gap: 0;
+      }
+
+      & > img {
+        width: 80px;
+        height: 80px;
+      }
+
+      & > :not(img) {
+        display: none;
+      }
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+}
+
+.empty {
+  text-align: center;
+  padding-block: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--color-gray-10);
+}
+
+.loaderWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 120px;
+}

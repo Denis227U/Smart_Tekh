@@ -1,5 +1,5 @@
 import { Loader } from '@/src/shared/ui/common';
-import s from './cart-items.module.scss';
+import s from './cart-items-step.module.scss';
 
 export const CartItemsSkeleton = () => {
   return (
