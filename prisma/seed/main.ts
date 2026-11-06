@@ -2,10 +2,15 @@ import 'dotenv/config';
 import { PrismaPg } from '@prisma/adapter-pg';
 import bcrypt from 'bcryptjs';
 import { Pool } from 'pg';
-import { Prisma, PrismaClient } from '@/src/shared/api/prisma/generated/client';
+import {
+  Prisma,
+  PrismaClient,
+  CityCode,
+} from '@/src/shared/api/prisma/generated/client';
 import { ASSET_PATHS } from '@/src/shared/config';
 import { generateUniqueSlug, getAssetUrl } from '@/src/shared/lib';
 import { categories } from './data/categories';
+import { pickupPoints } from './data/pickup-points';
 import { products } from './data/products';
 import { dummyReviews } from './data/reviews';
 import { users } from './data/users';
@@ -28,7 +33,8 @@ async function main() {
       "products",
       "product_images",
       "product_characteristics",
-      "product_reviews"
+      "product_reviews",
+      "pickup_points"
     RESTART IDENTITY CASCADE;
   `;
 
@@ -245,6 +251,31 @@ async function main() {
   );
   console.log(
     `✅ Seeding reviews finished. Created ${totalReviewsCount} reviews.`,
+  );
+
+  // --- PICKUP POINTS ---
+  console.log('📦 Seeding pickup points...');
+  let pickupPointsCount = 0;
+
+  for (const pp of pickupPoints) {
+    await prisma.pickupPoint.create({
+      data: {
+        name: pp.name,
+        address: pp.address,
+        latitude: pp.latitude,
+        longitude: pp.longitude,
+        workingDays: pp.workingDays,
+        workingHours: pp.workingHours,
+        city: pp.city as CityCode,
+        type: pp.type, // OWN_STORE | PARTNER_PVZ
+        phone: pp.phone,
+        description: pp.description,
+      },
+    });
+    pickupPointsCount++;
+  }
+  console.log(
+    `✅ Seeding pickup points finished. Processed ${pickupPointsCount} pickup points.`,
   );
 
   console.log('✅ Seeding finished.');

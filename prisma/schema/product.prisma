@@ -26,7 +26,8 @@ model Product {
   images          ProductImage[]
   reviews         ProductReview[]
 
-  cartItems CartItem[]
+  cartItems  CartItem[]
+  orderItems OrderItem[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
