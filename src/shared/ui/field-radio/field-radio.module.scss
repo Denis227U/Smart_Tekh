@@ -1,0 +1,163 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  min-height: var(--size-button);
+  transition: all var(--transition-duration) ease-in-out;
+  background-color: transparent;
+
+  &[data-variant='card'] {
+    padding: 8px 16px;
+    border: var(--border);
+    border-radius: var(--border-radius);
+
+    @include hover {
+      &:not(.disabled) {
+        border-color: var(--color-blue-40);
+      }
+    }
+
+    &.checked {
+      border-color: var(--color-blue-50);
+      box-shadow: inset 0 0 0 1px var(--color-blue-50);
+    }
+
+    &:has(.input:focus-visible) {
+      outline: none;
+      border-color: var(--color-blue-50);
+      box-shadow: 0 0 0 3px rgba(76, 117, 163, 0.3);
+    }
+
+    .root[data-error='true'] &:not(.checked):not(.disabled) {
+      border-color: var(--color-error, #dc2626);
+
+      @include hover {
+        border-color: var(--color-error-hover, #b91c1c);
+      }
+    }
+  }
+
+  &[data-variant='simple'] {
+    padding: 4px 0;
+
+    @include hover {
+      &:not(.disabled):not(.checked) {
+        .circle {
+          box-shadow: 0 0 0 2px rgba(76, 117, 163, 0.4);
+        }
+      }
+    }
+
+    &.checked {
+      .content {
+        color: var(--color-blue-50);
+      }
+    }
+
+    &:has(.input:focus-visible) {
+      .circle {
+        box-shadow: 0 0 0 3px rgba(76, 117, 163, 0.4);
+        border-color: var(--color-blue-50);
+      }
+    }
+
+    .root[data-error='true'] &:not(.checked):not(.disabled) {
+      @include hover {
+        .circle {
+          box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+        }
+      }
+    }
+  }
+
+  &.disabled {
+    opacity: 0.5;
+
+    .content {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.input {
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: var(--border);
+  border-radius: 50%;
+  background-color: #fff;
+  transition: all var(--transition-duration) ease-in-out;
+  flex-shrink: 0;
+  margin-top: 1px;
+  position: relative;
+  z-index: 1;
+
+  .item.checked & {
+    border-color: var(--color-blue-50);
+  }
+
+  .root[data-error='true'] .item:not(.checked):not(.disabled) & {
+    border-color: var(--color-error, #dc2626);
+  }
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-blue-50);
+  transform: scale(0);
+  transition: transform var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
+
+  .item.checked & {
+    transform: scale(1);
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-grow: 1;
+  cursor: pointer;
+
+  .item[data-variant='card'] &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+}
+
+.helper {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+
+  &[data-error='true'] {
+    color: var(--color-error, #dc2626);
+  }
+}
