@@ -6,7 +6,8 @@ import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import GitHub from 'next-auth/providers/github';
 import Yandex from 'next-auth/providers/yandex';
-import { prisma, UserRole } from '@/src/shared/api';
+import { prisma } from '@/src/shared/api';
+import { UserRole } from '@/src/shared/api/enums';
 import { serverEnv } from '@/src/shared/config/env';
 import { signInSchema } from '@/src/shared/lib';
 

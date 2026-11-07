@@ -1,4 +1,4 @@
-import { UserRole } from '@/src/shared/api';
+import { UserRole } from '@/src/shared/api/enums';
 import type { DefaultSession } from 'next-auth';
 
 declare module 'next-auth' {
