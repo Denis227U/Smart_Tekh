@@ -1,4 +1,8 @@
+import { useRef } from 'react';
+import { DeliveryForm } from '@/src/features/checkout';
+import { useCheckoutDelivery } from '@/src/features/checkout';
 import { StepCard } from '../../step-card/step-card';
+import { DeliveryPreview } from './delivery-preview';
 import type { CheckoutStep } from '../../../model/types';
 
 export const DeliveryStep = ({
@@ -12,8 +16,13 @@ export const DeliveryStep = ({
   setStep: (step: CheckoutStep) => void;
   isUnlocked: boolean;
 }) => {
-  const renderPreview = () => {
-    return <div>Delivery Preview</div>;
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
+  const delivery = useCheckoutDelivery();
+
+  const handleNextClick = () => {
+    if (submitButtonRef.current) {
+      submitButtonRef.current.click();
+    }
   };
 
   return (
@@ -23,10 +32,13 @@ export const DeliveryStep = ({
       isActive={isActive}
       isUnlocked={isUnlocked}
       onEdit={() => setStep('delivery')}
-      previewContent={renderPreview()}
-      onNext={onComplete}
+      previewContent={<DeliveryPreview delivery={delivery} />}
+      onNext={handleNextClick}
     >
-      <div>Delivery Form</div>
+      <DeliveryForm
+        onValidSubmit={onComplete}
+        ref={submitButtonRef}
+      />
     </StepCard>
   );
 };

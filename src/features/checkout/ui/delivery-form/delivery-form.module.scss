@@ -1,0 +1,72 @@
+.form {
+  --gap: 20px;
+
+  .header {
+    display: grid;
+    grid-template-columns: repeat(2, 310px);
+    column-gap: 30px;
+
+    @include bp-down(1140px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include tablet {
+      grid-template-columns: repeat(2, 310px);
+    }
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      row-gap: var(--gap);
+    }
+
+    .methodsFieldset {
+      display: flex;
+      flex-direction: column;
+      row-gap: var(--gap);
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .methodsLegend {
+      font-size: 16px;
+      margin-bottom: 8px;
+      line-height: 1;
+
+      @include mobile {
+        @include visually-hidden;
+      }
+    }
+  }
+
+  .body {
+    padding-top: 30px;
+
+    &::before {
+      margin-bottom: 30px;
+      content: '';
+      display: block;
+      height: var(--border-width-s);
+      width: 100%;
+      background-color: var(--color-gray-30);
+    }
+  }
+
+  .content {
+    display: grid;
+
+    &.contentDelivery {
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: var(--gap);
+      row-gap: var(--gap);
+
+      @include mobile {
+        grid-template-columns: initial;
+      }
+
+      .fieldWide {
+        grid-column: 1/-1;
+      }
+    }
+  }
+}
