@@ -1,0 +1,53 @@
+.errorStateBlock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+
+  height: var(--pickup-block-height);
+  width: 100%;
+  padding: 32px;
+  background-color: #ffefef;
+  border: 1px dashed #fee2e2;
+  border-radius: 12px;
+  gap: 16px;
+
+  @include mobile {
+    height: 300px;
+    padding: 20px;
+  }
+}
+
+.errorIcon {
+  font-size: 32px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.errorTextWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 360px;
+}
+
+.errorMessageTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-black);
+  margin: 0;
+}
+
+.errorMessageText {
+  font-size: 14px;
+  color: var(--color-gray-10);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.retryButton {
+  margin-top: 8px;
+  padding: 10px 30px;
+  font-size: 14px;
+}

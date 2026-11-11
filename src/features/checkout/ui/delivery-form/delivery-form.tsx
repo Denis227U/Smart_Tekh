@@ -3,16 +3,23 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Ref } from 'react';
 import { useForm, Controller, useWatch } from 'react-hook-form';
-import { CITY_OPTIONS } from '@/src/entities/pickup-point';
+import { CITY_OPTIONS, PickupSelector } from '@/src/entities/pickup-point';
 import { DeliveryType } from '@/src/shared/api/enums';
 import { cn } from '@/src/shared/lib';
 import { Field, FieldRadio, Select } from '@/src/shared/ui/client';
 import { isCourierDelivery, isPickupDelivery } from '../../lib/type-guards';
 import { useSetCheckoutDeliveryData } from '../../model/actions';
-import { DATES, RECEIVING_METHODS, TIMES } from '../../model/constants';
+import {
+  DATES,
+  PICKUP_BLOCK_HEIGHT,
+  RECEIVING_METHODS,
+  TIMES,
+} from '../../model/constants';
 import { deliveryFormSchema } from '../../model/delivery-schema';
 import { useCheckoutDelivery } from '../../model/selectors';
-import { DeliveryFormSchemaInput } from '../../model/types';
+import { DeliveryData, DeliveryFormSchemaInput } from '../../model/types';
+import { usePickupPoints } from '../../model/use-pickup-points';
+import { PickupPointsError } from '../pickup-points-error/pickup-points-error';
 import s from './delivery-form.module.scss';
 
 export const DeliveryForm = ({
@@ -57,19 +64,46 @@ export const DeliveryForm = ({
     };
   };
 
-  const { control, handleSubmit } = useForm<DeliveryFormSchemaInput>({
-    resolver: zodResolver(deliveryFormSchema),
-    defaultValues: getDefaultValues(),
-    mode: 'onBlur',
-  });
+  const { control, handleSubmit, setValue, getValues } =
+    useForm<DeliveryFormSchemaInput>({
+      resolver: zodResolver(deliveryFormSchema),
+      defaultValues: getDefaultValues(),
+      mode: 'onBlur',
+    });
 
   const deliveryType = useWatch({
     control,
     name: 'deliveryType',
   });
+  const city = useWatch({
+    control,
+    name: 'city',
+  });
+
+  const { pickupPoints, isPickupPointsLoading, errorPickupPoints, refetch } =
+    usePickupPoints({ getValues, setValue, deliveryType, city });
 
   const onSubmit = (data: DeliveryFormSchemaInput) => {
-    setDeliveryData(data);
+    console.log('submit', data);
+    let deliveryDataToSave: DeliveryData = { ...data };
+
+    // If "PICKUP" is selected, enrich the base form data for preview
+    if (data.deliveryType === DeliveryType.PICKUP && data.pickupPointId) {
+      const selectedPoint = pickupPoints.find(
+        (p) => p.id === data.pickupPointId,
+      );
+
+      if (selectedPoint) {
+        deliveryDataToSave = {
+          ...data,
+          pickupPointAddress: selectedPoint.address,
+          pickupPointWorkingDays: selectedPoint.workingDays,
+          pickupPointWorkingHours: selectedPoint.workingHours,
+        };
+      }
+    }
+
+    setDeliveryData(deliveryDataToSave);
     onValidSubmit();
   };
 
@@ -103,11 +137,7 @@ export const DeliveryForm = ({
             render={({ field }) => (
               <FieldRadio
                 name={field.name}
-                options={RECEIVING_METHODS.map((method) =>
-                  method.value === DeliveryType.PICKUP
-                    ? { ...method, disabled: true }
-                    : method,
-                )}
+                options={RECEIVING_METHODS}
                 value={field.value}
                 onChange={field.onChange}
               />
@@ -201,7 +231,39 @@ export const DeliveryForm = ({
 
         {deliveryType === 'PICKUP' && (
           <div className={s.content}>
-            <div>В РАЗРАБОТКЕ</div>
+            <Controller
+              name='pickupPointId'
+              control={control}
+              render={({ field, fieldState }) => (
+                <>
+                  {/* Backend error handling */}
+                  {errorPickupPoints ? (
+                    <PickupPointsError
+                      message={errorPickupPoints}
+                      height={PICKUP_BLOCK_HEIGHT}
+                      onRetry={refetch}
+                    />
+                  ) : (
+                    <PickupSelector
+                      points={pickupPoints}
+                      value={field.value}
+                      name={field.name}
+                      onChange={field.onChange}
+                      isLoading={isPickupPointsLoading}
+                      error={Boolean(fieldState.error && !errorPickupPoints)}
+                      height={PICKUP_BLOCK_HEIGHT}
+                    />
+                  )}
+
+                  {/* Form validation error */}
+                  {fieldState.error && !errorPickupPoints && (
+                    <span className={s.errorText}>
+                      {fieldState.error.message}
+                    </span>
+                  )}
+                </>
+              )}
+            />
           </div>
         )}
       </div>

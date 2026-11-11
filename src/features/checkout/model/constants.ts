@@ -55,3 +55,5 @@ export const TIMES: TimeOption[] = [
     value: DeliveryTimeSlot.EVENING,
   },
 ];
+
+export const PICKUP_BLOCK_HEIGHT = '340px';
