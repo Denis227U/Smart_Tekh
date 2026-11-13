@@ -59,7 +59,7 @@ model Order {
   recipientLastname  String  @map("recipient_lastname")
   recipientPhone     String  @map("recipient_phone")
   recipientEmail     String  @map("recipient_email")
-  recipientNoCall    Boolean @map("recipient_no_call")
+  recipientNoCall    Boolean @default(true) @map("recipient_no_call")
 
   userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id], onDelete: Restrict)
