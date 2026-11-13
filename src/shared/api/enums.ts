@@ -4,4 +4,5 @@ export {
   DeliveryType,
   DeliveryTimeSlot,
   PickupPointType,
+  PaymentMethodCode,
 } from './prisma/generated/enums';
