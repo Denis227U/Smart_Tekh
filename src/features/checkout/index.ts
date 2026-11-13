@@ -1,7 +1,8 @@
 export { DeliveryForm } from './ui/delivery-form/delivery-form';
+export { PaymentForm } from './ui/payment-form/payment-form';
 
-export { useCheckoutDelivery } from './model/selectors';
+export { useCheckoutDelivery, useCheckoutPayment } from './model/selectors';
 
-export type { DeliveryData } from './model/types';
+export type { DeliveryData, PaymentData } from './model/types';
 
-export { TIMES } from './model/constants';
+export { TIMES, PAYMENT_METHOD_OPTIONS } from './model/constants';

@@ -1,6 +1,8 @@
+import { useRef } from 'react';
+import { PaymentForm, useCheckoutPayment } from '@/src/features/checkout';
 import { StepCard } from '../../step-card/step-card';
+import { PaymentPreview } from './payment-preview';
 import type { CheckoutStep } from '../../../model/types';
-import s from './payment-step.module.scss';
 
 export const PaymentStep = ({
   isActive,
@@ -13,8 +15,13 @@ export const PaymentStep = ({
   setStep: (step: CheckoutStep) => void;
   isUnlocked: boolean;
 }) => {
-  const renderPreview = () => {
-    return <div>Payment Preview</div>;
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
+  const payment = useCheckoutPayment();
+
+  const handleNextClick = () => {
+    if (submitButtonRef.current) {
+      submitButtonRef.current.click();
+    }
   };
 
   return (
@@ -24,10 +31,13 @@ export const PaymentStep = ({
       isActive={isActive}
       isUnlocked={isUnlocked}
       onEdit={() => setStep('payment')}
-      previewContent={renderPreview()}
-      onNext={onComplete}
+      previewContent={<PaymentPreview payment={payment} />}
+      onNext={handleNextClick}
     >
-      <div>Payment Form</div>
+      <PaymentForm
+        onValidSubmit={onComplete}
+        ref={submitButtonRef}
+      />
     </StepCard>
   );
 };

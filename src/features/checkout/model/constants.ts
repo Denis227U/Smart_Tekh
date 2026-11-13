@@ -1,4 +1,8 @@
-import { DeliveryTimeSlot, DeliveryType } from '@/src/shared/api/enums';
+import {
+  DeliveryTimeSlot,
+  DeliveryType,
+  PaymentMethodCode,
+} from '@/src/shared/api/enums';
 import { formatToTextDate } from '@/src/shared/lib';
 
 export const RECEIVING_METHODS = [
@@ -11,6 +15,25 @@ export const RECEIVING_METHODS = [
     value: DeliveryType.PICKUP,
   },
 ];
+
+export const PAYMENT_METHOD_OPTIONS = [
+  {
+    label: 'Картой онлайн',
+    value: PaymentMethodCode.CARD_ONLINE,
+  },
+  {
+    label: 'СБП (Система быстрых платежей)',
+    value: PaymentMethodCode.SBP,
+  },
+  {
+    label: 'Наличными при получении',
+    value: PaymentMethodCode.CASH_ON_DELIVERY,
+  },
+  {
+    label: 'Картой при получении',
+    value: PaymentMethodCode.CARD_ON_DELIVERY,
+  },
+] as const;
 
 export interface DateOption {
   label: string;
