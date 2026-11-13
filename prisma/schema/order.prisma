@@ -23,10 +23,10 @@ model PickupPoint {
 }
 
 model PaymentMethod {
-  id       String  @id @default(cuid(2))
-  name     String // (e.g., "Картой онлайн", "Наличными при получении")
-  code     String  @unique // (e.g., "stripe", "cash")
-  isActive Boolean @default(true) @map("is_active") // for soft delete
+  id       String            @id @default(cuid(2))
+  name     String
+  code     PaymentMethodCode @unique
+  isActive Boolean           @default(true) @map("is_active") // for soft delete
 
   orders Order[]
 
@@ -112,6 +112,13 @@ model Payment {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("payments")
+}
+
+enum PaymentMethodCode {
+  CARD_ONLINE
+  SBP
+  CASH_ON_DELIVERY
+  CARD_ON_DELIVERY
 }
 
 enum PickupPointType {

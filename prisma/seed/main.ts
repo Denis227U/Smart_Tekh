@@ -10,6 +10,7 @@ import {
 import { ASSET_PATHS } from '@/src/shared/config';
 import { generateUniqueSlug, getAssetUrl } from '@/src/shared/lib';
 import { categories } from './data/categories';
+import { paymentMethodsData } from './data/payment-methods';
 import { pickupPoints } from './data/pickup-points';
 import { products } from './data/products';
 import { dummyReviews } from './data/reviews';
@@ -34,7 +35,8 @@ async function main() {
       "product_images",
       "product_characteristics",
       "product_reviews",
-      "pickup_points"
+      "pickup_points",
+      "payment_methods"
     RESTART IDENTITY CASCADE;
   `;
 
@@ -276,6 +278,22 @@ async function main() {
   }
   console.log(
     `✅ Seeding pickup points finished. Processed ${pickupPointsCount} pickup points.`,
+  );
+
+  // --- PAYMENT METHODS ---
+  console.log('📦 Seeding payment methods...');
+  let paymentMethodsCount = 0;
+
+  for (const method of paymentMethodsData) {
+    await prisma.paymentMethod.create({
+      data: method,
+    });
+
+    paymentMethodsCount++;
+  }
+
+  console.log(
+    `✅ Seeding payment methods finished. Processed ${paymentMethodsCount} payment methods.`,
   );
 
   console.log('✅ Seeding finished.');
