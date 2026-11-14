@@ -1,0 +1,35 @@
+.previewWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 75%;
+
+  @include mobile {
+    max-width: 100%;
+  }
+}
+
+.previewFullName {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-black);
+  margin: 0 0 10px 0;
+  line-height: 1.2;
+}
+
+.previewContacts {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-black);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.previewNoCall {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-gray-10);
+  margin: 10px 0 0 0;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}

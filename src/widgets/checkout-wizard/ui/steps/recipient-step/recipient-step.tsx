@@ -1,21 +1,18 @@
+import { RecipientForm, useCheckoutRecipient } from '@/src/features/checkout';
 import { StepCard } from '../../step-card/step-card';
+import { RecipientPreview } from './recipient-preview';
 import type { CheckoutStep } from '../../../model/types';
-import s from './recipient-step.module.scss';
 
 export const RecipientStep = ({
   isActive,
-  onComplete,
   setStep,
   isUnlocked,
 }: {
   isActive: boolean;
-  onComplete: () => void;
   setStep: (step: CheckoutStep) => void;
   isUnlocked: boolean;
 }) => {
-  const renderPreview = () => {
-    return <div>Recipient Preview</div>;
-  };
+  const recipient = useCheckoutRecipient();
 
   return (
     <StepCard
@@ -24,9 +21,9 @@ export const RecipientStep = ({
       isActive={isActive}
       isUnlocked={isUnlocked}
       onEdit={() => setStep('recipient')}
-      previewContent={renderPreview()}
+      previewContent={<RecipientPreview recipient={recipient} />}
     >
-      <div>Recipient Form</div>
+      <RecipientForm />
     </StepCard>
   );
 };
