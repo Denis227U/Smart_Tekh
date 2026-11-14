@@ -8,11 +8,13 @@ export const useCheckoutStore = create<CheckoutStore>()(
       delivery: null,
       payment: null,
       recipient: null,
+      isRecipientValid: false,
       cachedPoints: {},
 
       setDeliveryData: (delivery) => set({ delivery }),
       setPaymentData: (payment) => set({ payment }),
-      setRecipientData: (recipient) => set({ recipient }),
+      setRecipientState: (recipient, isValid) =>
+        set({ recipient, isRecipientValid: isValid }),
       resetCheckout: () =>
         set({ delivery: null, payment: null, recipient: null }),
       setCachedPoints: (city, points) =>
