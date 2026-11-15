@@ -33,9 +33,6 @@
   position: sticky;
   top: 20px;
 
-  background-color: #ccc;
-  height: 400px;
-
   @include tablet {
     position: static;
     margin: auto;

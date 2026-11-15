@@ -6,6 +6,7 @@ import {
   useCheckoutRecipient,
 } from '@/src/features/checkout';
 import { useCheckoutSteps } from '../../model/use-checkout-step';
+import { OrderSummary } from '../order-summary/order-summary';
 import { CartItemsStep } from '../steps/cart-items-step/cart-items-step';
 import { DeliveryStep } from '../steps/delivery-step/delivery-step';
 import { PaymentStep } from '../steps/payment-step/payment-step';
@@ -61,7 +62,7 @@ export const CheckoutWizard = ({ step }: { step?: string | string[] }) => {
       </div>
 
       <aside className={s.aside}>
-        <div className={s.summary} />
+        <OrderSummary className={s.summary} />
       </aside>
     </div>
   );

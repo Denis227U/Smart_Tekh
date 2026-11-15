@@ -9,3 +9,5 @@ export const useSetCheckoutRecipientState = () =>
   useCheckoutStore((state: CheckoutActions) => state.setRecipientState);
 export const useSetCheckoutCachedPoints = () =>
   useCheckoutStore((state: CheckoutActions) => state.setCachedPoints);
+export const useResetCheckout = () =>
+  useCheckoutStore((state: CheckoutActions) => state.resetCheckout);

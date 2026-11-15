@@ -4,3 +4,4 @@ export { devDelay } from './delay/dev-delay';
 export { getAssetUrl } from './assets/get-asset-url';
 export { generateUniqueSlug } from './slugify/generate-unique-slug';
 export { formatToLongDate, serializeDate, formatToTextDate } from './date';
+export { getPluralNoun } from './strings/get-plural-noun';

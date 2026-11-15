@@ -1,6 +1,7 @@
 import z from 'zod';
 import type { PickupPointDto } from '@/src/entities/pickup-point';
 import { CityCode } from '@/src/shared/api/enums';
+import { createOrderSchema } from './create-order-schema';
 import { deliveryFormSchema } from './delivery-schema';
 import { paymentFormSchema } from './payment-schema';
 import { recipientFormSchema } from './recipient-schema';
@@ -8,6 +9,7 @@ import { recipientFormSchema } from './recipient-schema';
 export type DeliveryFormSchemaInput = z.infer<typeof deliveryFormSchema>;
 export type PaymentFormSchemaInput = z.infer<typeof paymentFormSchema>;
 export type RecipientSchemaInput = z.infer<typeof recipientFormSchema>;
+export type CreateOrderInput = z.infer<typeof createOrderSchema>;
 
 export type DeliveryData = DeliveryFormSchemaInput & {
   pickupPointAddress?: string;
