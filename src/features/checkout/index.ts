@@ -13,6 +13,6 @@ export { useResetCheckout } from './model/actions';
 
 export type { DeliveryData, PaymentData, RecipientData } from './model/types';
 
-export { TIMES, PAYMENT_METHOD_OPTIONS } from './model/constants';
+export { PAYMENT_METHOD_OPTIONS } from './model/constants';
 
 export { createOrder } from './api/create-order';

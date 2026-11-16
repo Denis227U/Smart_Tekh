@@ -1,6 +1,6 @@
 import { RecipientForm, useCheckoutRecipient } from '@/src/features/checkout';
+import { RecipientPreview } from '@/src/entities/order';
 import { StepCard } from '../../step-card/step-card';
-import { RecipientPreview } from './recipient-preview';
 import type { CheckoutStep } from '../../../model/types';
 
 export const RecipientStep = ({

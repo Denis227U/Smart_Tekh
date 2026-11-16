@@ -1,4 +1,4 @@
-import { CityCode } from '@/src/shared/api/enums';
+import { CityCode } from '../api/enums';
 
 export const CITY_LABELS: Record<CityCode, string> = {
   [CityCode.MO]: 'Москва',

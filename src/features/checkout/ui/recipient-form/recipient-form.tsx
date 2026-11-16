@@ -8,7 +8,7 @@ import { Field, FieldCheckbox } from '@/src/shared/ui/client';
 import { useSetCheckoutRecipientState } from '../../model/actions';
 import { recipientFormSchema } from '../../model/recipient-schema';
 import { useCheckoutRecipient } from '../../model/selectors';
-import { RecipientSchemaInput } from '../../model/types';
+import type { RecipientSchemaInput } from '../../model/types';
 import s from './recipient-form.module.scss';
 
 export const RecipientForm = () => {

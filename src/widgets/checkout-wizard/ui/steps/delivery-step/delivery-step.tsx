@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import { DeliveryForm } from '@/src/features/checkout';
 import { useCheckoutDelivery } from '@/src/features/checkout';
+import { DeliveryPreview } from '@/src/entities/order';
 import { StepCard } from '../../step-card/step-card';
-import { DeliveryPreview } from './delivery-preview';
 import type { CheckoutStep } from '../../../model/types';
 
 export const DeliveryStep = ({

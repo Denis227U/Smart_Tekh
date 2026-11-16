@@ -1,13 +1,14 @@
-import { TIMES, type DeliveryData } from '@/src/features/checkout';
-import { CITY_LABELS } from '@/src/entities/pickup-point';
 import { CityCode, DeliveryType } from '@/src/shared/api/enums';
+import { CITY_LABELS } from '@/src/shared/config';
 import { formatToTextDate } from '@/src/shared/lib';
-import s from './delivery-step.module.scss';
+import { TIMES } from '../../model/constants';
+import type { OrderDeliveryView } from '../../model/types';
+import s from './delivery-preview.module.scss';
 
 export const DeliveryPreview = ({
   delivery,
 }: {
-  delivery: DeliveryData | null;
+  delivery: OrderDeliveryView | null;
 }) => {
   if (!delivery) return null;
 

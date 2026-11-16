@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { PaymentForm, useCheckoutPayment } from '@/src/features/checkout';
+import { PaymentPreview } from '@/src/entities/order';
 import { StepCard } from '../../step-card/step-card';
-import { PaymentPreview } from './payment-preview';
 import type { CheckoutStep } from '../../../model/types';
 
 export const PaymentStep = ({

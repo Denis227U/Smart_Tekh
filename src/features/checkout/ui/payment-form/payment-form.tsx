@@ -9,7 +9,7 @@ import { useSetCheckoutPaymentData } from '../../model/actions';
 import { PAYMENT_METHOD_OPTIONS } from '../../model/constants';
 import { paymentFormSchema } from '../../model/payment-schema';
 import { useCheckoutPayment } from '../../model/selectors';
-import { PaymentFormSchemaInput } from '../../model/types';
+import type { PaymentFormSchemaInput } from '../../model/types';
 import s from './payment-form.module.scss';
 
 export const PaymentForm = ({
@@ -31,8 +31,6 @@ export const PaymentForm = ({
   });
 
   const onSubmit = (data: PaymentFormSchemaInput) => {
-    console.log('submit', data);
-
     setPaymentData(data);
     onValidSubmit();
   };

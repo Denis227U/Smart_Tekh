@@ -1,5 +1,5 @@
 import { type RecipientData } from '@/src/features/checkout';
-import s from './recipient-step.module.scss';
+import s from './recipient-preview.module.scss';
 
 export const RecipientPreview = ({
   recipient,

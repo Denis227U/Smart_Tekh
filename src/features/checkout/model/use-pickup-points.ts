@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { type UseFormGetValues, type UseFormSetValue } from 'react-hook-form';
-import { useSetCheckoutCachedPoints } from '@/src/features/checkout/model/actions';
-import { getPickupPointsAction } from '@/src/features/checkout/model/get-pickup-points-action';
-import { useCheckoutCachedPoints } from '@/src/features/checkout/model/selectors';
 import type { PickupPointDto } from '@/src/entities/pickup-point';
 import { CityCode, DeliveryType } from '@/src/shared/api/enums';
+import { useSetCheckoutCachedPoints } from './actions';
+import { getPickupPointsAction } from './get-pickup-points-action';
+import { useCheckoutCachedPoints } from './selectors';
 import type { DeliveryFormSchemaInput } from './types';
 
 /**
@@ -147,7 +147,6 @@ export const usePickupPoints = ({
         }
       } finally {
         if (isCurrentRequest) {
-          // setCompletedCity(cityCode);
           setCompletedRequest({ city: cityCode, attempt: retryCount });
         }
       }

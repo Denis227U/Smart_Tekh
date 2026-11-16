@@ -1,20 +1,16 @@
-import {
-  PAYMENT_METHOD_OPTIONS,
-  type PaymentData,
-} from '@/src/features/checkout';
-import { PAYMENT_HINTS } from '../../../model/constants';
-import s from './payment-step.module.scss';
+import { PAYMENT_HINTS, PAYMENT_METHOD_LABELS } from '../../model/constants';
+import type { OrderPaymentView } from '../../model/types';
+import s from './payment-preview.module.scss';
 
 export const PaymentPreview = ({
   payment,
 }: {
-  payment: PaymentData | null;
+  payment: OrderPaymentView | null;
 }) => {
   if (!payment) return null;
 
   const methodLabel =
-    PAYMENT_METHOD_OPTIONS.find((opt) => opt.value === payment.paymentMethod)
-      ?.label || payment.paymentMethod;
+    PAYMENT_METHOD_LABELS[payment.paymentMethod] || payment.paymentMethod;
 
   const hintText = PAYMENT_HINTS[payment.paymentMethod];
 

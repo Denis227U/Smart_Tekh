@@ -3,8 +3,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Ref } from 'react';
 import { useForm, Controller, useWatch } from 'react-hook-form';
-import { CITY_OPTIONS, PickupSelector } from '@/src/entities/pickup-point';
+import { TIMES } from '@/src/entities/order';
+import { PickupSelector } from '@/src/entities/pickup-point';
 import { DeliveryType } from '@/src/shared/api/enums';
+import { CITY_OPTIONS } from '@/src/shared/config';
 import { cn } from '@/src/shared/lib';
 import { Field, FieldRadio, Select } from '@/src/shared/ui/client';
 import { isCourierDelivery, isPickupDelivery } from '../../lib/type-guards';
@@ -13,13 +15,12 @@ import {
   DATES,
   PICKUP_BLOCK_HEIGHT,
   RECEIVING_METHODS,
-  TIMES,
 } from '../../model/constants';
 import { deliveryFormSchema } from '../../model/delivery-schema';
 import { useCheckoutDelivery } from '../../model/selectors';
-import { DeliveryData, DeliveryFormSchemaInput } from '../../model/types';
 import { usePickupPoints } from '../../model/use-pickup-points';
 import { PickupPointsError } from '../pickup-points-error/pickup-points-error';
+import type { DeliveryData, DeliveryFormSchemaInput } from '../../model/types';
 import s from './delivery-form.module.scss';
 
 export const DeliveryForm = ({
@@ -84,7 +85,6 @@ export const DeliveryForm = ({
     usePickupPoints({ getValues, setValue, deliveryType, city });
 
   const onSubmit = (data: DeliveryFormSchemaInput) => {
-    console.log('submit', data);
     let deliveryDataToSave: DeliveryData = { ...data };
 
     // If "PICKUP" is selected, enrich the base form data for preview

@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { CITY_KEYS } from '@/src/entities/pickup-point';
 import { DeliveryTimeSlot, DeliveryType } from '@/src/shared/api/enums';
+import { CITY_KEYS } from '@/src/shared/config';
 
 const deliverySlots = Object.values(DeliveryTimeSlot) as [
   DeliveryTimeSlot,

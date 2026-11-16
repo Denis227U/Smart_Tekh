@@ -1,4 +1,9 @@
 import z from 'zod';
+import type {
+  OrderDeliveryView,
+  OrderPaymentView,
+  OrderRecipientView,
+} from '@/src/entities/order';
 import type { PickupPointDto } from '@/src/entities/pickup-point';
 import { CityCode } from '@/src/shared/api/enums';
 import { createOrderSchema } from './create-order-schema';
@@ -38,3 +43,16 @@ export interface CheckoutActions {
 }
 
 export type CheckoutStore = CheckoutState & CheckoutActions;
+
+// Prevent type drift between checkout form and order preview UI
+type AssertTrue<T extends true> = T;
+
+type _AssertDeliveryCompatibility = AssertTrue<
+  DeliveryData extends OrderDeliveryView ? true : false
+>;
+type _AssertPaymentCompatibility = AssertTrue<
+  PaymentData extends OrderPaymentView ? true : false
+>;
+type _AssertRecipientCompatibility = AssertTrue<
+  RecipientData extends OrderRecipientView ? true : false
+>;

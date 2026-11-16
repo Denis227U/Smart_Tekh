@@ -1,8 +1,5 @@
-import {
-  DeliveryTimeSlot,
-  DeliveryType,
-  PaymentMethodCode,
-} from '@/src/shared/api/enums';
+import { PAYMENT_METHOD_LABELS } from '@/src/entities/order';
+import { DeliveryType, PaymentMethodCode } from '@/src/shared/api/enums';
 import { formatToTextDate } from '@/src/shared/lib';
 
 export const RECEIVING_METHODS = [
@@ -16,24 +13,12 @@ export const RECEIVING_METHODS = [
   },
 ];
 
-export const PAYMENT_METHOD_OPTIONS = [
-  {
-    label: 'Картой онлайн',
-    value: PaymentMethodCode.CARD_ONLINE,
-  },
-  {
-    label: 'СБП (Система быстрых платежей)',
-    value: PaymentMethodCode.SBP,
-  },
-  {
-    label: 'Наличными при получении',
-    value: PaymentMethodCode.CASH_ON_DELIVERY,
-  },
-  {
-    label: 'Картой при получении',
-    value: PaymentMethodCode.CARD_ON_DELIVERY,
-  },
-] as const;
+export const PAYMENT_METHOD_OPTIONS = (
+  Object.keys(PAYMENT_METHOD_LABELS) as PaymentMethodCode[]
+).map((code) => ({
+  value: code,
+  label: PAYMENT_METHOD_LABELS[code],
+}));
 
 export interface DateOption {
   label: string;
@@ -56,26 +41,6 @@ export const DATES: DateOption[] = [
   {
     label: formatToTextDate('2026-05-26')!,
     value: '2026-05-26',
-  },
-];
-
-export interface TimeOption {
-  label: string;
-  value: DeliveryTimeSlot;
-}
-
-export const TIMES: TimeOption[] = [
-  {
-    label: '09:00–13:00 (бесплатно)',
-    value: DeliveryTimeSlot.MORNING,
-  },
-  {
-    label: '15:00–18:00 (бесплатно)',
-    value: DeliveryTimeSlot.AFTERNOON,
-  },
-  {
-    label: '18:00–22:00',
-    value: DeliveryTimeSlot.EVENING,
   },
 ];
 

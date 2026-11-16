@@ -1,5 +1,5 @@
-import { DeliveryFormSchemaInput } from '@/src/features/checkout/model/types';
 import { DeliveryType } from '@/src/shared/api/enums';
+import type { DeliveryFormSchemaInput } from '../model/types';
 
 export function isCourierDelivery(
   delivery: DeliveryFormSchemaInput | null,
