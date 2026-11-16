@@ -4,6 +4,7 @@ import {
   DeliveryType,
   PaymentMethodCode,
 } from '@/src/shared/api/enums';
+import type { getOrderById } from '../api/get-order-by-id';
 
 export type OrderDeliveryView =
   | {
@@ -36,12 +37,16 @@ export type OrderRecipientView = {
 };
 
 export interface OrderPreviewsData {
-  delivery: OrderDeliveryView | null;
+  delivery: OrderDeliveryView;
   payment: OrderPaymentView | null;
-  recipient: OrderRecipientView | null;
+  recipient: OrderRecipientView;
 }
 
 export interface TimeOption {
   label: string;
   value: DeliveryTimeSlot;
 }
+
+export type OrderDto = NonNullable<Awaited<ReturnType<typeof getOrderById>>>;
+
+export type OrderItemDto = OrderDto['items'][number];

@@ -1,5 +1,17 @@
-import { DeliveryTimeSlot, PaymentMethodCode } from '@/src/shared/api/enums';
+import {
+  DeliveryTimeSlot,
+  OrderStatus,
+  PaymentMethodCode,
+} from '@/src/shared/api/enums';
 import type { TimeOption } from './types';
+
+export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
+  [OrderStatus.PENDING]: 'Ожидает подтверждения / оплаты',
+  [OrderStatus.PAID]: 'Оплачен',
+  [OrderStatus.SHIPPED]: 'Передан в доставку',
+  [OrderStatus.CANCELLED]: 'Отменён',
+  [OrderStatus.REFUNDED]: 'Возврат средств',
+};
 
 export const PAYMENT_HINTS: Record<PaymentMethodCode, string> = {
   [PaymentMethodCode.CARD_ONLINE]:
