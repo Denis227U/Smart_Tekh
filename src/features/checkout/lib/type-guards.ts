@@ -1,4 +1,4 @@
-import { DeliveryType } from '@/src/shared/api/enums';
+import { CityCode, DeliveryType } from '@/src/shared/api/enums';
 import type { DeliveryFormSchemaInput } from '../model/types';
 
 export function isCourierDelivery(
@@ -17,4 +17,11 @@ export function isPickupDelivery(
   { deliveryType: typeof DeliveryType.PICKUP }
 > {
   return delivery?.deliveryType === DeliveryType.PICKUP;
+}
+
+export function isCityCode(value: unknown): value is CityCode {
+  return (
+    typeof value === 'string' &&
+    Object.values(CityCode).includes(value as CityCode)
+  );
 }

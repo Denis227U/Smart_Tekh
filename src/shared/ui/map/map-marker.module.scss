@@ -1,0 +1,52 @@
+.activeMarker {
+  z-index: 10 !important;
+}
+
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tooltip {
+  --tooltip-bg: color-mix(in srgb, var(--color-blue-20) 88%, transparent);
+
+  position: absolute;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 220px;
+  padding: 6px 10px 5px;
+  border-radius: var(--border-radius-m);
+  background-color: var(--tooltip-bg);
+  backdrop-filter: blur(6px);
+  border: var(--border-width-s) solid
+    color-mix(in srgb, var(--color-blue-70) 25%, transparent);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--color-black) 45%, transparent);
+  color: var(--color-white);
+  text-align: center;
+  pointer-events: none;
+  animation: tooltipAppear var(--transition-duration) ease-out;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--tooltip-bg);
+  }
+}
+
+@keyframes tooltipAppear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 4px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}

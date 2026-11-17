@@ -1,5 +1,8 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
+import { PickupMap } from '@/src/entities/pickup-point/ui/pickup-map/pickup-map';
+import { CityCode } from '@/src/shared/api/enums';
 import { cn } from '@/src/shared/lib';
 import { FieldRadio } from '@/src/shared/ui/client';
 import { Loader } from '@/src/shared/ui/common';
@@ -11,6 +14,7 @@ export const PickupSelector = ({
   points,
   value,
   name,
+  currentCityCode,
   onChange,
   isLoading,
   error,
@@ -19,11 +23,21 @@ export const PickupSelector = ({
   points: PickupPointDto[];
   value?: string;
   name: string;
+  currentCityCode?: CityCode;
   onChange: (id: string) => void;
   isLoading?: boolean;
   error: boolean;
   height?: string;
 }) => {
+  const listRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll list when selecting a point on the map
+  useEffect(() => {
+    if (!value || !listRef.current) return;
+    const target = listRef.current.querySelector(`[data-point-id="${value}"]`);
+    target?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, [value]);
+
   if (isLoading) {
     return (
       <div
@@ -40,6 +54,7 @@ export const PickupSelector = ({
     value: item.id,
     label: () => (
       <PickupAddressLabel
+        id={item.id}
         address={item.address}
         workingDays={item.workingDays}
         workingHours={item.workingHours}
@@ -59,7 +74,10 @@ export const PickupSelector = ({
           Товар доступен в {points.length} магазинах
         </span>
 
-        <div className={cn(s.list, 'custom-scroll')}>
+        <div
+          ref={listRef}
+          className={cn(s.list, 'custom-scroll')}
+        >
           <FieldRadio
             name={name}
             variant='simple'
@@ -72,12 +90,12 @@ export const PickupSelector = ({
         </div>
       </fieldset>
 
-      <div className={s.mapWrapper}>
-        <div className={s.mockMap}>
-          Карта (Выбрано:{' '}
-          {points.find((p) => p.id === value)?.address || 'Ничего'})
-        </div>
-      </div>
+      <PickupMap
+        points={points}
+        selectedId={value}
+        onSelect={onChange}
+        cityCode={currentCityCode}
+      />
     </div>
   );
 };

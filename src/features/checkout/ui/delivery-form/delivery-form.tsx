@@ -9,7 +9,11 @@ import { DeliveryType } from '@/src/shared/api/enums';
 import { CITY_OPTIONS } from '@/src/shared/config';
 import { cn } from '@/src/shared/lib';
 import { Field, FieldRadio, Select } from '@/src/shared/ui/client';
-import { isCourierDelivery, isPickupDelivery } from '../../lib/type-guards';
+import {
+  isCityCode,
+  isCourierDelivery,
+  isPickupDelivery,
+} from '../../lib/type-guards';
 import { useSetCheckoutDeliveryData } from '../../model/actions';
 import {
   DATES,
@@ -80,6 +84,8 @@ export const DeliveryForm = ({
     control,
     name: 'city',
   });
+
+  const currentCityCode = isCityCode(city) ? city : undefined;
 
   const { pickupPoints, isPickupPointsLoading, errorPickupPoints, refetch } =
     usePickupPoints({ getValues, setValue, deliveryType, city });
@@ -252,6 +258,7 @@ export const DeliveryForm = ({
                       isLoading={isPickupPointsLoading}
                       error={Boolean(fieldState.error && !errorPickupPoints)}
                       height={PICKUP_BLOCK_HEIGHT}
+                      currentCityCode={currentCityCode}
                     />
                   )}
 

@@ -4,13 +4,16 @@ import Cart from './icons/cart.svg';
 import Catalog from './icons/catalog.svg';
 import Chart from './icons/chart.svg';
 import Chat from './icons/chat.svg';
+import Collapse from './icons/collapse.svg';
 import Delete from './icons/delete.svg';
 import Delivery from './icons/delivery.svg';
+import Expand from './icons/expand.svg';
 import EyeOff from './icons/eye-off.svg';
 import Eye from './icons/eye.svg';
 import Home from './icons/home.svg';
 import Like from './icons/like.svg';
 import Lock from './icons/lock.svg';
+import LogoShort from './icons/logo-short.svg';
 import More from './icons/more.svg';
 import Payment from './icons/payment.svg';
 import Profile from './icons/profile.svg';
@@ -38,4 +41,7 @@ export const Icons = {
   Payment,
   CartAdded,
   Delete,
+  LogoShort,
+  Expand,
+  Collapse,
 };

@@ -13,3 +13,4 @@ export * from './tabs';
 export * from './avatar';
 export * from './field-counter';
 export * from './field-radio';
+export * from './map';
