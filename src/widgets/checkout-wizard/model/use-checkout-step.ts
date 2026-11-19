@@ -1,12 +1,11 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { CHECKOUT_STEPS } from './constants';
 import type { CheckoutStep } from './types';
 
 export function useCheckoutSteps(serverStep?: string | string[]) {
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -23,22 +22,22 @@ export function useCheckoutSteps(serverStep?: string | string[]) {
     : 'cart';
 
   // Check URL for 'step' param, default to 'cart' if missing
-  // Use router.replace to keep the browser history clean
+  // Use window.history.replaceState to keep the browser history clean
   useEffect(() => {
     if (!searchParams?.has('step')) {
       const params = new URLSearchParams(searchParams?.toString());
       params.set('step', 'cart');
 
-      router.replace(`${pathname}?${params.toString()}`);
+      window.history.replaceState(null, '', `${pathname}?${params.toString()}`);
     }
-  }, [searchParams, pathname, router]);
+  }, [searchParams, pathname]);
 
   const setStep = (step: CheckoutStep) => {
     const params = new URLSearchParams(searchParams?.toString());
     params.set('step', step);
 
     // Soft navigation
-    router.push(`${pathname}?${params.toString()}`);
+    window.history.pushState(null, '', `${pathname}?${params.toString()}`);
   };
 
   const nextStep = () => {

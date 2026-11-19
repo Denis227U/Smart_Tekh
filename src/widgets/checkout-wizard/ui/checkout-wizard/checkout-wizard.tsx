@@ -7,6 +7,7 @@ import {
 } from '@/src/features/checkout';
 import { useTotalItems } from '@/src/entities/cart';
 import { useCheckoutSteps } from '../../model/use-checkout-step';
+import { useScrollToStep } from '../../model/use-scroll-to-step';
 import { OrderSummary } from '../order-summary/order-summary';
 import { CartItemsStep } from '../steps/cart-items-step/cart-items-step';
 import { DeliveryStep } from '../steps/delivery-step/delivery-step';
@@ -17,6 +18,8 @@ import s from './checkout-wizard.module.scss';
 export const CheckoutWizard = ({ step }: { step?: string | string[] }) => {
   const { currentStep, nextStep, isStepPassed, setStep } =
     useCheckoutSteps(step);
+
+  useScrollToStep(currentStep);
 
   const delivery = useCheckoutDelivery();
   const payment = useCheckoutPayment();
