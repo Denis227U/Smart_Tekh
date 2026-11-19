@@ -21,8 +21,14 @@ export const deliveryFormSchema = z.discriminatedUnion('deliveryType', [
     deliveryTime: z.enum(deliverySlots, {
       message: 'Выберите время',
     }),
-    street: z.string().min(1, 'Укажите адрес'),
-    apartment: z.string().min(1, 'Укажите квартиру'),
+    street: z
+      .string({ message: 'Укажите адрес' })
+      .trim()
+      .min(1, 'Укажите адрес'),
+    apartment: z
+      .string({ message: 'Укажите квартиру' })
+      .trim()
+      .min(1, 'Укажите квартиру'),
     comment: z.string().optional(),
   }),
   z.object({
@@ -30,6 +36,8 @@ export const deliveryFormSchema = z.discriminatedUnion('deliveryType', [
     city: z.enum(zodCityKeys, {
       message: 'Выберите город из списка',
     }),
-    pickupPointId: z.string().min(1, 'Выберите пункт выдачи'),
+    pickupPointId: z
+      .string({ message: 'Выберите пункт выдачи' })
+      .min(1, 'Выберите пункт выдачи'),
   }),
 ]);

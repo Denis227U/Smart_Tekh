@@ -162,6 +162,7 @@ export const DeliveryForm = ({
     <form
       onSubmit={handleSubmit(onSubmit)}
       className={s.form}
+      noValidate
     >
       <header className={s.header}>
         <Controller
