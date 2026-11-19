@@ -74,10 +74,15 @@ $control-padding: 20px;
     pointer-events: auto;
   }
 
-  .error {
+  .helperText {
     margin: 0;
     font-size: 14px;
-    color: var(--color-red);
+    line-height: 1.2;
+    color: var(--color-gray-50);
+
+    &[data-error] {
+      color: var(--color-red);
+    }
   }
 
   // modifiers

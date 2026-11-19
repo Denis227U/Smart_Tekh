@@ -59,11 +59,12 @@ export const FieldLayout = ({
         {suffix && <span className={s.suffix}>{suffix}</span>}
       </div>
 
-      {error && (
+      {helperText && (
         <p
-          id={`${id}-error`}
-          className={s.error}
-          role='alert'
+          id={`${id}-helper`}
+          className={s.helperText}
+          data-error={error || undefined}
+          role={error ? 'alert' : undefined}
         >
           {helperText}
         </p>

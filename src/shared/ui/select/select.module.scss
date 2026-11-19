@@ -135,6 +135,13 @@
   }
 
   .helperText {
-    color: var(--color-red);
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.2;
+    color: var(--color-gray-50);
+
+    &[data-error] {
+      color: var(--color-red);
+    }
   }
 }

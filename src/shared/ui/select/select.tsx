@@ -74,6 +74,7 @@ export const Select = (props: SelectProps) => {
           aria-haspopup='listbox'
           aria-expanded={isOpen}
           aria-labelledby={label ? labelId : undefined}
+          aria-describedby={helperText ? `${id}-helper` : undefined}
         >
           <span
             className={selectedOption ? s.selectedValue : s.selectedplaceholder}
@@ -108,7 +109,16 @@ export const Select = (props: SelectProps) => {
         />
       )}
 
-      {helperText && <span className={s.helperText}>{helperText}</span>}
+      {helperText && (
+        <p
+          id={`${id}-helper`}
+          className={s.helperText}
+          data-error={error || undefined}
+          role={error ? 'alert' : undefined}
+        >
+          {helperText}
+        </p>
+      )}
 
       {isOpen && (
         <ul
