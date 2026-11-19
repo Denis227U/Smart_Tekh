@@ -9,11 +9,13 @@ export const CartItemsStep = ({
   onComplete,
   setStep,
   isUnlocked,
+  isNextDisabled,
 }: {
   isActive: boolean;
   onComplete: () => void;
   setStep: (step: CheckoutStep) => void;
   isUnlocked: boolean;
+  isNextDisabled: boolean;
 }) => {
   const isCartInitialized = useIsCartInitialized();
 
@@ -30,6 +32,7 @@ export const CartItemsStep = ({
       onEdit={() => setStep('cart')}
       previewContent={renderPreview()}
       onNext={onComplete}
+      isNextDisabled={isNextDisabled}
     >
       {!isCartInitialized ? <CartItemsSkeleton /> : <CartItemsContent />}
     </StepCard>

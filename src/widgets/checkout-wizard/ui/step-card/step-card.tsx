@@ -13,6 +13,7 @@ export const StepCard = ({
   previewContent,
   onNext,
   nextBtnText = 'Далее',
+  isNextDisabled = false,
   children,
 }: PropsWithChildren<{
   number: number;
@@ -23,6 +24,7 @@ export const StepCard = ({
   previewContent?: ReactNode;
   onNext?: () => void;
   nextBtnText?: string;
+  isNextDisabled?: boolean;
 }>) => {
   // Locked mode: Step is not yet accessible to the user
   if (!isUnlocked) {
@@ -94,6 +96,7 @@ export const StepCard = ({
           variant='main'
           className={s.nextBtn}
           aria-label={`Перейти к следующему шагу после "${title}"`}
+          disabled={isNextDisabled}
           onClick={onNext}
         >
           {nextBtnText}

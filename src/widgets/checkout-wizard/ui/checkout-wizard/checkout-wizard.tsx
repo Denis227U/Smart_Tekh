@@ -5,6 +5,7 @@ import {
   useCheckoutPayment,
   useCheckoutRecipient,
 } from '@/src/features/checkout';
+import { useTotalItems } from '@/src/entities/cart';
 import { useCheckoutSteps } from '../../model/use-checkout-step';
 import { OrderSummary } from '../order-summary/order-summary';
 import { CartItemsStep } from '../steps/cart-items-step/cart-items-step';
@@ -21,6 +22,9 @@ export const CheckoutWizard = ({ step }: { step?: string | string[] }) => {
   const payment = useCheckoutPayment();
   const recipient = useCheckoutRecipient();
 
+  const cartTotalItems = useTotalItems();
+  const isCartEmpty = cartTotalItems === 0;
+
   return (
     <div className={s.wrapper}>
       <div className={s.steps}>
@@ -29,15 +33,17 @@ export const CheckoutWizard = ({ step }: { step?: string | string[] }) => {
           onComplete={nextStep}
           setStep={setStep}
           isUnlocked={isStepPassed('cart') || currentStep === 'cart'}
+          isNextDisabled={isCartEmpty}
         />
         <DeliveryStep
           isActive={currentStep === 'delivery'}
           onComplete={nextStep}
           setStep={setStep}
           isUnlocked={
-            isStepPassed('delivery') ||
-            currentStep === 'delivery' ||
-            Boolean(delivery)
+            !isCartEmpty &&
+            (isStepPassed('delivery') ||
+              currentStep === 'delivery' ||
+              Boolean(delivery))
           }
         />
         <PaymentStep
@@ -45,18 +51,20 @@ export const CheckoutWizard = ({ step }: { step?: string | string[] }) => {
           onComplete={nextStep}
           setStep={setStep}
           isUnlocked={
-            isStepPassed('payment') ||
-            currentStep === 'payment' ||
-            Boolean(payment)
+            !isCartEmpty &&
+            (isStepPassed('payment') ||
+              currentStep === 'payment' ||
+              Boolean(payment))
           }
         />
         <RecipientStep
           isActive={currentStep === 'recipient'}
           setStep={setStep}
           isUnlocked={
-            isStepPassed('recipient') ||
-            currentStep === 'recipient' ||
-            Boolean(recipient)
+            !isCartEmpty &&
+            (isStepPassed('recipient') ||
+              currentStep === 'recipient' ||
+              Boolean(recipient))
           }
         />
       </div>
