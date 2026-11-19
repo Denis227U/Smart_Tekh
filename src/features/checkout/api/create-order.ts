@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { calculateDeliveryCost } from '@/src/entities/order';
 import { getCurrentUser } from '@/src/entities/user/server';
 import { prisma } from '@/src/shared/api';
 import {
@@ -20,10 +21,11 @@ import { type CreateOrderInput } from '../model/types';
  * Executes the full order creation process:
  * 1. Verifies user authentication and validates input data against `createOrderSchema`.
  * 2. Fetches the cart from the database, checks product availability (`stock`), and calculates the total amount on the server.
- * 3. Validates that the selected payment method and pickup point (for store pickup) are active.
- * 4. Within an atomic transaction (`prisma.$transaction`), decrements product stock, creates the order (`Order`),
+ * 3. Calculate shipping cost and total order amount.
+ * 4. Validates that the selected payment method and pickup point (for store pickup) are active.
+ * 5. Within an atomic transaction (`prisma.$transaction`), decrements product stock, creates the order (`Order`),
  *    order items (`OrderItem`), payment record (`Payment` for online payments), and clears the cart.
- * 5. Revalidates the cache for the checkout and order history pages.
+ * 6. Revalidates the cache for the checkout and order history pages.
  *
  * @param rawInput - Order checkout data (delivery details, payment method, and recipient contacts).
  * @returns Result object: `{ success: true, orderId, shouldRedirectToPayment }` on success
@@ -78,7 +80,7 @@ export async function createOrder(
       };
     }
 
-    let totalAmount = 0; // current order total
+    let itemsTotal = 0; // current order total
     const stockErrors: string[] = [];
 
     for (const item of cart.items) {
@@ -90,7 +92,7 @@ export async function createOrder(
         );
       }
 
-      totalAmount += Number(item.product.price) * item.quantity;
+      itemsTotal += Number(item.product.price) * item.quantity;
     }
 
     if (stockErrors.length > 0) {
@@ -99,6 +101,18 @@ export async function createOrder(
         error: `Недостаточно товара: ${stockErrors.join(', ')}`,
       };
     }
+
+    const deliveryCost = calculateDeliveryCost({
+      deliveryType: delivery.deliveryType,
+      city: delivery.city as CityCode,
+      timeSlot:
+        delivery.deliveryType === DeliveryType.DELIVERY
+          ? delivery.deliveryTime
+          : null,
+      itemsTotal,
+    });
+
+    const totalAmount = itemsTotal + deliveryCost;
 
     const orderItemsData = cart.items.map((item) => ({
       productId: item.product.id,
@@ -180,6 +194,8 @@ export async function createOrder(
           recipientEmail: recipient.recipientEmail,
           recipientNoCall: recipient.recipientNoCall,
 
+          itemsTotal,
+          deliveryCost,
           total: totalAmount,
           status: OrderStatus.PENDING,
 

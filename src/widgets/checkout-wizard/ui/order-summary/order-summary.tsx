@@ -5,6 +5,7 @@ import { useState, useTransition } from 'react';
 import {
   createOrder,
   useCheckoutDelivery,
+  useCheckoutDeliveryDraft,
   useCheckoutIsRecipientValid,
   useCheckoutPayment,
   useCheckoutRecipient,
@@ -16,6 +17,8 @@ import {
   useTotalItems,
   useTotalPrice,
 } from '@/src/entities/cart';
+import { calculateDeliveryCost } from '@/src/entities/order';
+import { DeliveryType } from '@/src/shared/api/enums';
 import { cn, getPluralNoun } from '@/src/shared/lib';
 import { ROUTES } from '@/src/shared/routes';
 import { Button, FieldCheckbox } from '@/src/shared/ui/client';
@@ -30,6 +33,7 @@ export const OrderSummary = ({ className }: { className?: string }) => {
   const totalCount = useTotalItems();
   const totalPrice = useTotalPrice();
   const delivery = useCheckoutDelivery();
+  const deliveryDraft = useCheckoutDeliveryDraft();
   const payment = useCheckoutPayment();
   const recipient = useCheckoutRecipient();
   const isRecipientValid = useCheckoutIsRecipientValid();
@@ -42,7 +46,18 @@ export const OrderSummary = ({ className }: { className?: string }) => {
   const router = useRouter();
 
   const pluralNoun = getPluralNoun(totalCount, 'товар', 'товара', 'товаров');
-  const isPickupPoint = delivery?.deliveryType === 'PICKUP';
+  const activeDeliveryType = deliveryDraft.deliveryType;
+  const isPickupPoint = activeDeliveryType === DeliveryType.PICKUP;
+  const isEmptyCart = totalCount === 0;
+
+  const deliveryCost = calculateDeliveryCost({
+    deliveryType: activeDeliveryType,
+    city: deliveryDraft.city,
+    timeSlot: deliveryDraft.deliveryTime,
+    itemsTotal: totalPrice,
+  });
+
+  const finalTotal = totalPrice + deliveryCost;
 
   const isOrderReady = Boolean(
     totalCount > 0 &&
@@ -102,24 +117,25 @@ export const OrderSummary = ({ className }: { className?: string }) => {
             <span className={s.value}>{totalPrice.toLocaleString()} ₽</span>
           </div>
 
-          {!isPickupPoint ? (
-            <div className={s.row}>
-              <span className={s.label}>Стоимость доставки</span>
-              <span className={s.value}>бесплатно</span>
-            </div>
-          ) : (
-            <div className={s.row}>
-              <span className={s.label}>Самовывоз</span>
-              <span className={s.value}>бесплатно</span>
-            </div>
-          )}
+          <div className={s.row}>
+            <span className={s.label}>
+              {isPickupPoint ? 'Самовывоз' : 'Стоимость доставки'}
+            </span>
+            <span className={s.value}>
+              {isEmptyCart
+                ? '—'
+                : deliveryCost === 0
+                  ? 'бесплатно'
+                  : `${deliveryCost.toLocaleString()} ₽`}
+            </span>
+          </div>
         </div>
 
         <form onSubmit={handlePlaceOrder}>
           <div className={cn(s.row, s.rowTotal)}>
             <span className={s.labelTotal}>К оплате</span>
             <span className={s.priceTotal}>
-              {totalPrice.toLocaleString()} ₽
+              {finalTotal.toLocaleString()} ₽
             </span>
           </div>
 

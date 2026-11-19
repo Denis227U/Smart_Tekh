@@ -5,7 +5,11 @@ import type {
   OrderRecipientView,
 } from '@/src/entities/order';
 import type { PickupPointDto } from '@/src/entities/pickup-point';
-import { CityCode } from '@/src/shared/api/enums';
+import {
+  CityCode,
+  DeliveryTimeSlot,
+  DeliveryType,
+} from '@/src/shared/api/enums';
 import { createOrderSchema } from './create-order-schema';
 import { deliveryFormSchema } from './delivery-schema';
 import { paymentFormSchema } from './payment-schema';
@@ -22,12 +26,19 @@ export type DeliveryData = DeliveryFormSchemaInput & {
   pickupPointWorkingHours?: string;
 };
 
+export interface DeliveryDraft {
+  deliveryType: DeliveryType;
+  city: CityCode;
+  deliveryTime?: DeliveryTimeSlot | null;
+}
+
 export type PaymentData = PaymentFormSchemaInput;
 
 export type RecipientData = RecipientSchemaInput;
 
 export interface CheckoutState {
   delivery: DeliveryData | null;
+  deliveryDraft: DeliveryDraft;
   payment: PaymentData | null;
   recipient: RecipientData | null;
   isRecipientValid: boolean;
@@ -36,6 +47,7 @@ export interface CheckoutState {
 
 export interface CheckoutActions {
   setDeliveryData: (data: DeliveryData) => void;
+  setDeliveryDraft: (draft: Partial<DeliveryDraft>) => void;
   setPaymentData: (data: PaymentData) => void;
   setRecipientState: (data: RecipientData | null, isValid: boolean) => void;
   resetCheckout: () => void;

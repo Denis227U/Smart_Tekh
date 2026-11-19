@@ -10,7 +10,9 @@ export {
   PAYMENT_METHOD_LABELS,
   TIMES,
 } from './model/constants';
+export { DELIVERY_CONFIG } from './model/delivery-config';
 
+export { calculateDeliveryCost } from './model/calculate-delivery-cost';
 export { mapOrderToPreviews } from './lib/map-order-to-previews';
 
 export { DeliveryPreview } from './ui/delivery-preview/delivery-preview';

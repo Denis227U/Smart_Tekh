@@ -64,8 +64,10 @@ model Order {
   userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id], onDelete: Restrict)
 
-  total  Decimal     @db.Decimal(10, 2)
-  status OrderStatus @default(PENDING)
+  itemsTotal   Decimal     @map("items_total") @db.Decimal(10, 2)
+  deliveryCost Decimal     @map("delivery_cost") @db.Decimal(10, 2)
+  total        Decimal     @db.Decimal(10, 2) // itemsTotal + deliveryCost
+  status       OrderStatus @default(PENDING)
 
   items    OrderItem[] // for history
   payments Payment[]

@@ -33,11 +33,11 @@ export const PAYMENT_METHOD_LABELS: Record<PaymentMethodCode, string> = {
 
 export const TIMES: TimeOption[] = [
   {
-    label: '09:00–13:00 (бесплатно)',
+    label: '09:00–13:00',
     value: DeliveryTimeSlot.MORNING,
   },
   {
-    label: '15:00–18:00 (бесплатно)',
+    label: '15:00–18:00',
     value: DeliveryTimeSlot.AFTERNOON,
   },
   {

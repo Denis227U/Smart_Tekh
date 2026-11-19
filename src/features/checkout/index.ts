@@ -4,6 +4,7 @@ export { RecipientForm } from './ui/recipient-form/recipient-form';
 
 export {
   useCheckoutDelivery,
+  useCheckoutDeliveryDraft,
   useCheckoutPayment,
   useCheckoutRecipient,
   useCheckoutIsRecipientValid,

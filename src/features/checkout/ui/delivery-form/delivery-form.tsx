@@ -1,11 +1,12 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Ref } from 'react';
+import { Ref, useEffect } from 'react';
 import { useForm, Controller, useWatch } from 'react-hook-form';
-import { TIMES } from '@/src/entities/order';
+import { useTotalPrice } from '@/src/entities/cart';
+import { calculateDeliveryCost, TIMES } from '@/src/entities/order';
 import { PickupSelector } from '@/src/entities/pickup-point';
-import { DeliveryType } from '@/src/shared/api/enums';
+import { CityCode, DeliveryType } from '@/src/shared/api/enums';
 import { CITY_OPTIONS } from '@/src/shared/config';
 import { cn } from '@/src/shared/lib';
 import { Field, FieldRadio, Select } from '@/src/shared/ui/client';
@@ -14,7 +15,10 @@ import {
   isCourierDelivery,
   isPickupDelivery,
 } from '../../lib/type-guards';
-import { useSetCheckoutDeliveryData } from '../../model/actions';
+import {
+  useSetCheckoutDeliveryData,
+  useSetCheckoutDeliveryDraft,
+} from '../../model/actions';
 import {
   DATES,
   PICKUP_BLOCK_HEIGHT,
@@ -36,6 +40,8 @@ export const DeliveryForm = ({
 }) => {
   const delivery = useCheckoutDelivery();
   const setDeliveryData = useSetCheckoutDeliveryData();
+  const cartItemsTotalPrice = useTotalPrice();
+  const setDeliveryDraft = useSetCheckoutDeliveryDraft();
 
   const getDefaultValues = (): DeliveryFormSchemaInput => {
     if (isCourierDelivery(delivery)) {
@@ -84,8 +90,30 @@ export const DeliveryForm = ({
     control,
     name: 'city',
   });
+  const deliveryTime = useWatch({
+    control,
+    name: 'deliveryTime',
+  });
 
   const currentCityCode = isCityCode(city) ? city : undefined;
+
+  const targetCity = currentCityCode ?? CITY_OPTIONS[0].value;
+
+  const timeOptions = TIMES.map((slot) => {
+    const cost = calculateDeliveryCost({
+      deliveryType: DeliveryType.DELIVERY,
+      city: targetCity,
+      timeSlot: slot.value,
+      itemsTotal: cartItemsTotalPrice,
+    });
+
+    const priceLabel = cost === 0 ? 'бесплатно' : `${cost} ₽`;
+
+    return {
+      value: slot.value,
+      label: `${slot.label} (${priceLabel})`,
+    };
+  });
 
   const { pickupPoints, isPickupPointsLoading, errorPickupPoints, refetch } =
     usePickupPoints({ getValues, setValue, deliveryType, city });
@@ -110,8 +138,25 @@ export const DeliveryForm = ({
     }
 
     setDeliveryData(deliveryDataToSave);
+
+    setDeliveryDraft({
+      deliveryType: data.deliveryType,
+      city: data.city as CityCode,
+      deliveryTime:
+        data.deliveryType === DeliveryType.DELIVERY ? data.deliveryTime : null,
+    });
+
     onValidSubmit();
   };
+
+  useEffect(() => {
+    setDeliveryDraft({
+      deliveryType,
+      city: currentCityCode,
+      deliveryTime:
+        deliveryType === DeliveryType.DELIVERY ? deliveryTime : null,
+    });
+  }, [deliveryType, currentCityCode, deliveryTime, setDeliveryDraft]);
 
   return (
     <form
@@ -177,7 +222,7 @@ export const DeliveryForm = ({
                 <Field
                   label='Улица, дом/корпус'
                   placeholder='Набережная Кутузова, 2'
-                  value={field.value}
+                  value={field.value ?? ''}
                   onChange={field.onChange}
                   error={Boolean(fieldState.error)}
                   helperText={fieldState.error?.message}
@@ -192,7 +237,7 @@ export const DeliveryForm = ({
               render={({ field, fieldState }) => (
                 <Select
                   label='Время'
-                  options={TIMES}
+                  options={timeOptions}
                   value={field.value}
                   onChange={field.onChange}
                   error={Boolean(fieldState.error)}
@@ -208,7 +253,7 @@ export const DeliveryForm = ({
                 <Field
                   label='Квартира'
                   placeholder='77'
-                  value={field.value}
+                  value={field.value ?? ''}
                   onChange={field.onChange}
                   error={Boolean(fieldState.error)}
                   helperText={fieldState.error?.message}
@@ -224,7 +269,7 @@ export const DeliveryForm = ({
                   label='Комментарий курьеру'
                   className={s.fieldWide}
                   placeholder='Вход со двора'
-                  value={field.value}
+                  value={field.value ?? ''}
                   onChange={field.onChange}
                   error={Boolean(fieldState.error)}
                   helperText={fieldState.error?.message}
