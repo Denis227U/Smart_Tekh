@@ -237,20 +237,124 @@
   font-variant-numeric: tabular-nums;
 }
 
+.bottomGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .itemsSection {
+    grid-column: span 2;
+
+    @include mobile {
+      grid-column: span 1;
+    }
+  }
+}
+
+.itemsList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.itemRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-block: 14px;
+  border-bottom: var(--border);
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.itemTitle {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-black);
+}
+
+.itemQty {
+  font-size: 13px;
+  color: var(--color-gray-10);
+}
+
+.itemPrice {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-black);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.summaryCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.summaryList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  color: var(--color-gray-10);
+
+  span:last-child {
+    color: var(--color-black);
+    font-weight: 500;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
 .totalRow {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-top: 20px;
-  padding-top: 18px;
-  border-top: var(--border-width-s) dashed var(--color-gray-30);
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: var(--border);
   font-size: 15px;
-  color: var(--color-gray-10);
+  font-weight: 500;
+  color: var(--color-black);
 
   strong {
     font-size: 22px;
     font-weight: 700;
     color: var(--color-black);
+    white-space: nowrap;
     font-variant-numeric: tabular-nums;
 
     @include mobile {
