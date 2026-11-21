@@ -4,7 +4,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Ref, useEffect } from 'react';
 import { useForm, Controller, useWatch } from 'react-hook-form';
 import { useTotalPrice } from '@/src/entities/cart';
-import { calculateDeliveryCost, TIMES } from '@/src/entities/order';
+import {
+  calculateDeliveryCost,
+  getAvailableDeliveryDates,
+  TIMES,
+} from '@/src/entities/order';
 import { PickupSelector } from '@/src/entities/pickup-point';
 import { CityCode, DeliveryType } from '@/src/shared/api/enums';
 import { CITY_OPTIONS } from '@/src/shared/config';
@@ -19,11 +23,7 @@ import {
   useSetCheckoutDeliveryData,
   useSetCheckoutDeliveryDraft,
 } from '../../model/actions';
-import {
-  DATES,
-  PICKUP_BLOCK_HEIGHT,
-  RECEIVING_METHODS,
-} from '../../model/constants';
+import { PICKUP_BLOCK_HEIGHT, RECEIVING_METHODS } from '../../model/constants';
 import { deliveryFormSchema } from '../../model/delivery-schema';
 import { useCheckoutDelivery } from '../../model/selectors';
 import { usePickupPoints } from '../../model/use-pickup-points';
@@ -43,12 +43,21 @@ export const DeliveryForm = ({
   const cartItemsTotalPrice = useTotalPrice();
   const setDeliveryDraft = useSetCheckoutDeliveryDraft();
 
+  const availableDates = getAvailableDeliveryDates();
+
   const getDefaultValues = (): DeliveryFormSchemaInput => {
+    const defaultDate = availableDates[0]?.value ?? '';
+
     if (isCourierDelivery(delivery)) {
+      // Check if the date from store is still valid
+      const isSavedDateValid = availableDates.some(
+        (d) => d.value === delivery.deliveryDate,
+      );
+
       return {
         deliveryType: DeliveryType.DELIVERY,
         city: delivery.city,
-        deliveryDate: delivery.deliveryDate,
+        deliveryDate: isSavedDateValid ? delivery.deliveryDate : defaultDate,
         deliveryTime: delivery.deliveryTime,
         street: delivery.street,
         apartment: delivery.apartment,
@@ -67,7 +76,7 @@ export const DeliveryForm = ({
     return {
       deliveryType: DeliveryType.DELIVERY,
       city: CITY_OPTIONS[0].value,
-      deliveryDate: DATES[0].value,
+      deliveryDate: defaultDate,
       deliveryTime: TIMES[0].value,
       street: '',
       apartment: '',
@@ -207,7 +216,7 @@ export const DeliveryForm = ({
               render={({ field, fieldState }) => (
                 <Select
                   label='Дата'
-                  options={DATES}
+                  options={availableDates}
                   value={field.value}
                   onChange={field.onChange}
                   error={Boolean(fieldState.error)}

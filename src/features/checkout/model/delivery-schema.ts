@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { getAvailableDeliveryDates } from '@/src/entities/order';
 import { DeliveryTimeSlot, DeliveryType } from '@/src/shared/api/enums';
 import { CITY_KEYS } from '@/src/shared/config';
 
@@ -17,7 +18,14 @@ export const deliveryFormSchema = z.discriminatedUnion('deliveryType', [
     }),
     deliveryDate: z
       .string({ message: 'Выберите дату' })
-      .min(1, 'Выберите дату'),
+      .min(1, 'Выберите дату')
+      .refine(
+        (val) =>
+          getAvailableDeliveryDates(new Date(), true).some(
+            (d) => d.value === val,
+          ),
+        { message: 'Выбранная дата доставки недоступна' },
+      ),
     deliveryTime: z.enum(deliverySlots, {
       message: 'Выберите время',
     }),

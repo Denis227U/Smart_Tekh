@@ -47,6 +47,11 @@ export interface TimeOption {
   value: DeliveryTimeSlot;
 }
 
+export interface DateOption {
+  label: string;
+  value: string; // YYYY-MM-DD
+}
+
 export type OrderDto = NonNullable<Awaited<ReturnType<typeof getOrderById>>>;
 
 export type OrderItemDto = OrderDto['items'][number];
