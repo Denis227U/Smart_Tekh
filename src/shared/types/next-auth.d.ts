@@ -1,4 +1,4 @@
-import { UserRole } from '@/src/shared/api';
+import { UserRole } from '@/src/shared/api/enums';
 import type { DefaultSession } from 'next-auth';
 
 declare module 'next-auth' {
@@ -8,6 +8,7 @@ declare module 'next-auth' {
       role: UserRole;
       avatar?: string | null;
       username?: string | null;
+      phone?: string | null;
     } & DefaultSession['user'];
   }
 
@@ -15,6 +16,7 @@ declare module 'next-auth' {
     role?: UserRole;
     avatar?: string | null;
     username?: string | null;
+    phone?: string | null;
   }
 }
 
@@ -24,5 +26,6 @@ declare module '@auth/core/jwt' {
     role: UserRole;
     avatar?: string | null;
     username?: string | null;
+    phone?: string | null;
   }
 }

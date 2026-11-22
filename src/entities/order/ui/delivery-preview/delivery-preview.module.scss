@@ -1,0 +1,42 @@
+.previewWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 75%;
+
+  @include mobile {
+    max-width: 100%;
+  }
+}
+
+.previewMethodTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-black);
+  margin: 0;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+
+.previewAddress {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-black);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.previewWorkingHours,
+.previewDeliveryTime,
+.previewDeliveryComment {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-gray-10);
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.previewDeliveryComment {
+  margin-top: 10px;
+}

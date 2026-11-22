@@ -1,0 +1,177 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--border-radius-l);
+  background-color: var(--color-blue-20);
+  isolation: isolate;
+
+  canvas {
+    filter: sepia(100%) hue-rotate(175deg) saturate(260%) brightness(0.85)
+      contrast(1.15) !important;
+  }
+}
+
+.skeleton {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    110deg,
+    var(--color-blue-10) 25%,
+    var(--color-blue-20) 50%,
+    var(--color-blue-10) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  color: var(--color-blue-70);
+  font-size: 14px;
+}
+
+@keyframes shimmer {
+  to {
+    background-position-x: -200%;
+  }
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  background-color: color-mix(in srgb, var(--color-black) 72%, transparent);
+  backdrop-filter: blur(4px);
+  animation: fadeIn var(--transition-duration) ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.expanded {
+  position: fixed !important;
+  inset: 24px !important;
+  z-index: 1002 !important;
+  width: auto !important;
+  height: auto !important;
+  border: var(--border-width-s) solid
+    color-mix(in srgb, var(--color-blue-70) 20%, transparent);
+  border-radius: var(--border-radius-l) !important;
+  box-shadow: 0 20px 50px
+    color-mix(in srgb, var(--color-black) 65%, transparent);
+
+  @include mobile {
+    inset: 12px !important;
+  }
+}
+
+.expandButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: var(--border-width-s) solid
+    color-mix(in srgb, var(--color-blue-70) 25%, transparent);
+  border-radius: var(--border-radius-m);
+  background-color: color-mix(in srgb, var(--color-blue-20) 88%, transparent);
+  backdrop-filter: blur(4px);
+  color: var(--color-blue-70);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-duration) ease,
+    border-color var(--transition-duration) ease,
+    transform var(--transition-duration) ease;
+
+  &:hover {
+    background-color: var(--color-blue-40);
+    border-color: color-mix(in srgb, var(--color-blue-70) 45%, transparent);
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &:focus-visible {
+    outline: var(--border-width-m) solid var(--color-blue-50);
+    outline-offset: 2px;
+  }
+}
+
+// MapLibre attribution styling
+:global(.maplibregl-ctrl-attrib.maplibregl-compact) {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  padding: 0 !important;
+  border: var(--border-width-s) solid
+    color-mix(in srgb, var(--color-blue-70) 20%, transparent) !important;
+  border-radius: 12px !important;
+  background-color: color-mix(
+    in srgb,
+    var(--color-blue-20) 88%,
+    transparent
+  ) !important;
+  backdrop-filter: blur(4px);
+  color: var(--color-blue-70) !important;
+  font-family: var(--font-family-base), sans-serif !important;
+  font-size: 11px !important;
+  line-height: 1.2 !important;
+}
+
+:global(.maplibregl-ctrl-attrib.maplibregl-compact a) {
+  color: var(--color-blue-70) !important;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    color: var(--color-white) !important;
+  }
+}
+
+:global(
+  .maplibregl-ctrl-attrib.maplibregl-compact:not(:hover):not(:focus-within)
+    .maplibregl-ctrl-attrib-inner
+) {
+  display: none !important;
+}
+
+:global(
+  .maplibregl-ctrl-attrib.maplibregl-compact:hover .maplibregl-ctrl-attrib-inner
+),
+:global(
+  .maplibregl-ctrl-attrib.maplibregl-compact:focus-within
+    .maplibregl-ctrl-attrib-inner
+) {
+  display: block !important;
+  padding: 4px 28px 4px 10px !important;
+  white-space: nowrap !important;
+}
+
+:global(.maplibregl-ctrl-attrib-button[title='Toggle attribution']) {
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  display: block !important;
+  width: 24px !important;
+  height: 24px !important;
+  background-color: transparent !important;
+  filter: invert(1) opacity(0.85);
+}

@@ -10,6 +10,8 @@ export const ROUTES = {
   PROFILE: {
     INDEX: '/profile',
     GENERAL: '/profile/general',
+    ORDERS: '/profile/orders',
+    ORDER_DETAILS: (orderId: string) => `/profile/orders/${orderId}`,
   },
   CHECKOUT: '/checkout',
 };

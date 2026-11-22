@@ -1,0 +1,161 @@
+model PickupPoint {
+  id           String          @id @default(cuid(2))
+  type         PickupPointType @default(PARTNER_PVZ)
+  name         String?
+  address      String
+  workingDays  String          @map("working_days")
+  workingHours String          @map("working_hours")
+  phone        String?
+  description  String?         @db.Text
+  isActive     Boolean         @default(true) @map("is_active")
+
+  city      CityCode
+  latitude  Float
+  longitude Float
+
+  orders Order[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([city, isActive, type])
+  @@map("pickup_points")
+}
+
+model PaymentMethod {
+  id       String            @id @default(cuid(2))
+  name     String
+  code     PaymentMethodCode @unique
+  isActive Boolean           @default(true) @map("is_active") // for soft delete
+
+  orders Order[]
+
+  @@map("payment_methods")
+}
+
+model Order {
+  id           String       @id @default(cuid(2))
+  deliveryType DeliveryType @map("delivery_type")
+
+  city CityCode
+
+  // delivery
+  deliveryDate DateTime?         @map("delivery_date") @db.Date
+  deliveryTime DeliveryTimeSlot? @map("delivery_time")
+  street       String?
+  apartment    String?
+  comment      String?
+
+  // pickup
+  pickupPointId String?      @map("pickup_point_id")
+  pickupPoint   PickupPoint? @relation(fields: [pickupPointId], references: [id], onDelete: Restrict)
+
+  // payment
+  paymentMethodId String?        @map("payment_method_id")
+  paymentMethod   PaymentMethod? @relation(fields: [paymentMethodId], references: [id], onDelete: Restrict)
+
+  // recipient
+  recipientFirstname String  @map("recipient_firstname")
+  recipientLastname  String  @map("recipient_lastname")
+  recipientPhone     String  @map("recipient_phone")
+  recipientEmail     String  @map("recipient_email")
+  recipientNoCall    Boolean @default(true) @map("recipient_no_call")
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  itemsTotal   Decimal     @map("items_total") @db.Decimal(10, 2)
+  deliveryCost Decimal     @map("delivery_cost") @db.Decimal(10, 2)
+  total        Decimal     @db.Decimal(10, 2) // itemsTotal + deliveryCost
+  status       OrderStatus @default(PENDING)
+
+  items    OrderItem[] // for history
+  payments Payment[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@index([deliveryDate])
+  @@index([pickupPointId])
+  @@map("orders")
+}
+
+model OrderItem {
+  id String @id @default(cuid(2))
+
+  orderId   String   @map("order_id")
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String? // null if product is deleted
+  product   Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  // denormalization
+  productTitle String  @map("product_title")
+  productPrice Decimal @map("product_price") @db.Decimal(10, 2)
+  productSlug  String? @map("product_slug")
+  quantity     Int
+
+  @@index([orderId])
+  @@map("order_items")
+}
+
+model Payment {
+  id      String @id @default(cuid(2))
+  orderId String @map("order_id")
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  amount Decimal       @db.Decimal(10, 2)
+  status PaymentStatus @default(PENDING)
+
+  externalId String? @map("external_id")
+  paymentUrl String? @map("payment_url") @db.Text
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("payments")
+}
+
+enum PaymentMethodCode {
+  CARD_ONLINE
+  SBP
+  CASH_ON_DELIVERY
+  CARD_ON_DELIVERY
+}
+
+enum PickupPointType {
+  OWN_STORE // Own store / Office
+  PARTNER_PVZ // Partner pickup point
+}
+
+enum DeliveryType {
+  DELIVERY
+  PICKUP
+}
+
+enum CityCode {
+  SP
+  MO
+  KZ
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  PENDING // Payment created, user redirected to checkout, card details not yet entered
+  SUCCESS // Funds successfully debited / bank confirmed the transaction (order can be processed)
+  FAILED // Payment error (insufficient funds, cancelled by user, 3D-Secure failure)
+  REFUNDED // Funds successfully returned to the buyer's card (e.g. upon order cancellation)
+}
+
+enum DeliveryTimeSlot {
+  MORNING   @map("9:00-13:00")
+  AFTERNOON @map("15:00-18:00")
+  EVENING   @map("18:00-22:00")
+}

@@ -1,0 +1,17 @@
+.body {
+  --gap: 20px;
+
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: var(--gap);
+  row-gap: var(--gap);
+
+  @include mobile {
+    grid-template-columns: initial;
+  }
+
+  .fieldWide {
+    grid-column: 1/-1;
+  }
+}

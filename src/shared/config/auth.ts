@@ -6,7 +6,8 @@ import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import GitHub from 'next-auth/providers/github';
 import Yandex from 'next-auth/providers/yandex';
-import { prisma, UserRole } from '@/src/shared/api';
+import { prisma } from '@/src/shared/api';
+import { UserRole } from '@/src/shared/api/enums';
 import { serverEnv } from '@/src/shared/config/env';
 import { signInSchema } from '@/src/shared/lib';
 
@@ -101,6 +102,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.role = user.role || UserRole.USER;
         token.avatar = user.avatar || user.image;
         token.username = user.username || user.name;
+        token.phone = user.phone ?? null;
       }
       return token;
     },
@@ -110,6 +112,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.role = token.role;
         session.user.avatar = token.avatar;
         session.user.username = token.username;
+        session.user.phone = token.phone ?? null;
       }
       return session;
     },

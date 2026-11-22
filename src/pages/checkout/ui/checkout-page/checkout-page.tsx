@@ -1,8 +1,10 @@
-import { CartItems } from '@/src/widgets/cart-items';
+import {
+  CHECKOUT_STEPS,
+  CheckoutWizard,
+  type CheckoutStep,
+} from '@/src/widgets/checkout-wizard';
 import { PageHeader } from '@/src/widgets/page-header';
-import { cn } from '@/src/shared/lib';
-import { Container } from '@/src/shared/ui/common';
-import s from './checkout-page.module.scss';
+import { Container, RoutePropsResolver } from '@/src/shared/ui/common';
 
 export const CheckoutPage = ({
   params,
@@ -12,10 +14,24 @@ export const CheckoutPage = ({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
   return (
-    <Container className={cn(s.container, s.section)}>
+    <Container>
       <PageHeader title='Оформление заказа' />
 
-      <CartItems />
+      <RoutePropsResolver
+        params={params}
+        searchParams={searchParams}
+        fallback={<div>Loading...</div>}
+      >
+        {({ searchParams: { step } }) => {
+          const currentStep: CheckoutStep = CHECKOUT_STEPS.includes(
+            step as CheckoutStep,
+          )
+            ? (step as CheckoutStep)
+            : 'cart';
+
+          return <CheckoutWizard step={currentStep} />;
+        }}
+      </RoutePropsResolver>
     </Container>
   );
 };

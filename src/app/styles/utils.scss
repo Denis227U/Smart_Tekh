@@ -30,3 +30,31 @@
   overflow: hidden !important;
   touch-action: none;
 }
+
+.custom-scroll {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gray-30) transparent;
+  padding-right: 4px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-gray-30);
+    border-radius: 8px;
+
+    @include hover {
+      background-color: var(--color-gray-10);
+    }
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+}
