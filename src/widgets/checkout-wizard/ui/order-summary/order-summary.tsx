@@ -21,7 +21,13 @@ import { useCheckoutItemsSource } from '../../model/use-checkout-items-source';
 import { OrderSummarySkeleton } from './order-summary-skeleton';
 import s from './order-summary.module.scss';
 
-export const OrderSummary = ({ className }: { className?: string }) => {
+export const OrderSummary = ({
+  className,
+  onOrderSuccess,
+}: {
+  className?: string;
+  onOrderSuccess?: () => void;
+}) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const { isBuyNow, items, totalCount, totalPrice, isReady, clearSource } =
@@ -88,10 +94,11 @@ export const OrderSummary = ({ className }: { className?: string }) => {
         return;
       }
 
+      onOrderSuccess?.();
       resetCheckout();
       clearSource();
 
-      router.push(
+      router.replace(
         `${ROUTES.PROFILE.ORDER_DETAILS(result.orderId)}?created=true`,
       );
     });

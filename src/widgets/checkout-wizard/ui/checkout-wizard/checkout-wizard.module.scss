@@ -39,3 +39,10 @@
     margin: auto;
   }
 }
+
+.loaderWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: calc(50vh - 200px);
+}

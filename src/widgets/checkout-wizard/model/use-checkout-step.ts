@@ -5,7 +5,10 @@ import { useEffect } from 'react';
 import { CHECKOUT_STEPS } from './constants';
 import type { CheckoutStep } from './types';
 
-export function useCheckoutSteps(serverStep?: string | string[]) {
+export function useCheckoutSteps(
+  serverStep?: string | string[],
+  isDisabled = false,
+) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -24,13 +27,15 @@ export function useCheckoutSteps(serverStep?: string | string[]) {
   // Check URL for 'step' param, default to 'cart' if missing
   // Use window.history.replaceState to keep the browser history clean
   useEffect(() => {
+    if (isDisabled) return;
+
     if (!searchParams?.has('step')) {
       const params = new URLSearchParams(searchParams?.toString());
       params.set('step', 'cart');
 
       window.history.replaceState(null, '', `${pathname}?${params.toString()}`);
     }
-  }, [searchParams, pathname]);
+  }, [searchParams, pathname, isDisabled]);
 
   const setStep = (step: CheckoutStep) => {
     const params = new URLSearchParams(searchParams?.toString());
