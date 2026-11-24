@@ -11,35 +11,28 @@ import {
   useCheckoutRecipient,
   useResetCheckout,
 } from '@/src/features/checkout';
-import {
-  useClearCart,
-  useIsCartInitialized,
-  useTotalItems,
-  useTotalPrice,
-} from '@/src/entities/cart';
 import { calculateDeliveryCost } from '@/src/entities/order';
 import { DeliveryType } from '@/src/shared/api/enums';
 import { cn, getPluralNoun } from '@/src/shared/lib';
 import { ROUTES } from '@/src/shared/routes';
 import { Button, FieldCheckbox } from '@/src/shared/ui/client';
 import { Heading } from '@/src/shared/ui/common';
+import { useCheckoutItemsSource } from '../../model/use-checkout-items-source';
 import { OrderSummarySkeleton } from './order-summary-skeleton';
 import s from './order-summary.module.scss';
 
 export const OrderSummary = ({ className }: { className?: string }) => {
   const [isChecked, setIsChecked] = useState(false);
 
-  const isCartInitialized = useIsCartInitialized();
-  const totalCount = useTotalItems();
-  const totalPrice = useTotalPrice();
+  const { isBuyNow, items, totalCount, totalPrice, isReady, clearSource } =
+    useCheckoutItemsSource();
+
   const delivery = useCheckoutDelivery();
   const deliveryDraft = useCheckoutDeliveryDraft();
   const payment = useCheckoutPayment();
   const recipient = useCheckoutRecipient();
   const isRecipientValid = useCheckoutIsRecipientValid();
-
   const resetCheckout = useResetCheckout();
-  const clearCart = useClearCart();
 
   const [isPending, startTransition] = useTransition();
 
@@ -73,11 +66,21 @@ export const OrderSummary = ({ className }: { className?: string }) => {
 
     if (!delivery || !payment || !recipient || !isRecipientValid) return;
 
+    const buyNowProduct = isBuyNow ? items[0] : undefined;
+
     startTransition(async () => {
       const result = await createOrder({
         delivery,
         payment,
         recipient,
+        ...(buyNowProduct
+          ? {
+              buyNowItem: {
+                productId: buyNowProduct.productId,
+                quantity: buyNowProduct.quantity,
+              },
+            }
+          : {}),
       });
 
       if (!result.success) {
@@ -86,7 +89,7 @@ export const OrderSummary = ({ className }: { className?: string }) => {
       }
 
       resetCheckout();
-      clearCart();
+      clearSource();
 
       router.push(
         `${ROUTES.PROFILE.ORDER_DETAILS(result.orderId)}?created=true`,
@@ -94,7 +97,7 @@ export const OrderSummary = ({ className }: { className?: string }) => {
     });
   };
 
-  if (!isCartInitialized) {
+  if (!isReady) {
     return <OrderSummarySkeleton />;
   }
 

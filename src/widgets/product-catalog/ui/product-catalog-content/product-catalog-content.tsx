@@ -1,5 +1,7 @@
 import { AddToCartButton } from '@/src/features/add-to-cart';
+import { BuyNowButton } from '@/src/features/buy-now';
 import { ProductPagination } from '@/src/features/product-pagination';
+import type { CartProductDto } from '@/src/entities/cart';
 import { ProductCard, type ProductDto } from '@/src/entities/product';
 import { Button } from '@/src/shared/ui/client';
 import { Grid, Icon } from '@/src/shared/ui/common';
@@ -23,7 +25,7 @@ export const ProductCatalogContent = ({
       >
         {products.map((p, index) => {
           // Preparing data object for Zustand
-          const cartProductData = {
+          const cartProductData: CartProductDto = {
             id: p.id,
             title: p.title,
             slug: p.slug,
@@ -50,7 +52,7 @@ export const ProductCatalogContent = ({
                   <Icon name='Chart' />
                 </Button>
               }
-              quickBuyBtn={<Button variant='outline'>Купить в 1 клик</Button>}
+              quickBuyBtn={<BuyNowButton product={cartProductData} />}
               buyBtn={
                 <AddToCartButton
                   productId={p.id}

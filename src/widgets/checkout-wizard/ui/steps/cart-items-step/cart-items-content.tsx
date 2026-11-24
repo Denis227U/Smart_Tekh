@@ -1,12 +1,10 @@
+import { ChangeBuyNowQuantity } from '@/src/features/buy-now';
 import { ChangeCartItemQuantity } from '@/src/features/change-cart-item-quantity';
 import { RemoveFromCartButton } from '@/src/features/remove-from-cart';
-import {
-  CartItemRow,
-  useCartHydrated,
-  useCartItems,
-} from '@/src/entities/cart';
+import { CartItemRow } from '@/src/entities/cart';
 import { useSession } from '@/src/entities/user';
 import { cn } from '@/src/shared/lib';
+import { useCheckoutItemsSource } from '../../../model/use-checkout-items-source';
 import { CartItemsSkeleton } from './cart-items-skeleton';
 import s from './cart-items-step.module.scss';
 
@@ -16,15 +14,20 @@ export const CartItemsContent = ({
   isCollapsed?: boolean;
 }) => {
   const { user } = useSession();
-  const items = useCartItems();
-  const isHydrated = useCartHydrated();
+  const { items, isReady, isBuyNow } = useCheckoutItemsSource();
 
-  if (!isHydrated) {
+  if (!isReady) {
     return <CartItemsSkeleton />;
   }
 
   if (!items || items.length === 0) {
-    return <div className={s.empty}>Ваша корзина пуста</div>;
+    return (
+      <div className={s.empty}>
+        {isBuyNow
+          ? 'Товар для быстрого заказа не выбран'
+          : 'Ваша корзина пуста'}
+      </div>
+    );
   }
 
   return (
@@ -50,17 +53,23 @@ export const CartItemsContent = ({
             coverThumbnail={item.product.coverThumbnail}
             coverImageAlt={item.product.coverImageAlt}
             counterSlot={
-              <ChangeCartItemQuantity
-                productId={item.productId}
-                productData={item.product}
-                userId={user?.id}
-              />
+              isBuyNow ? (
+                <ChangeBuyNowQuantity />
+              ) : (
+                <ChangeCartItemQuantity
+                  productId={item.productId}
+                  productData={item.product}
+                  userId={user?.id}
+                />
+              )
             }
             actionsSlot={
-              <RemoveFromCartButton
-                productId={item.productId}
-                userId={user?.id}
-              />
+              !isBuyNow && (
+                <RemoveFromCartButton
+                  productId={item.productId}
+                  userId={user?.id}
+                />
+              )
             }
           />
         );

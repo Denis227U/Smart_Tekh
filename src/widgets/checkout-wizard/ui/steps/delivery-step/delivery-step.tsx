@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { DeliveryForm } from '@/src/features/checkout';
 import { useCheckoutDelivery } from '@/src/features/checkout';
 import { DeliveryPreview } from '@/src/entities/order';
+import { useCheckoutItemsSource } from '../../../model/use-checkout-items-source';
 import { StepCard } from '../../step-card/step-card';
 import type { CheckoutStep } from '../../../model/types';
 
@@ -18,6 +19,7 @@ export const DeliveryStep = ({
 }) => {
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   const delivery = useCheckoutDelivery();
+  const { totalPrice } = useCheckoutItemsSource();
 
   const handleNextClick = () => {
     if (submitButtonRef.current) {
@@ -36,6 +38,7 @@ export const DeliveryStep = ({
       onNext={handleNextClick}
     >
       <DeliveryForm
+        itemsTotalPrice={totalPrice}
         onValidSubmit={onComplete}
         ref={submitButtonRef}
       />

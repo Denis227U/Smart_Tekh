@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Ref, useEffect } from 'react';
 import { useForm, Controller, useWatch } from 'react-hook-form';
-import { useTotalPrice } from '@/src/entities/cart';
 import {
   calculateDeliveryCost,
   getAvailableDeliveryDates,
@@ -32,15 +31,16 @@ import type { DeliveryData, DeliveryFormSchemaInput } from '../../model/types';
 import s from './delivery-form.module.scss';
 
 export const DeliveryForm = ({
+  itemsTotalPrice,
   onValidSubmit,
   ref,
 }: {
+  itemsTotalPrice: number;
   onValidSubmit: () => void;
   ref: Ref<HTMLButtonElement>;
 }) => {
   const delivery = useCheckoutDelivery();
   const setDeliveryData = useSetCheckoutDeliveryData();
-  const cartItemsTotalPrice = useTotalPrice();
   const setDeliveryDraft = useSetCheckoutDeliveryDraft();
 
   const availableDates = getAvailableDeliveryDates();
@@ -113,7 +113,7 @@ export const DeliveryForm = ({
       deliveryType: DeliveryType.DELIVERY,
       city: targetCity,
       timeSlot: slot.value,
-      itemsTotal: cartItemsTotalPrice,
+      itemsTotal: itemsTotalPrice,
     });
 
     const priceLabel = cost === 0 ? 'бесплатно' : `${cost} ₽`;

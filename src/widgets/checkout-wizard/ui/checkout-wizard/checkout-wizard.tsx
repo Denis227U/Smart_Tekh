@@ -5,7 +5,7 @@ import {
   useCheckoutPayment,
   useCheckoutRecipient,
 } from '@/src/features/checkout';
-import { useTotalItems } from '@/src/entities/cart';
+import { useCheckoutItemsSource } from '../../model/use-checkout-items-source';
 import { useCheckoutSteps } from '../../model/use-checkout-step';
 import { useScrollToStep } from '../../model/use-scroll-to-step';
 import { OrderSummary } from '../order-summary/order-summary';
@@ -25,8 +25,8 @@ export const CheckoutWizard = ({ step }: { step?: string | string[] }) => {
   const payment = useCheckoutPayment();
   const recipient = useCheckoutRecipient();
 
-  const cartTotalItems = useTotalItems();
-  const isCartEmpty = cartTotalItems === 0;
+  const { totalCount } = useCheckoutItemsSource();
+  const isCartEmpty = totalCount === 0;
 
   return (
     <div className={s.wrapper}>

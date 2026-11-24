@@ -1,4 +1,4 @@
-import { useIsCartInitialized } from '@/src/entities/cart';
+import { useCheckoutItemsSource } from '../../../model/use-checkout-items-source';
 import { StepCard } from '../../step-card/step-card';
 import { CartItemsContent } from './cart-items-content';
 import { CartItemsSkeleton } from './cart-items-skeleton';
@@ -17,7 +17,7 @@ export const CartItemsStep = ({
   isUnlocked: boolean;
   isNextDisabled: boolean;
 }) => {
-  const isCartInitialized = useIsCartInitialized();
+  const { isReady } = useCheckoutItemsSource();
 
   const renderPreview = () => {
     return <CartItemsContent isCollapsed />;
@@ -34,7 +34,7 @@ export const CartItemsStep = ({
       onNext={onComplete}
       isNextDisabled={isNextDisabled}
     >
-      {!isCartInitialized ? <CartItemsSkeleton /> : <CartItemsContent />}
+      {!isReady ? <CartItemsSkeleton /> : <CartItemsContent />}
     </StepCard>
   );
 };
