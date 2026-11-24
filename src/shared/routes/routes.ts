@@ -13,5 +13,6 @@ export const ROUTES = {
     ORDERS: '/profile/orders',
     ORDER_DETAILS: (orderId: string) => `/profile/orders/${orderId}`,
   },
-  CHECKOUT: '/checkout',
+  CHECKOUT: (mode?: 'buy-now') =>
+    mode ? `/checkout?mode=${mode}` : '/checkout',
 };

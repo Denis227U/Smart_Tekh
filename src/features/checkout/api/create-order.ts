@@ -224,7 +224,7 @@ export async function createOrder(
       return order;
     });
 
-    revalidatePath(ROUTES.CHECKOUT);
+    revalidatePath(ROUTES.CHECKOUT());
     revalidatePath(ROUTES.PROFILE.ORDERS);
 
     return {

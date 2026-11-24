@@ -9,7 +9,7 @@ export const CartHeaderLink = () => {
 
   return (
     <Badge
-      href={ROUTES.CHECKOUT}
+      href={ROUTES.CHECKOUT()}
       label='Корзина'
       count={totalCount}
     >
