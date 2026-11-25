@@ -11,12 +11,16 @@
   flex-direction: column;
   row-gap: var(--gap);
 
-  padding: 30px;
+  padding: var(--gap);
   border: var(--border-width-s) solid var(--color-gray-30);
   border-radius: var(--border-radius-m);
 
+  @include mobile {
+    --gap: 20px;
+  }
+
   @include mobile-s {
-    padding-block: 30px;
+    --gap: 12px;
   }
 }
 
@@ -24,6 +28,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
 }
 
 .title {
@@ -34,6 +39,22 @@
   color: var(--color-gray-10);
 }
 
+.editBtn {
+  flex-shrink: 0;
+
+  @include mobile-s {
+    font-size: 14px;
+  }
+}
+
 .nextBtn {
   width: 200px;
+
+  @include mobile {
+    width: 140px;
+  }
+
+  @include mobile-s {
+    width: 120px;
+  }
 }

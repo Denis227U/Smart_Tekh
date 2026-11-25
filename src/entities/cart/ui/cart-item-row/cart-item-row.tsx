@@ -39,7 +39,10 @@ export const CartItemRow = ({
   const totalOldPrice = oldPrice ? oldPrice * quantity : null;
 
   return (
-    <Component className={cn(s.row, className)}>
+    <Component
+      className={cn(s.row, className)}
+      data-no-actions={!actionsSlot || undefined}
+    >
       <Image
         className={s.image}
         src={coverThumbnail ?? noProductImage}

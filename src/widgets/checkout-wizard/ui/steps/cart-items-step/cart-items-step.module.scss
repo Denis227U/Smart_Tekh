@@ -1,23 +1,17 @@
 .list {
-  --list-gap: 30px;
-
   @include reset-list;
 
   display: flex;
   flex-direction: column;
-  // row-gap: var(--list-gap);
 
-  // Стили для стандартного списка в корзине
   &:not(.collapsed) {
     .item {
-      padding-block: 24px; // Отступы сверху и снизу от линии
+      padding-block: 24px;
 
-      // Добавляем линию разделения для всех элементов, кроме последнего
       &:not(:last-child) {
-        border-bottom: 1px solid #e5e5e5; // Цвет серой линии с макета
+        border-bottom: 1px solid #e5e5e5;
       }
 
-      // Корректируем отступы у крайних элементов
       &:first-child {
         padding-top: 0;
       }
@@ -33,12 +27,16 @@
     justify-content: start;
     column-gap: 20px;
 
+    @include mobile-s {
+      column-gap: 8px;
+    }
+
     .item {
       grid-template-columns: initial;
       padding-bottom: 0;
 
       @include mobile-s {
-        row-gap: 0;
+        row-gap: 8px;
       }
 
       & > img {

@@ -18,6 +18,10 @@
   row-gap: var(--gap);
   width: 100%;
   min-height: 70vh;
+
+  @include mobile-s {
+    min-height: initial;
+  }
 }
 
 .aside {
@@ -26,7 +30,6 @@
 
   @include mobile-s {
     padding-top: 30px;
-    margin-inline: calc(-1 * var(--container-padding-x));
   }
 }
 
