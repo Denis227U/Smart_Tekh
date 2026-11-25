@@ -1,4 +1,6 @@
 import { AddToCartButton } from '@/src/features/add-to-cart';
+import { BuyNowButton } from '@/src/features/buy-now';
+import type { CartProductDto } from '@/src/entities/cart';
 import { ProductCommentsCount, type ProductDto } from '@/src/entities/product';
 import { Button } from '@/src/shared/ui/client';
 import { Heading, Icon, Rating } from '@/src/shared/ui/common';
@@ -17,7 +19,7 @@ export const ProductDetailsContent = ({
     product;
 
   // Preparing data object for Zustand
-  const cartProductData = {
+  const cartProductData: CartProductDto = {
     id: id,
     title: title,
     slug: product.slug,
@@ -68,7 +70,7 @@ export const ProductDetailsContent = ({
         </div>
 
         <div className={s.actionsSecond}>
-          <Button variant='outline'>Купить в 1 клик</Button>
+          <BuyNowButton product={cartProductData} />
 
           <AddToCartButton
             productId={id}

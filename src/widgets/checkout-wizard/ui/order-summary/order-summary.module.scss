@@ -13,6 +13,10 @@
     &:not(:last-child) {
       margin-bottom: 20px;
     }
+
+    @include mobile-s {
+      padding: 16px;
+    }
   }
 
   .title {

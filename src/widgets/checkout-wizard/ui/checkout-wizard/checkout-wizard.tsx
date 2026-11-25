@@ -5,7 +5,9 @@ import {
   useCheckoutPayment,
   useCheckoutRecipient,
 } from '@/src/features/checkout';
-import { useTotalItems } from '@/src/entities/cart';
+import { Loader } from '@/src/shared/ui/common';
+import { useBuyNowGuard } from '../../model/use-buy-now-guard';
+import { useCheckoutItemsSource } from '../../model/use-checkout-items-source';
 import { useCheckoutSteps } from '../../model/use-checkout-step';
 import { useScrollToStep } from '../../model/use-scroll-to-step';
 import { OrderSummary } from '../order-summary/order-summary';
@@ -16,8 +18,19 @@ import { RecipientStep } from '../steps/recipient-step/recipient-step';
 import s from './checkout-wizard.module.scss';
 
 export const CheckoutWizard = ({ step }: { step?: string | string[] }) => {
-  const { currentStep, nextStep, isStepPassed, setStep } =
-    useCheckoutSteps(step);
+  const { isBuyNow, totalCount, isReady } = useCheckoutItemsSource();
+  const { isRedirecting, isOrderCompleted, completeOrder } = useBuyNowGuard({
+    isReady,
+    isBuyNow,
+    totalCount,
+  });
+
+  const isTransitioning = isRedirecting || isOrderCompleted;
+
+  const { currentStep, nextStep, isStepPassed, setStep } = useCheckoutSteps(
+    step,
+    !isReady || isTransitioning,
+  );
 
   useScrollToStep(currentStep);
 
@@ -25,8 +38,18 @@ export const CheckoutWizard = ({ step }: { step?: string | string[] }) => {
   const payment = useCheckoutPayment();
   const recipient = useCheckoutRecipient();
 
-  const cartTotalItems = useTotalItems();
-  const isCartEmpty = cartTotalItems === 0;
+  const isCartEmpty = totalCount === 0;
+
+  if (isTransitioning) {
+    return (
+      <div className={s.loaderWrapper}>
+        <Loader
+          size='lg'
+          color='dark'
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={s.wrapper}>
@@ -73,7 +96,10 @@ export const CheckoutWizard = ({ step }: { step?: string | string[] }) => {
       </div>
 
       <aside className={s.aside}>
-        <OrderSummary className={s.summary} />
+        <OrderSummary
+          className={s.summary}
+          onOrderSuccess={completeOrder}
+        />
       </aside>
     </div>
   );

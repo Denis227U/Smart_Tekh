@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { calculateDeliveryCost } from '@/src/entities/order';
 import { getCurrentUser } from '@/src/entities/user/server';
-import { prisma } from '@/src/shared/api';
+import { prisma, type PrismaProduct } from '@/src/shared/api';
 import {
   CityCode,
   DeliveryType,
@@ -60,30 +60,54 @@ export async function createOrder(
       };
     }
 
-    const { delivery, payment, recipient } = parsed.data;
+    const { delivery, payment, recipient, buyNowItem } = parsed.data;
 
-    const cart = await prisma.cart.findUnique({
-      where: { userId },
-      include: {
-        items: {
-          include: {
-            product: true,
+    let itemsToOrder: { product: PrismaProduct; quantity: number }[] = [];
+    let cartIdToClear: string | null = null;
+
+    if (buyNowItem) {
+      const product = await prisma.product.findUnique({
+        where: { id: buyNowItem.productId },
+      });
+
+      if (!product) {
+        return {
+          success: false,
+          error: 'Выбранный товар не найден',
+        };
+      }
+
+      itemsToOrder = [{ product, quantity: buyNowItem.quantity }];
+    } else {
+      const cart = await prisma.cart.findUnique({
+        where: { userId },
+        include: {
+          items: {
+            include: {
+              product: true,
+            },
           },
         },
-      },
-    });
+      });
 
-    if (!cart || cart.items.length === 0) {
-      return {
-        success: false,
-        error: 'Ваша корзина пуста',
-      };
+      if (!cart || cart.items.length === 0) {
+        return {
+          success: false,
+          error: 'Ваша корзина пуста',
+        };
+      }
+
+      itemsToOrder = cart.items.map((item) => ({
+        product: item.product,
+        quantity: item.quantity,
+      }));
+      cartIdToClear = cart.id;
     }
 
     let itemsTotal = 0; // current order total
     const stockErrors: string[] = [];
 
-    for (const item of cart.items) {
+    for (const item of itemsToOrder) {
       if (item.product.stock < item.quantity) {
         stockErrors.push(
           item.product.stock === 0
@@ -114,7 +138,7 @@ export async function createOrder(
 
     const totalAmount = itemsTotal + deliveryCost;
 
-    const orderItemsData = cart.items.map((item) => ({
+    const orderItemsData = itemsToOrder.map((item) => ({
       productId: item.product.id,
       productTitle: item.product.title,
       productPrice: item.product.price,
@@ -152,10 +176,10 @@ export async function createOrder(
 
     const createdOrder = await prisma.$transaction(async (tx) => {
       // Decrement stock for each item
-      for (const item of cart.items) {
+      for (const item of itemsToOrder) {
         const updated = await tx.product.updateMany({
           where: {
-            id: item.productId,
+            id: item.product.id,
             stock: { gte: item.quantity },
           },
           data: {
@@ -217,14 +241,16 @@ export async function createOrder(
         },
       });
 
-      await tx.cartItem.deleteMany({
-        where: { cartId: cart.id },
-      });
+      if (cartIdToClear) {
+        await tx.cartItem.deleteMany({
+          where: { cartId: cartIdToClear },
+        });
+      }
 
       return order;
     });
 
-    revalidatePath(ROUTES.CHECKOUT);
+    revalidatePath(ROUTES.CHECKOUT());
     revalidatePath(ROUTES.PROFILE.ORDERS);
 
     return {
